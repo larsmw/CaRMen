@@ -32,7 +32,6 @@ class Menu
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -44,7 +43,6 @@ class Menu
     public function setMachineName(string $name): static
     {
         $this->machine_name = $name;
-
         return $this;
     }
 }

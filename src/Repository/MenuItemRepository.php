@@ -17,9 +17,10 @@ class MenuItemRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param $value : Name of the menu for which to finde menu items.
      * @return MenuItem[] Returns an array of MenuItem objects
      */
-    public function findByMenuField($value): array
+    public function findByMenuName($value): array
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.menu = :val')
@@ -31,6 +32,10 @@ class MenuItemRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $value : Name of the menu for which to finde menu items.
+     * @return MenuItem Returns a MenuItem object
+     */
     public function findOneByMenu($value): ?MenuItem
     {
       return $this->createQueryBuilder('m')

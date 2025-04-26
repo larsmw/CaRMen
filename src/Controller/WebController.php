@@ -12,7 +12,7 @@ final class WebController extends AbstractController
     public function index(): Response
     {
         return $this->render('web/index.html.twig', [
-            'controller_name' => 'WebController',
+            'controller_name' => 'Lars',
         ]);
     }
 }

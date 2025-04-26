@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul>
+        {% for item in menu %}
+            {% if item.title is defined %}
+            <li><a href="{{ item.url }}" title="{{ item.title }}">
+            {% else %}
+            <li><a href="{{ item.url }}">
+            {% endif %}
+                {{ item.name }}
+            </a></li>
+        {% endfor %}
+    </ul>
+</nav>

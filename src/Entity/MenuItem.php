@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\MenuItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: MenuItemRepository::class)]
 class MenuItem
@@ -12,6 +12,9 @@ class MenuItem
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $parent = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -38,7 +41,6 @@ class MenuItem
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -50,7 +52,6 @@ class MenuItem
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -62,7 +63,6 @@ class MenuItem
     public function setRoute(string $route): static
     {
         $this->route = $route;
-
         return $this;
     }
 
@@ -74,7 +74,6 @@ class MenuItem
     public function setMenu(string $menu): static
     {
         $this->menu = $menu;
-
         return $this;
     }
 }
