@@ -44,6 +44,17 @@ class MenuItem
         return $this;
     }
 
+    public function getParent(): ?int
+    {
+        return $this->parent;
+    }
+
+    public function setParent(int $parent): static
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;

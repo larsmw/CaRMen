@@ -16,6 +16,7 @@ class MenuItemType extends AbstractType
             ->add('route')
             ->add('title')
             ->add('menu')
+            ->add('parent')
         ;
     }
 
