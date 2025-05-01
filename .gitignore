@@ -4,6 +4,9 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
+# ignore generated css files
+public/css/**
+
 # ignore emacs backup files
 *~
 
