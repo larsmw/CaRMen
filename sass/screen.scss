@@ -8,3 +8,26 @@ nav ul li {
   position: relative;
   float: left;
 }
+
+main {
+    table {
+        thead {
+            tr, td {
+                box-shadow: inset 0px -1px #111;
+            }
+        }
+        th, td {
+            padding: 8px;
+        }
+        th {
+            text-align:left;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
