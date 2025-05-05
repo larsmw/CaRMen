@@ -1,0 +1,20 @@
+#ddev-generated
+services:
+  memcached:
+    container_name: ddev-${DDEV_SITENAME}-memcached
+    image: ${MEMCACHED_DOCKER_IMAGE:-memcached:1.6}
+    restart: "no"
+    # memcached is available at this port inside the container.
+    expose:
+      - 11211
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+
+    # Arguments passed to the memcached binary.
+    command: ["-m", "128"]
+
+    volumes:
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
