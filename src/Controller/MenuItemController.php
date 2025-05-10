@@ -31,7 +31,7 @@ final class MenuItemController extends AbstractController
         $menuItem = new MenuItem();
         $form = $this->createForm(MenuItemType::class, $menuItem);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($menuItem);
             $entityManager->flush();

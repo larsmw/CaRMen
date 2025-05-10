@@ -1,4 +1,13 @@
 
+$color-bg: #eef4ed;
+$color-front: #0b2545;
+
+html {
+    background-color: $color-bg;
+    color: $color-front;
+    font-family: sans-serif;
+}
+
 header {
   display: inline-flex;
 }
@@ -25,9 +34,30 @@ main {
         a {
             color: #333;
             text-decoration: none;
+            border: 1px solid #999;
+            box-shadow: 2px 1px #134074;
+            padding: 3px;
             &:hover {
                 text-decoration: underline;
             }
+        }
+    }
+}
+
+body {
+    form {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-gap: 16px;
+
+        label {
+
+            grid-column: 1 / 2;
+
+        }
+
+        input {
+            grid-column: 3;
         }
     }
 }

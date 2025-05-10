@@ -43,6 +43,7 @@ public/css/**
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/assets/styles/*
 
 # PHPUnit
 /app/phpunit.xml

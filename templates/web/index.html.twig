@@ -14,6 +14,11 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
 
     This friendly message is coming from:
+    {{ form_errors(form) }}
+    {{ form_start(form) }}
+      {{ form_widget(form) }}
+{#      <button class="btn">{{ button_label|default('Save') }}</button>#}
+    {{ form_end(form) }}
     <ul>
         <li>Your controller at <code>/home/lars/src/github/CaRMen/src/Controller/WebController.php</code></li>
         <li>Your template at <code>/home/lars/src/github/CaRMen/templates/web/index.html.twig</code></li>
