@@ -29,7 +29,7 @@ final class WebController extends AbstractController
     }
 
     #[Route('/customer/add', name: 'customer_add')]
-    public function addCustomer(Request $request, EntityManagerInterface $entityManager) {
+    public function addCustomer(Request $request, EntityManagerInterface $entityManager) : Response {
         $customer = new Customer();
         $form = $this->createForm(CustomerForm::class,
            $customer,

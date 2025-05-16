@@ -3,45 +3,35 @@
 {% block title %}MenuItem index{% endblock %}
 
 {% block body %}
-  <header>
-    {{ render(controller(
-      'App\\Controller\\MenuController::mainMenu'
-      )) }}
-  </header>
-  <main>
-    <h1>MenuItem index</h1>
+  <h1>MenuItem index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Route</th>
-                <th>Menu</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for menu_item in menu_items %}
-            <tr>
-                <td>{{ menu_item.name }}</td>
-                <td>{{ menu_item.route }}</td>
-                <td>{{ menu_item.menu }}</td>
-                <td>
-                    <a href="{{ path('app_menu_item_show', {'id': menu_item.id}) }}">show</a>
-                    <a href="{{ path('app_menu_item_edit', {'id': menu_item.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Route</th>
+        <th>Menu</th>
+        <th>actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for menu_item in menu_items %}
+      <tr>
+        <td>{{ menu_item.name }}</td>
+        <td>{{ menu_item.route }}</td>
+        <td>{{ menu_item.menu }}</td>
+        <td>
+          <a href="{{ path('app_menu_item_show', {'id': menu_item.id}) }}" class="list-button">show</a>
+          <a href="{{ path('app_menu_item_edit', {'id': menu_item.id}) }}" class="list-button">edit</a>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="5">no records found</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
-    <a href="{{ path('app_menu_item_new') }}">Create new</a>
-  </main>
-  {{ render(controller(
-    'App\\Controller\\MenuController::adminMenu'
-    )) }}
+  <a href="{{ path('app_menu_item_new') }}" class="action">Create new</a>
 {% endblock %}

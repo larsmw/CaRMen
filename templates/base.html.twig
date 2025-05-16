@@ -12,6 +12,18 @@
     {% endblock %}
   </head>
   <body>
-    {% block body %}{% endblock %}
+    <header>
+    {{ render(controller(
+      'App\\Controller\\MenuController::mainMenu'
+      )) }}
+    </header>
+    <main>
+      {% block body %}{% endblock %}
+    </main>
+    <footer>
+    {{ render(controller(
+      'App\\Controller\\MenuController::adminMenu'
+      )) }}
+    </footer>
   </body>
 </html>

@@ -5,17 +5,64 @@ $color-front: #0b2545;
 html {
     background-color: $color-bg;
     color: $color-front;
+
+    // Manage fonts
+    // Genral
     font-family: sans-serif;
+    // In menu navigations
+    nav {
+        line-height: 10pt;
+        font-size: 12pt;
+    }
+
+    // links
+    a {
+        color: #333;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    a.list-button {
+        color: #333;
+        text-decoration: none;
+        border: 1px solid #999;
+        box-shadow: 2px 1px #134074;
+        padding: 3px;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 header {
-  display: inline-flex;
+    display: inline-flex;
+    nav {
+      position: fixed; /* Set the navbar to fixed position */
+      top: 0; /* Position the navbar at the top of the page */
+      width: 100%;
+      background-color: #000;
+
+      ul li {
+        list-style: none;
+        position: relative;
+        float: left;
+        height: -moz-available;
+        top: -7px;
+        a {
+            color: #fff;
+        }
+        &:not(:last-child) {
+            padding-right: 1rem;
+        }
+      }
+    }
 }
 
-nav ul li {
-  list-style: none;
-  position: relative;
-  float: left;
+main, footer {
+  max-width: 880px;
+  padding: 0 16px;
+  margin: 0 auto;
 }
 
 main {
@@ -25,26 +72,18 @@ main {
                 box-shadow: inset 0px -1px #111;
             }
         }
-        th, td {
+        th, tr {
             padding: 8px;
         }
         th {
             text-align:left;
         }
-        a {
-            color: #333;
-            text-decoration: none;
-            border: 1px solid #999;
-            box-shadow: 2px 1px #134074;
-            padding: 3px;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
     }
 }
 
 body {
+    padding: 0;
+    margin: 0;
     form {
         display: grid;
         grid-template-columns: 200px 1fr;

@@ -15,3 +15,5 @@ Automation - When an enity reaches some state it should be able to trigger some 
 Email - Templates for standard emails for customers
 Department - A user can belong to a department
 Teams - Some structure of colaboration between users.
+
+Integrations - Zapier, Facebook, mail system.
