@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Repository\UserRepository;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,10 +14,19 @@ class LoginControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        self::ensureKernelShutdown();
         $this->client = static::createClient();
         $container = static::getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
-        $userRepository = $em->getRepository(User::class);
+        $userRepository = $container->get(UserRepository::class);
+
+        foreach ($userRepository->findAll() as $user) {
+            if ($user->getUsername() == 'test') {
+                $em->remove($user);
+            }
+        }
+
+        $em->flush();
 
 
         // Create a User fixture
@@ -29,6 +39,22 @@ class LoginControllerTest extends WebTestCase
 
         $em->persist($user);
         $em->flush();
+    }
+
+    protected function tearDown() : void {
+      // Ensure we have a clean database
+
+      $container = static::getContainer();
+      $em = $container->get('doctrine.orm.entity_manager');
+      $userRepository = $container->get(UserRepository::class);
+
+      foreach ($userRepository->findAll() as $user) {
+        if ($user->getUsername() == 'test') {
+          $em->remove($user);
+        }
+      }
+
+      $em->flush();
     }
 
     public function testLogin(): void
