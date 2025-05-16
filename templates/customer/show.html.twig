@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer{% endblock %}
+
+{% block body %}
+  <h1>Customer</h1>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Firstname</th>
+        <td>: {{ customer.firstName }}</td>
+      </tr>
+      <tr>
+        <th>Lastname</th>
+        <td>: {{ customer.lastName }}</td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td>: {{ customer.phone }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href="{{ path('app_customer') }}">back to list</a>
+
+  <a href="{{ path('app_customer_edit', {'id': customer.id}) }}">edit</a>
+
+{% endblock %}
