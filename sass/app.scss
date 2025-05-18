@@ -13,6 +13,23 @@ html {
     nav {
         line-height: 10pt;
         font-size: 12pt;
+        &.actions li {
+            list-style-type: none;
+            display: inline;
+            padding: 4px;
+        }
+        &.actions {
+            a:hover {
+                text-decoration: none;
+            }
+            li:hover {
+                background-color: #888;
+            }
+        }
+/*        &.actions li:not(:last-child)::after {
+            margin-right: 4px;
+            content: '-';
+        }*/
     }
 
     // links
@@ -96,6 +113,14 @@ body {
 
         input {
             grid-column: 3;
+        }
+    }
+    .registration_form {
+        form {
+            div,button {
+                display: grid;
+                grid-column: 2;
+            }
         }
     }
 }

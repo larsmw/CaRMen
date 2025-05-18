@@ -31,9 +31,8 @@ final class MenuItemController extends AbstractController
         $menuItem = new MenuItem();
         $form = $this->createForm(MenuItemType::class, $menuItem);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($menuItem);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_menu_item_index', [], Response::HTTP_SEE_OTHER);
@@ -60,7 +59,15 @@ final class MenuItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $entityManager->beginTransaction();
+            try {
+              $entityManager->persist($menuItem);
+              $entityManager->flush();
+              $entityManager->commit();
+            } catch( \Exception $e) {
+              $entityManager->rollback();
+              throw $e;
+            }
 
             return $this->redirectToRoute('app_menu_item_index', [], Response::HTTP_SEE_OTHER);
         }

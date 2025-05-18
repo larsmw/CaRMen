@@ -11,6 +11,7 @@
 
     {{ form_errors(registrationForm) }}
 
+    <div class="registration_form">
     {{ form_start(registrationForm) }}
       {{ form_row(registrationForm.username) }}
       {{ form_row(registrationForm.email) }}
@@ -21,4 +22,5 @@
 
       <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}
