@@ -22,3 +22,17 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Security\PermissionChecker:
+        arguments:
+            $strategies: !tagged_iterator app.permission_strategy
+
+    App\Security\PermissionStrategyInterface:
+        tags: ['app.permission_strategy']
+        autoconfigure: false
+
+    App\Security\Strategy\:
+        resource: '../src/Security/Strategy/*'
+        tags: ['app.permission_strategy']
+        autowire: true
+        autoconfigure: false

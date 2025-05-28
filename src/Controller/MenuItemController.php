@@ -26,6 +26,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/new', name: 'app_menu_item_new', methods: ['GET', 'POST'])]
+    #[IsGranted(MenuItemVoter::CREATE)]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $menuItem = new MenuItem();
@@ -45,6 +46,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_menu_item_show', methods: ['GET'])]
+    #[IsGranted(MenuItemVoter::VIEW)]
     public function show(MenuItem $menuItem): Response
     {
         return $this->render('menu_item/show.html.twig', [
@@ -53,6 +55,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_menu_item_edit', methods: ['GET', 'POST'])]
+    #[IsGranted(MenuItemVoter::EDIT)]
     public function edit(Request $request, MenuItem $menuItem, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MenuItemType::class, $menuItem);
@@ -79,6 +82,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_menu_item_delete', methods: ['POST'])]
+    #[IsGranted(MenuItemVoter::DELETE)]
     public function delete(Request $request, MenuItem $menuItem, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$menuItem->getId(), $request->getPayload()->getString('_token'))) {

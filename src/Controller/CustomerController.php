@@ -10,10 +10,12 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\CustomerRepository;
 use App\Entity\Customer;
 use App\Form\CustomerForm;
+use App\Security\Voter\PermissionVoter;
 
 final class CustomerController extends AbstractController
 {
     #[Route('/customer', name: 'app_customer')]
+    #[IsGranted(PermissionVoter::CUSTOMER_LIST)]
     public function index(CustomerRepository $customerRepository): Response
     {
         return $this->render('customer/index.html.twig', [

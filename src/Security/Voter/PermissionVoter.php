@@ -5,25 +5,21 @@ namespace App\Security\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security;
 use App\Entity\User;
-use App\Entity\MenuItem;
 
-final class MenuItemVoter extends Voter
+final class PermissionVoter extends Voter
 {
-    public const EDIT   = 'MENU_EDIT';
-    public const VIEW   = 'MENU_VIEW';
-    public const CREATE = 'MENU_CREATE';
-    public const DELETE = 'MENU_DELETE';
+    public const EDIT = 'POST_EDIT';
+    public const VIEW = 'POST_VIEW';
+    public const CUSTOMER_LIST = 'CUSTOMER_LIST';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        //dump(__METHOD__);
-        //dump($attribute);
-        //dump($subject);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW]);
+        dump($attribute);
+        //return in_array($attribute, [self::EDIT, self::VIEW]);
+        return is_object($subject);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -31,25 +27,21 @@ final class MenuItemVoter extends Voter
         $user = $token->getUser();
 
         dump($attribute);
+        dump($subject);
         dump($token);
-        //        die();
+        dump($user);
         // if the user is anonymous, do not grant access
-
-        if (!$user instanceof User &&
-            $subject instanceof MenuItem) {
-            if (
-              $subject->getRoute() == '/logout' || $subject->getRoute() == '/customer') {
-              return false;
-            }
-        } elseif ($user instanceof User) {
-            dump($user);
-            dump($subject);
-            if ($subject instanceof MenuItem &&
-              $subject->getRoute() == '/login') {
-              return false;
-            }
+        if (!$user instanceof User) {
+            return false;
         }
 
+        /*        try {
+            //return $this->isGranted($attribute, $user, $subject);
+        } catch (\LogicException) {
+            return false;
+            }*/
+        
+        /*
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
@@ -59,10 +51,11 @@ final class MenuItemVoter extends Voter
 
             case self::VIEW:
                 // logic to determine if the user can VIEW
-                return true;
-
+                // return true or false
+                break;
         }
 
-        return false;
+        return false;*/
+        return true;
     }
 }

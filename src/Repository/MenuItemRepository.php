@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\MenuItem;
+use App\Security\Voter\MenuItemVoter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,6 +23,8 @@ class MenuItemRepository extends ServiceEntityRepository
      */
     public function findByMenuName($value): array
     {
+        //dump($this);
+        //dump($value);
         return $this->createQueryBuilder('m')
             ->andWhere('m.menu = :val')
             ->setParameter('val', $value)
