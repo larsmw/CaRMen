@@ -18,9 +18,6 @@ final class MenuItemVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        //dump(__METHOD__);
-        //dump($attribute);
-        //dump($subject);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW]);
@@ -30,35 +27,37 @@ final class MenuItemVoter extends Voter
     {
         $user = $token->getUser();
 
-        dump($attribute);
-        dump($token);
-        //        die();
         // if the user is anonymous, do not grant access
-
+        
         if (!$user instanceof User &&
             $subject instanceof MenuItem) {
-            if (
-              $subject->getRoute() == '/logout' || $subject->getRoute() == '/customer') {
+            if (in_array($subject->getRoute(), ['/logout','/customer', '/menu/item'])) {
               return false;
             }
         } elseif ($user instanceof User) {
-            dump($user);
-            dump($subject);
             if ($subject instanceof MenuItem &&
               $subject->getRoute() == '/login') {
               return false;
             }
+
         }
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
+            case self::CREATE:
+                if (is_object($user))
+                  return true;
+                break;
             case self::EDIT:
                 // logic to determine if the user can EDIT
                 // return true or false
+                if (is_object($user))
+                  return true;
                 break;
 
             case self::VIEW:
                 // logic to determine if the user can VIEW
+                //if ($user instanceof User) return true;
                 return true;
 
         }

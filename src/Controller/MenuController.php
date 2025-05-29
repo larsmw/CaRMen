@@ -15,7 +15,6 @@ class MenuController extends AbstractController
         $menuitems = $this->getItems($em, 'main');
         $menu = [];
         foreach ($menuitems as $item) {
-            //dump($item);
 
             if ($this->isGranted(MenuItemVoter::VIEW, $item)) {
               $menu[] = [
@@ -33,11 +32,13 @@ class MenuController extends AbstractController
         $menuitems = $this->getItems($em, 'admin');
         $menu = [];
         foreach ($menuitems as $item) {
-            $menu[] = [
-                'url' => $item->getRoute(),
-                'name' => $item->getName(),
-                'title' => $item->getTitle(),
-            ];
+            if ($this->isGranted(MenuItemVoter::VIEW, $item)) {
+              $menu[] = [
+                  'url' => $item->getRoute(),
+                  'name' => $item->getName(),
+                  'title' => $item->getTitle(),
+              ];
+            }
         }
         return $this->render('menu/main.html.twig',
             ['menu' => $menu]);
@@ -49,6 +50,5 @@ class MenuController extends AbstractController
     }
     
     public function get($menuname) : null {
-        error_log($menuname);
     }
 }

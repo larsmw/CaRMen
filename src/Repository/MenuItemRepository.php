@@ -23,13 +23,10 @@ class MenuItemRepository extends ServiceEntityRepository
      */
     public function findByMenuName($value): array
     {
-        //dump($this);
-        //dump($value);
         return $this->createQueryBuilder('m')
             ->andWhere('m.menu = :val')
             ->setParameter('val', $value)
             ->orderBy('m.id', 'ASC')
-            //->setMaxResults(10)
             ->getQuery()
             ->getResult()
             ;

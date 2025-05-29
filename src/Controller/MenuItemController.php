@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class MenuItemController extends AbstractController
 {
     #[Route(name: 'app_menu_item_index', methods: ['GET'])]
-    #[IsGranted(MenuItemVoter::VIEW)]
+    #[IsGranted(MenuItemVoter::EDIT)] // Needs edit permission to 'view' the admin page
     public function index(MenuItemRepository $menuItemRepository): Response
     {
         return $this->render('menu_item/index.html.twig', [
@@ -46,7 +46,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_menu_item_show', methods: ['GET'])]
-    #[IsGranted(MenuItemVoter::VIEW)]
+    #[IsGranted(MenuItemVoter::EDIT)]
     public function show(MenuItem $menuItem): Response
     {
         return $this->render('menu_item/show.html.twig', [

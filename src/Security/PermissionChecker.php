@@ -20,7 +20,6 @@ class PermissionChecker {
 
     public function isGranted(string $action, User $user, object $subject): bool
     {
-        dump($user);
         foreach ($this->strategies as $strategy) {
             if ($strategy->supports($action, $subject)) {
                 return $strategy->canPerform($user, $subject);
