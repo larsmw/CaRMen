@@ -29,3 +29,4 @@ class RestUserController extends AbstractFOSRestController {
         return $this->handleView($this->view($customers));
     }
 }
+
