@@ -10,7 +10,7 @@ public/css/**
 # ignore emacs backup files
 *~
 
-.env
+#.env
 .env.local
 
 # Email spool folder
@@ -47,7 +47,6 @@ public/css/**
 
 # PHPUnit
 /app/phpunit.xml
-/phpunit.xml
 
 # Build data
 /build/
