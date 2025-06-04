@@ -11,7 +11,7 @@ public/css/**
 *~
 
 .env
-.env*
+.env.local
 
 # Email spool folder
 /app/spool/*
