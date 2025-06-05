@@ -9,7 +9,7 @@ As a cookie manager I use : https://silktide.com/consent-manager/install/
 
 
 # Wishlist for features
-Users
+Users and permissions
 
 Leads - Collect leads from facebook and website.
 
@@ -43,3 +43,5 @@ Integrations - Zapier, Facebook, mail system.
 Why are CRM faling
 https://www.researchgate.net/profile/Mohamed-Tazkarji/publication/340550301_Reasons_for_Failures_of_CRM_Implementations/links/63fe7a9ab1704f343f8d4233/Reasons-for-Failures-of-CRM-Implementations.pdf
 
+# Notes
+Error page handling : https://symfony.com/doc/current/controller/error_pages.html
