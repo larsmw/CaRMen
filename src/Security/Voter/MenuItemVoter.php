@@ -20,7 +20,7 @@ final class MenuItemVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW]);
+        return in_array($attribute, [self::EDIT, self::VIEW, self::CREATE]);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
