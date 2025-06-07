@@ -7,14 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\CustomerRepository;
 use App\Entity\Customer;
 use App\Form\CustomerForm;
 use App\Security\Voter\PermissionVoter;
 
+#[Route('/customer', name: 'app_customer_')]
 final class CustomerController extends AbstractController
 {
-    #[Route('/customer', name: 'app_customer')]
+    #[Route('/', name: 'index')]
     #[IsGranted(PermissionVoter::CUSTOMER_LIST)]
     public function index(CustomerRepository $customerRepository): Response
     {
@@ -23,7 +25,8 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    #[Route('/customer/{id}', name: 'app_customer_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[IsGranted(PermissionVoter::CUSTOMER_VIEW)]
     public function show(Customer $customer): Response
     {
         return $this->render('customer/show.html.twig', [
@@ -31,8 +34,30 @@ final class CustomerController extends AbstractController
         ]);
     }
 
+    #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
+    #[IsGranted(PermissionVoter::CUSTOMER_ADD)]
+    public function addCustomer(Request $request, EntityManagerInterface $entityManager) : Response {
+        $customer = new Customer();
+        $form = $this->createForm(CustomerForm::class,
+           $customer,
+           ['method' => 'POST','action'=> '/customer/add']
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $entityManager->persist($form->getData());
+                $entityManager->flush();
+            }
+        }
 
-    #[Route('/customer/{id}/edit', name: 'app_customer_edit', methods: ['GET', 'POST'])]
+        return $this->render('web/index.html.twig', [
+            'controller_name' => 'ny kunde',
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[IsGranted(PermissionVoter::CUSTOMER_EDIT)]
     public function edit(Request $request, Customer $customerItem, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CustomerForm::class, $customerItem);
@@ -51,6 +76,5 @@ final class CustomerController extends AbstractController
             'form' => $form,
         ]);
     }
-
 
 }

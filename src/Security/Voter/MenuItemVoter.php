@@ -18,6 +18,7 @@ final class MenuItemVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
+        dump($attribute);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW, self::CREATE]);
@@ -26,6 +27,7 @@ final class MenuItemVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
+        dump($attribute);
 
         // if the user is anonymous, do not grant access
         
@@ -50,6 +52,13 @@ final class MenuItemVoter extends Voter
                 break;
             case self::EDIT:
                 // logic to determine if the user can EDIT
+                // return true or false
+                if (is_object($user))
+                  return true;
+                break;
+
+            case self::DELETE:
+                // logic to determine if the user can DELETE
                 // return true or false
                 if (is_object($user))
                   return true;

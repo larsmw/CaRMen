@@ -15,12 +15,15 @@ class PermissionChecker {
      */
     public function __construct(iterable $strategies)
     {
+        dump($strategies);
         $this->strategies = $strategies;
     }
 
     public function isGranted(string $action, User $user, object $subject): bool
     {
+        dump($this->strategies);
         foreach ($this->strategies as $strategy) {
+            dump($strategy);
             if ($strategy->supports($action, $subject)) {
                 return $strategy->canPerform($user, $subject);
             }

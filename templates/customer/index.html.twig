@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CustomerController!{% endblock %}
+{% block title %}Hello Customercontroller{% endblock %}
 
 {% block body %}
-  <h1>Hello</h1>
+  <h1>Hello CustomerController</h1>
 
   <table class="table">
     <thead>
@@ -20,12 +20,13 @@
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.phone }}</td>
         </tr>
-{% else %}
+      {% else %}
         <tr>
-          <td colspan="5">no records found</td>
+          <td colspan="5">no records found</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
-
+  <a href="/customer/add">Add new customer</a>
 {% endblock %}

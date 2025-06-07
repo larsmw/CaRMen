@@ -31,24 +31,4 @@ final class WebController extends AbstractController
         ]);
     }
 
-    #[Route('/customer/add', name: 'customer_add')]
-    public function addCustomer(Request $request, EntityManagerInterface $entityManager) : Response {
-        $customer = new Customer();
-        $form = $this->createForm(CustomerForm::class,
-           $customer,
-           ['method' => 'POST','action'=> '/customer/add']
-        );
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $entityManager->persist($form->getData());
-                $entityManager->flush();
-            }
-        }
-
-        return $this->render('web/index.html.twig', [
-            'controller_name' => 'ny kunde',
-            'form' => $form,
-        ]);
-    }
 }
