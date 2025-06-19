@@ -44,10 +44,10 @@ jobs:
         mkdir -p var/data
         touch var/data/database.sqlite
     - name: Make Migrations
-      run: bin/console make:migration
+      run: bin/console make:migration --env=test
     - name: Run migrations
-      run: bin/console doctrine:migrations:migrate --no-interaction
+      run: bin/console doctrine:migrations:migrate --no-interaction --env=test
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+        DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/database.sqlite
       run: vendor/bin/phpunit
