@@ -7,6 +7,11 @@ This project is built on top of many other great projects.
 
 As a cookie manager I use : https://silktide.com/consent-manager/install/
 
+# Install
+I have not made an installer yet. But insert these menu items as a start.
+''' 
+INSERT INTO `menu_item` (`id`,`name`,`title`,`route`,`menu`,`parent`) VALUES (1,'Menu Items','Menu Items','/menu/item','admin',0), (2,'Hjem','Hjem','/','main',0), (3,'Login','Login','/login','main',2), (4,'Logout','Logout','/logout','main',2), (5,'Register User','Register User','/register','admin',0), (6,'Kundeliste','Kunder','/customer','mainINSERT INTO `menu_item` VALUES',0);
+'''
 
 # Wishlist for features
 Users and permissions

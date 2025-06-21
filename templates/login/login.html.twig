@@ -3,6 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -14,7 +15,6 @@
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="username">Username</label>
         <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
         <label for="password">Password</label>
@@ -38,5 +38,4 @@
             Sign in
         </button>
     </form>
-    <a href="/register">Register new user</a>.
 {% endblock %}
