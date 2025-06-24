@@ -3,7 +3,7 @@
 The foundational thought for this project is to create a CRM system that is ACID and GDPR compliant,
 
 # Build on shoulders of Giants
-This project is built on top of many other great projects.
+This project is built on top of many other great projects. As foundation Symfony is used to manage routes, controllers and fundamental features.
 
 As a cookie manager I use : https://silktide.com/consent-manager/install/
 
