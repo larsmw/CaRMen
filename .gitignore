@@ -6,6 +6,7 @@
 
 # ignore generated css files
 public/css/**
+public/assets/**
 
 # ignore emacs backup files
 *~

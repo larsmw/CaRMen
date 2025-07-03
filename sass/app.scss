@@ -83,16 +83,26 @@ main, footer {
 
 main {
     table {
+        background: #525551;
+        color: #d8dfd7;
+
         thead {
             tr, td {
                 box-shadow: inset 0px -1px #111;
             }
+        }
+        tbody {
+            background: #eee;
+            color: #222;
         }
         th, tr {
             padding: 8px;
         }
         th {
             text-align:left;
+        }
+        td {
+            padding: 5px 3px;
         }
     }
 }
@@ -124,3 +134,57 @@ body {
         }
     }
 }
+
+       .popup {
+         position: fixed;
+         display: none;
+         overflow: hidden;
+         top: 10%;
+         right: 0;
+       }
+       .popup-overlay {
+       }
+       .main-popup {
+	       left: 0;
+         width: 50%;
+         z-index: 1;
+         background: #d2e1cf;
+         padding: 30px 20px;
+         line-height: 1rem;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+       }
+       .close-btn {
+	       border: .6px solid white;
+	       padding: 10px;
+	       position: absolute;
+	       top: 1rem;
+	       right: 1rem;
+	       font-size: 2rem;
+	       cursor: pointer;
+	       transition: .5s ease all;
+       }
+       .close-btn:hover {
+	       background: white;
+       }
+       .popup-content p {
+	       font-size: 1.5rem;
+	       line-height: 2rem;
+       }
+       @keyframes slide-in {
+	       0% {
+		       transform: translateX(200%);
+	       }
+	       100% {
+		       transform: translateX(40%);
+	       }
+       }
+       @keyframes slide-out {
+	       0% {
+		       transform: translateX(40%);
+	       }
+	       100% {
+		       transform: translateX(200%);
+	       }
+       }
