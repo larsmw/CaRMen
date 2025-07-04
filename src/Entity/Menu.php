@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace CaRMen\Entity;
 
-use App\Repository\MenuRepository;
+use CaRMen\Repository\MenuRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]

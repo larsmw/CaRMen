@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Security\Voter;
+namespace CaRMen\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\User;
-use App\Security\PermissionChecker;
+use CaRMen\Entity\User;
+use CaRMen\Security\PermissionChecker;
 
 final class PermissionVoter extends Voter
 {

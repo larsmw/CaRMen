@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace CaRMen\Repository;
 
-use App\Entity\Permission;
+use CaRMen\Entity\Permission;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

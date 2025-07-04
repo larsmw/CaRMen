@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repository;
+namespace CaRMen\Repository;
 
-use App\Entity\MenuItem;
-use App\Security\Voter\MenuItemVoter;
+use CaRMen\Entity\MenuItem;
+use CaRMen\Security\Voter\MenuItemVoter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace CaRMen\Form;
 
-use App\Entity\Permission;
-use App\Entity\Role;
+use CaRMen\Entity\Permission;
+use CaRMen\Entity\Role;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

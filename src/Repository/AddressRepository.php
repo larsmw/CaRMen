@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace CaRMen\Repository;
 
-use App\Entity\Address;
+use CaRMen\Entity\Address;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

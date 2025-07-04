@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Security\Strategy;
+namespace CaRMen\Security\Strategy;
 
-use App\Security\PermissionStrategyInterface;
-use App\Entity\User;
+use CaRMen\Security\PermissionStrategyInterface;
+use CaRMen\Entity\User;
 
 class MenuItemStrategy implements PermissionStrategyInterface {
 

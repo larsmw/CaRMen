@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace CaRMen\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

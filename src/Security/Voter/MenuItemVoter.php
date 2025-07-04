@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Security\Voter;
+namespace CaRMen\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security;
-use App\Entity\User;
-use App\Entity\MenuItem;
+use CaRMen\Entity\User;
+use CaRMen\Entity\MenuItem;
 
 final class MenuItemVoter extends Voter
 {

@@ -18,12 +18,12 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            App:
+            CaRMen:
                 type: attribute
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                prefix: 'CaRMen\Entity'
+                alias: CaRMen
         controller_resolver:
             auto_mapping: false
 

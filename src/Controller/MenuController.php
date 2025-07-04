@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace CaRMen\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\MenuItem;
-use App\Security\Voter\MenuItemVoter;
+use CaRMen\Entity\MenuItem;
+use CaRMen\Security\Voter\MenuItemVoter;
 use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends AbstractController

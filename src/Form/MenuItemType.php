@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace CaRMen\Form;
 
-use App\Entity\MenuItem;
+use CaRMen\Entity\MenuItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace CaRMen\Controller;
 
-use App\Entity\User;
-use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
-use App\Security\EmailVerifier;
+use CaRMen\Entity\User;
+use CaRMen\Form\RegistrationFormType;
+use CaRMen\Repository\UserRepository;
+use CaRMen\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

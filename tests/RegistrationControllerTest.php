@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace CaRMen\Tests;
 
-use App\Repository\UserRepository;
+use CaRMen\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

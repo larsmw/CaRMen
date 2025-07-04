@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace CaRMen\Form;
 
-use App\Entity\Customer;
+use CaRMen\Entity\Customer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

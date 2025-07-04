@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace CaRMen\Entity;
 
-use App\Repository\AddressRepository;
+use CaRMen\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]

@@ -44,10 +44,10 @@ html {
         color: #333;
         text-decoration: none;
         border: 1px solid #999;
-        box-shadow: 2px 1px #134074;
-        padding: 3px;
+        box-shadow: 2px 1px #abb9a8;
+        padding: 1px 6px;
         &:hover {
-            text-decoration: underline;
+            box-shadow: -1px -1px #abb9a8;
         }
     }
 }

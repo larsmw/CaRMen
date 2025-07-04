@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace CaRMen\Controller;
 
-use App\Entity\MenuItem;
-use App\Form\MenuItemType;
-use App\Security\Voter\MenuItemVoter;
-use App\Repository\MenuItemRepository;
+use CaRMen\Entity\MenuItem;
+use CaRMen\Form\MenuItemType;
+use CaRMen\Security\Voter\MenuItemVoter;
+use CaRMen\Repository\MenuItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

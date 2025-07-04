@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests;
+namespace CaRMen\Tests;
 
-use App\Repository\UserRepository;
-use App\Entity\User;
+use CaRMen\Repository\UserRepository;
+use CaRMen\Entity\User;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace CaRMen\Repository;
 
-use App\Entity\Menu;
+use CaRMen\Entity\Menu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

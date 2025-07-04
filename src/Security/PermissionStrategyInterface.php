@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Security;
+namespace CaRMen\Security;
 
-use App\Entity\User;
+use CaRMen\Entity\User;
 
 interface PermissionStrategyInterface {
 

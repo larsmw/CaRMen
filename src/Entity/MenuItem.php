@@ -1,7 +1,7 @@
 <?php
-namespace App\Entity;
+namespace CaRMen\Entity;
 
-use App\Repository\MenuItemRepository;
+use CaRMen\Repository\MenuItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace CaRMen\Controller;
 
-use App\Entity\Role;
-use App\Form\RoleForm;
-use App\Repository\RoleRepository;
+use CaRMen\Entity\Role;
+use CaRMen\Form\RoleForm;
+use CaRMen\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

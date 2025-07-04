@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Security;
+namespace CaRMen\Security;
 
-use App\Entity\User;
+use CaRMen\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;

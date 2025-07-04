@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace CaRMen\Entity;
 
-use App\Repository\RoleRepository;
+use CaRMen\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]

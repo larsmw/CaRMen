@@ -60,12 +60,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "CaRMen\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "CaRMen\\Tests\\": "tests/"
         }
     },
     "replace": {

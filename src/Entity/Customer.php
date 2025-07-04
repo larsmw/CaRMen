@@ -1,7 +1,7 @@
 <?php
-namespace App\Entity;
+namespace CaRMen\Entity;
 
-use App\Repository\CustomerRepository;
+use CaRMen\Repository\CustomerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
@@ -11,6 +11,12 @@ class Customer
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: 'datetime')]
+	protected $created;
+
+	#[ORM\Column(type: 'datetime', nullable: true)]
+	protected $updated;
 
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
@@ -61,4 +67,16 @@ class Customer
 
         return $this;
     }
+    #[ORM\PrePersist]
+    public function onPrePersist() : void
+    {
+        $this->created = new \DateTime("now");
+    }
+    
+    #[ORM\PreUpdate]
+    public function onPreUpdate() : void
+    {
+        $this->updated = new \DateTime("now");
+    }
+
 }

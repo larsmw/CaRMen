@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace CaRMen;
 
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\Schedule as SymfonySchedule;

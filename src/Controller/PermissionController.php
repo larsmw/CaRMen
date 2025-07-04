@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace CaRMen\Controller;
 
-use App\Entity\Permission;
-use App\Form\PermissionForm;
-use App\Repository\PermissionRepository;
+use CaRMen\Entity\Permission;
+use CaRMen\Form\PermissionForm;
+use CaRMen\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
