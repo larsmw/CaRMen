@@ -27,6 +27,10 @@ class Customer
     #[ORM\Column(length: 16)]
     private ?string $phone = null;
 
+    public function __construct() {
+        $this->created = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,6 +71,7 @@ class Customer
 
         return $this;
     }
+
     #[ORM\PrePersist]
     public function onPrePersist() : void
     {

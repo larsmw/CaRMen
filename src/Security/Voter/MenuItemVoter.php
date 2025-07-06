@@ -11,17 +11,23 @@ use CaRMen\Entity\MenuItem;
 
 final class MenuItemVoter extends Voter
 {
-    public const EDIT   = 'MENU_EDIT';
-    public const VIEW   = 'MENU_VIEW';
-    public const CREATE = 'MENU_CREATE';
-    public const DELETE = 'MENU_DELETE';
+    public const EDIT        = 'MENU_EDIT';
+    public const VIEW        = 'VIEW';
+    public const CREATE      = 'CREATE';
+    public const MENU_VIEW   = 'MENU_VIEW';
+    public const MENU_CREATE = 'MENU_CREATE';
+    public const MENU_DELETE = 'MENU_DELETE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        dump($attribute);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW, self::CREATE]);
+        if (in_array($attribute, [self::EDIT, self::VIEW, self::CREATE])) {
+            return true;
+        }
+        // unhandled attribute
+        dump($attribute);
+        return FALSE;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -57,7 +63,7 @@ final class MenuItemVoter extends Voter
                   return true;
                 break;
 
-            case self::DELETE:
+            case self::MENU_DELETE:
                 // logic to determine if the user can DELETE
                 // return true or false
                 if (is_object($user))

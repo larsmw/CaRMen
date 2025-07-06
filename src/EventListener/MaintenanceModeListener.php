@@ -14,7 +14,11 @@ class MaintenanceModeListener
     public function onKernelRequest(RequestEvent $event): void
     {
         if ($this->maintenanceMode) {
-            $event->setResponse(new RedirectResponse('/maintenance'));
+            if ($_SERVER['REQUEST_URI'] !== '/maintenance')
+              $event->setResponse(new RedirectResponse('/maintenance'));
+        } else {
+            if ($_SERVER['REQUEST_URI'] == '/maintenance')
+              $event->setResponse(new RedirectResponse('/'));
         }
     }
 }

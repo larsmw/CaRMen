@@ -6,10 +6,21 @@
 
   <h1>Hello {{ controller_name }}! ✅</h1>
 
-  This friendly message is coming from:
-  {{ form_errors(form) }}
-  {{ form_start(form) }}
-  {{ form_widget(form) }}
-{#      <button class="btn">{{ button_label|default('Save') }}</button>#}
-  {{ form_end(form) }}
+  {% if search_form is defined %}
+  Search :
+  {{ form_errors(search_form) }}
+  {{ form_start(search_form) }}
+    {{ form_widget(search_form) }}
+    {#      <button class="btn">{{ button_label|default('Save') }}</button>#}
+  {{ form_end(search_form) }}
+  {% endif %}
+
+  Add Customer :
+  {{ form_errors(addcustomer_form) }}
+  {{ form_start(addcustomer_form) }}
+    {{ form_widget(addcustomer_form) }}
+    {#      <button class="btn">{{ button_label|default('Save') }}</button>#}
+  {{ form_end(addcustomer_form) }}
+
+
 {% endblock %}

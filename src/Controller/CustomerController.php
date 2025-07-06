@@ -45,14 +45,16 @@ final class CustomerController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                dump($entityManager);
                 $entityManager->persist($form->getData());
                 $entityManager->flush();
+                dump($customer);
             }
         }
 
         return $this->render('web/index.html.twig', [
             'controller_name' => 'ny kunde',
-            'form' => $form,
+            'addcustomer_form' => $form,
         ]);
     }
 

@@ -36,6 +36,7 @@ final class PermissionVoter extends Voter
         if (!is_object($subject)) {
             return false;
         }
+        dump($attribute);
         return true;
     }
 
