@@ -10,8 +10,8 @@ use CaRMen\Security\PermissionChecker;
 
 final class PermissionVoter extends Voter
 {
-    public const EDIT = 'POST_EDIT';
-    public const VIEW = 'POST_VIEW';
+    public const EDIT = 'EDIT';
+    public const VIEW = 'VIEW';
     public const CUSTOMER_LIST = 'CUSTOMER_LIST';
     public const CUSTOMER_VIEW = 'CUSTOMER_VIEW';
     public const CUSTOMER_ADD  = 'CUSTOMER_ADD';
@@ -34,10 +34,11 @@ final class PermissionVoter extends Voter
         }
 
         if (!is_object($subject)) {
-            return false;
+            return FALSE;
         }
+        // debug unhandled attribute.
         dump($attribute);
-        return true;
+        return FALSE;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -45,17 +46,17 @@ final class PermissionVoter extends Voter
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
         if (!$user instanceof User) {
-            return false;
+            return FALSE;
         }
 
         if (is_object($subject)) {
           try {
               return $this->checker->isGranted($attribute, $user, $subject);
           } catch (\LogicException) {
-              return false;
+              return FALSE;
           }
         }
 
-        return true;
+        return TRUE;
     }
 }

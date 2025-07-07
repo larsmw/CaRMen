@@ -11,6 +11,9 @@ class MaintenanceModeListener
 {
     public function __construct(private readonly bool $maintenanceMode) {}
 
+    /**
+     * Checks if Maintenance mode is set. Redirects accordingly.
+     */
     public function onKernelRequest(RequestEvent $event): void
     {
         if ($this->maintenanceMode) {

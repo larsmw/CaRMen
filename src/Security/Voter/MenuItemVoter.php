@@ -20,6 +20,7 @@ final class MenuItemVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
+        dump($subject);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         if (in_array($attribute, [self::EDIT, self::VIEW, self::CREATE])) {
@@ -33,10 +34,8 @@ final class MenuItemVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
-        dump($attribute);
 
-        // if the user is anonymous, do not grant access
-        
+        // if the user is anonymous, do not grant access        
         if (!$user instanceof User &&
             $subject instanceof MenuItem) {
             if (in_array($subject->getRoute(), ['/logout','/customer', '/menu/item'])) {
@@ -75,6 +74,9 @@ final class MenuItemVoter extends Voter
                 //if ($user instanceof User) return true;
                 return true;
 
+        default:
+            // unhandled attribute
+            dump($attribute);
         }
 
         return false;

@@ -12,6 +12,7 @@ class MenuItemStrategy implements PermissionStrategyInterface {
     }
 
     public function canPerform(User $user, object $subject) : bool {
+        dump($subject->getRoute());
         if ($subject->getRoute() == '/login') {
             return false;
         }
