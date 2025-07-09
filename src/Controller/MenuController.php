@@ -19,7 +19,13 @@ class MenuController extends AbstractController
 
     public function adminMenu(EntityManagerInterface $em): Response {
         $menu = $this->get($em, 'admin');
-        return $this->render('menu/main.html.twig',
+        return $this->render('menu/admin.html.twig',
+            ['menu' => $menu]);
+    }
+
+    public function userMenu(EntityManagerInterface $em): Response {
+        $menu = $this->get($em, 'user');
+        return $this->render('menu/user.html.twig',
             ['menu' => $menu]);
     }
 

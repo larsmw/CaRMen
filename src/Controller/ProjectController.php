@@ -5,6 +5,7 @@ namespace CaRMen\Controller;
 use CaRMen\Entity\Project;
 use CaRMen\Form\ProjectForm;
 use CaRMen\Repository\ProjectRepository;
+use CaRMen\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,12 +24,14 @@ final class ProjectController extends AbstractController
     }
 
     #[Route('/new', name: 'app_project_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CustomerRepository $customerRepository): Response
     {
         $project = new Project();
         $form = $this->createForm(ProjectForm::class, $project);
         $form->handleRequest($request);
-
+        $customer_id = $request->query->get('customer_id');
+        $customer = $customerRepository->findOneById($customer_id);
+        $project->setCustomer($customer);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($project);
             $entityManager->flush();

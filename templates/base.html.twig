@@ -15,9 +15,12 @@
   </head>
   <body>
     <header>
-    {{ render(controller(
-      'CaRMen\\Controller\\MenuController::mainMenu'
-      )) }}
+      {{ render(controller(
+        'CaRMen\\Controller\\MenuController::mainMenu'
+        )) }}
+      {{ render(controller(
+        'CaRMen\\Controller\\MenuController::userMenu'
+        )) }}
     </header>
     <main>
       {% block body %}{% endblock %}

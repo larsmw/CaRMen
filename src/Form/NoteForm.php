@@ -2,30 +2,24 @@
 
 namespace CaRMen\Form;
 
-use CaRMen\Entity\MenuItem;
-use CaRMen\Form\MenuItemType;
+use CaRMen\Entity\Note;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class MenuItemType extends AbstractType
+class NoteForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('route')
-            ->add('title')
-            ->add('menu')
-            ->add('parent')
+            ->add('note_value')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => MenuItem::class,
+            'data_class' => Note::class,
         ]);
     }
 }

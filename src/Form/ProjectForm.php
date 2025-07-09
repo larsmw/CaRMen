@@ -15,10 +15,6 @@ class ProjectForm extends AbstractType
     {
         $builder
             ->add('WinnerFile')
-            ->add('customer', EntityType::class, [
-                'class' => Customer::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 
