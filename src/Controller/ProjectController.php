@@ -33,8 +33,15 @@ final class ProjectController extends AbstractController
         $customer = $customerRepository->findOneById($customer_id);
         $project->setCustomer($customer);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($project);
-            $entityManager->flush();
+            $entityManager->beginTransaction();
+            try {
+              $entityManager->persist($project);
+              $entityManager->flush();
+              $entityManager->commit();
+            } catch( \Exception $e) {
+              $entityManager->rollback();
+              throw $e;
+            }
 
             return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);
         }

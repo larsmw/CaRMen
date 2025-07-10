@@ -30,8 +30,15 @@ final class NoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($note);
-            $entityManager->flush();
+            $entityManager->beginTransaction();
+            try {
+              $entityManager->persist($note);
+              $entityManager->flush();
+              $entityManager->commit();
+            } catch( \Exception $e) {
+              $entityManager->rollback();
+              throw $e;
+            }
 
             return $this->redirectToRoute('app_note_index', [], Response::HTTP_SEE_OTHER);
         }

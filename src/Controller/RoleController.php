@@ -30,8 +30,15 @@ final class RoleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($role);
-            $entityManager->flush();
+            $entityManager->beginTransaction();
+            try {
+              $entityManager->persist($role);
+              $entityManager->flush();
+              $entityManager->commit();
+            } catch( \Exception $e) {
+              $entityManager->rollback();
+              throw $e;
+            }
 
             return $this->redirectToRoute('app_role_index', [], Response::HTTP_SEE_OTHER);
         }

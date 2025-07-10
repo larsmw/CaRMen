@@ -37,8 +37,15 @@ class RegistrationController extends AbstractController
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $entityManager->beginTransaction();
+            try {
+              $entityManager->persist($user);
+              $entityManager->flush();
+              $entityManager->commit();
+            } catch( \Exception $e) {
+              $entityManager->rollback();
+              throw $e;
+            }
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,

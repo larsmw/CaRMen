@@ -42,13 +42,19 @@ final class CustomerController extends AbstractController
            $customer,
            ['method' => 'POST','action'=> '/customer/add']
         );
+
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                dump($entityManager);
-                $entityManager->persist($form->getData());
-                $entityManager->flush();
-                dump($customer);
+                $entityManager->beginTransaction();
+                try {
+                    $entityManager->persist($form->getData());
+                    $entityManager->flush();
+                    $entityManager->commit();
+                  } catch( \Exception $e) {
+                    $entityManager->rollback();
+                    throw $e;
+                }
             }
         }
 
