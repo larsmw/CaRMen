@@ -17,10 +17,8 @@ class ProjectForm extends AbstractType
         $builder
             ->add('WinnerFile')
             ->add('Customer', CustomerAutocompleteField::class, [
-              'extra_options' => [
-                    'excluded_foods' => [1],
-              ],
-              'class' => 'CaRMen\Entity\Customer'])
+                'class' => Customer::class
+            ])
         ;
     }
 
