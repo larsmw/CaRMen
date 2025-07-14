@@ -20,14 +20,12 @@ final class MenuItemVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        dump($subject);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         if (in_array($attribute, [self::EDIT, self::VIEW, self::CREATE])) {
             return true;
         }
         // unhandled attribute
-        dump($attribute);
         return FALSE;
     }
 
@@ -72,11 +70,14 @@ final class MenuItemVoter extends Voter
             case self::VIEW:
                 // logic to determine if the user can VIEW
                 //if ($user instanceof User) return true;
-                return true;
+                if (is_object($user))
+                  return true;
 
         default:
             // unhandled attribute
-            dump($attribute);
+            if (in_array($subject->getRoute(), ['/login','/register', '/'])) {
+              return true;
+            }
         }
 
         return false;
