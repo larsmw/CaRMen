@@ -16,6 +16,7 @@ class CustomerForm extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('phone')
+            ->add('mail')
             ->add('submit', SubmitType::class);
         ;
     }

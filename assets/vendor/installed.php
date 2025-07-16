@@ -63,4 +63,14 @@
     array (
     ),
   ),
+  'tom-select/dist/css/tom-select.default.css' => 
+  array (
+    'version' => '2.4.3',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
 );

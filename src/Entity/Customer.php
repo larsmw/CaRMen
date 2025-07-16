@@ -35,6 +35,9 @@ class Customer
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'customer')]
     private Collection $projects;
 
+    #[ORM\Column(length: 1024, nullable: true)]
+    private ?string $mail = null;
+
     public function __construct() {
         $this->created = new \DateTimeImmutable();
         $this->projects = new ArrayCollection();
@@ -123,6 +126,18 @@ class Customer
                 $project->setCustomer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?string $mail): static
+    {
+        $this->mail = $mail;
 
         return $this;
     }
