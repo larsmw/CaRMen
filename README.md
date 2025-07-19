@@ -15,12 +15,15 @@ INSERT INTO `menu_item` (`id`,`name`,`title`,`route`,`menu`,`parent`) VALUES (1,
 sass -w sass/:assets/styles/
 `
 
+
+## How to update assets
 `
 bin/console asset-map:compile
 `
 
-## How to update assets
-`
+# Usage of components
+## Autocomplete
+https://symfony.com/bundles/ux-autocomplete/current/index.html
 
 
 # Wishlist for features

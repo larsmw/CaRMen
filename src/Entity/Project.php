@@ -17,6 +17,9 @@ class Project
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $WinnerFile = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $WinnerFileName = null;
+
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Customer $customer = null;
@@ -34,6 +37,18 @@ class Project
     public function setWinnerFile(?string $WinnerFile): static
     {
         $this->WinnerFile = $WinnerFile;
+
+        return $this;
+    }
+
+    public function getWinnerFileName(): ?string
+    {
+        return $this->WinnerFileName;
+    }
+
+    public function setWinnerFileName(?string $WinnerFileName): static
+    {
+        $this->WinnerFileName = $WinnerFileName;
 
         return $this;
     }
