@@ -17,6 +17,7 @@ class ResetPasswordControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        self::ensureKernelShutdown();
         $this->client = static::createClient();
 
         // Ensure we have a clean database
@@ -39,6 +40,7 @@ class ResetPasswordControllerTest extends WebTestCase
     {
         // Create a test user
         $user = (new User())
+            ->setUsername('test')
             ->setEmail('me@example.com')
             ->setPassword('a-test-password-that-will-be-changed-later')
         ;
