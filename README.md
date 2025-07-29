@@ -15,6 +15,14 @@ INSERT INTO `menu_item` (`id`,`name`,`title`,`route`,`menu`,`parent`) VALUES (1,
 sass -w sass/:assets/styles/
 `
 
+## migration of test database
+php bin/console doctrine:database:create --env=test
+php bin/console make:migration --env=test
+php bin/console doctrine:migrations:status --env=test
+php bin/console doctrine:migrations:migrate --env=test
+
+### This doesnt work
+It has generated migration with DEFAULT which is incompatible with sqlite.
 
 ## How to update assets
 `
@@ -64,3 +72,5 @@ https://www.researchgate.net/profile/Mohamed-Tazkarji/publication/340550301_Reas
 
 # Notes
 Error page handling : https://symfony.com/doc/current/controller/error_pages.html
+
+Install profiler : https://symfony.com/doc/current/profiler.html
