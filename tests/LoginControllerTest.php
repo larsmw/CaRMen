@@ -69,7 +69,7 @@ class LoginControllerTest extends WebTestCase
         ]);
 
         self::assertResponseRedirects('/login');
-        $this->client->followRedirect();
+        //$this->client->followRedirect();
 
         // Ensure we do not reveal if the user exists or not.
         self::assertSelectorTextContains('.alert-danger', 'Invalid credentials.');

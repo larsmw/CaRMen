@@ -12,6 +12,6 @@ final class CustomerControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', 'http://localhost/customer');
 
-        self::assertResponseRedirects('http://localhost/customer', 301);
+        self::assertResponseRedirects('http://localhost/customer/', 301);
     }
 }

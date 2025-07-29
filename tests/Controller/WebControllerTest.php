@@ -8,6 +8,7 @@ final class WebControllerTest extends WebTestCase
 {
     public function testIndex(): void
     {
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $client->request('GET', '/');
 
