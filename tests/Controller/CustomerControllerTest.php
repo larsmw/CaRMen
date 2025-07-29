@@ -10,7 +10,7 @@ final class CustomerControllerTest extends WebTestCase
     {
         self::ensureKernelShutdown();
         $client = static::createClient();
-        $client->request('GET', '/customer');
+        $client->request('GET', 'http://localhost/customer');
 
         self::assertResponseIsSuccessful();
     }
