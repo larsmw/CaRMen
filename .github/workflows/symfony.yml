@@ -42,7 +42,7 @@ jobs:
     - name: Create Database
       run: |
         mkdir -p var/data
-        touch var/data/database.sqlite
+        bin/console doctrine:database:create --env=test
     - name: Make Migrations
       run: bin/console make:migration --env=test
     - name: Run migrations
