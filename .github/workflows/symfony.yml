@@ -43,6 +43,11 @@ jobs:
       run: |
         mkdir -p var/data
         bin/console doctrine:database:create --env=test
+    - name: Compile css
+      uses: gha-utilities/sass-build@v0.6.1
+      with:
+        source: sass/app.scss
+        destination: assets/styles/app.css
     - name: Create assets
       run: bin/console asset-map:compile
     - name: Run migrations
