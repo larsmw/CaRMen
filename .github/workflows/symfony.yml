@@ -43,6 +43,8 @@ jobs:
       run: |
         mkdir -p var/data
         bin/console doctrine:database:create --env=test
+    - name: Prepare css
+      run: touch assets/styles/app.css
     - name: Compile css
       uses: gha-utilities/sass-build@v0.6.1
       with:
