@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  web:
+    image: nginx:alpine
+    container_name: carmen_http
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d:ro
+      - ./nginx/certs/:/etc/nginx/ssl
+      - ..:/usr/share/nginx/html
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - php
+  php:
+    build: php/
+    container_name: carmen_php
+    ports:
+      - "9000:9000"
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - ..:/var/www/html
+networks:
+  app-network:
+    driver: bridge
