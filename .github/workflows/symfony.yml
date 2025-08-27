@@ -43,6 +43,8 @@ jobs:
       run: |
         mkdir -p var/data
         bin/console doctrine:database:create --env=test
+    - name: Create assets
+      run: bin/console asset-map:compile
     - name: Run migrations
       run: bin/console doctrine:migrations:migrate --no-interaction --env=test
     - name: Execute tests (Unit and Feature tests) via PHPUnit

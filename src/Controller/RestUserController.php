@@ -23,10 +23,9 @@ class RestUserController extends AbstractFOSRestController {
      * @return Response
      */
     #[Route('/api/users', name: 'api_users')]
-    public function getUsersAction(Request $request, CustomerRepository $customerRepository) {
+    public function getUsersAction(Request $request, CustomerRepository $customerRepository) : Response {
         error_log(__METHOD__);
         $customers = $customerRepository->findAll();
         return $this->handleView($this->view($customers));
     }
 }
-
