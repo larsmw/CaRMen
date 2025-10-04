@@ -14,6 +14,7 @@ services:
       - ./nginx/conf/:/etc/nginx/conf.d:ro
       - ./nginx/certs/:/etc/nginx/ssl
       - ..:/usr/share/nginx/html
+    command: [nginx-debug, '-g', 'daemon off;']
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:

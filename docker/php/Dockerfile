@@ -1,13 +1,13 @@
 FROM php:8.4-fpm
 RUN apt-get update && apt-get install -y \
-    git \                    # For Composer and version control
-    curl \                   # For downloading stuff
-    libpng-dev \            # Required for GD extension (images)
-    libonig-dev \           # Required for mbstring
-    libxml2-dev \           # Required for XML handling
-    libzip-dev \            # Required for Zip handling
-    libicu-dev \            # Required for intl extension
-    zip \                   # For Composer
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libicu-dev \
+    zip \
     unzip
 
 # Clean up to reduce image size
@@ -16,15 +16,15 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 # Each one serves specific purpose:
 RUN docker-php-ext-install \
-    pdo_mysql \            # Database connections
-    mbstring \             # Better string handling
-    exif \                 # Image metadata
-    pcntl \                # Process control
-    bcmath \               # Better math functions
-    gd \                   # Image manipulation
-    intl \                 # Internationalization
-    zip \                  # ZIP archives
-    opcache               # Code caching for performance
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    intl \
+    zip \
+    opcache
 
 # Redis for caching/sessions
 RUN pecl install redis && docker-php-ext-enable redis
@@ -36,10 +36,10 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Add our PHP config
-COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./php.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # What command to run
 CMD ["php-fpm"]
