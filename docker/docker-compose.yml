@@ -14,10 +14,12 @@ services:
       - ./nginx/conf/:/etc/nginx/conf.d:ro
       - ./nginx/certs/:/etc/nginx/ssl
       - ..:/usr/share/nginx/html
-    command: [nginx-debug, '-g', 'daemon off;']
+#    command: [nginx-debug, '-g', 'daemon off;']
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
+      - php
+    links:
       - php
   php:
     build: php/
@@ -29,6 +31,21 @@ services:
     restart: always
     volumes:
       - ..:/var/www/html
+  mariadb:
+    image: mariadb:latest
+    container_name: carmen_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_USER: 'db'
+      MYSQL_PASSWORD: 'dbt'
+      MYSQL_DATABASE: 'db'
+    volumes:
+      - ../var/lib/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
