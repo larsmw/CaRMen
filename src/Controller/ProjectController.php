@@ -35,12 +35,12 @@ final class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->beginTransaction();
             try {
-              $entityManager->persist($project);
-              $entityManager->flush();
-              $entityManager->commit();
+                $entityManager->persist($project);
+                $entityManager->flush();
+                $entityManager->commit();
             } catch( \Exception $e) {
-              $entityManager->rollback();
-              throw $e;
+                $entityManager->rollback();
+                throw $e;
             }
 
             return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);

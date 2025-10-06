@@ -36,8 +36,7 @@ final class PermissionVoter extends Voter
         if (!is_object($subject)) {
             return FALSE;
         }
-        // debug unhandled attribute.
-        dump($attribute);
+
         return FALSE;
     }
 

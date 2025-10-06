@@ -23,6 +23,16 @@ final class Version20250718153550 extends AbstractMigration
         $this->addSql(<<<'SQL'
             ALTER TABLE project ADD winner_file_name VARCHAR(255) DEFAULT NULL
         SQL);
+
+        $this->addSql(<<<'SQL'
+        INSERT INTO `menu_item` (`id`,`name`,`title`,`route`,`menu`,`parent`)
+            VALUES (1,'Menu Items','Menu Items','/menu/item','admin',0),
+                   (2,'Home','Home','/','main',0),
+                   (3,'Login','Login','/login','main',2),
+                   (4,'Logout','Logout','/logout','main',2),
+                   (5,'Register User','Register User','/register','admin',0),
+                   (6,'Customers','List of Customers','/customer','main',0);
+        SQL);
     }
 
     public function down(Schema $schema): void
