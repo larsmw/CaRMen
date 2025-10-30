@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     maintenance_mode: '%env(bool:MAINTENANCE_MODE)%'
+    app_locales: ['en', 'da']
 
 services:
     # default configuration for services in *this* file
@@ -41,3 +42,8 @@ services:
         tags: ['app.permission_strategy']
         autowire: true
         autoconfigure: false
+
+    CaRMen\Translation\DBTranslationLoader:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+          - { name: translation.loader, alias: db }
