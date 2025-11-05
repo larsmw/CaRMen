@@ -74,3 +74,6 @@ https://www.researchgate.net/profile/Mohamed-Tazkarji/publication/340550301_Reas
 Error page handling : https://symfony.com/doc/current/controller/error_pages.html
 
 Install profiler : https://symfony.com/doc/current/profiler.html
+
+Translation : https://medium.com/@andrew72ru/store-translation-messages-in-database-in-symfony-3f12e579df74
+

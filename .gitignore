@@ -13,6 +13,8 @@ public/assets/**
 
 #.env
 .env.local
+.env.dev
+.env
 
 # Email spool folder
 /app/spool/*
@@ -62,3 +64,8 @@ public/assets/**
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+.aider*
+
+docker/nginx/certs/**
+*.sql.gz
+TAGS
