@@ -76,6 +76,11 @@ class Customer
         return $this;
     }
 
+    public function getFullName(): ?string
+    {
+        return $this->firstName . " " . $this->lastName;
+    }
+
     public function getPhone(): ?string
     {
         return $this->phone;

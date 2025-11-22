@@ -1,20 +1,39 @@
+$c1 : #303841;
+$c2 : #47555e;
+$c3 : #0a587c;
+$c4 : #4b86a5;
+$c5 : #7aa5d2;
+$c6 : #bae7fb;
+$c7 : #92cae7;
+$c8 : #eeeeee;
+$c9 : #f0f0f0;
+
 /* --- Global Styles --- */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #f8fafc; /* light gray background */
-  color: #1e293b; /* slate text */
+  background-color: $c8; /* light gray background */
+  color: $c1; /* slate text */
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
 }
-
 /* --- Navbar --- */
 header nav, footer nav {
-  background-color: #1e293b; /* dark slate */
-  color: #fff;
+  background-color: $c6; /* dark slate */
+  color: $c1;
   padding: 0.5rem 1rem;
-  border-bottom: 3px solid #3b82f6; /* blue accent */
+  border-bottom: 3px solid $c2; /* blue accent */
 }
 
+a, a:visited {
+    color: $c1;
+}
+a:hover {
+    color: $c3;
+    text-decoration: none;
+}
 nav ul {
   list-style: none;
   display: flex;
@@ -24,19 +43,14 @@ nav ul {
 }
 
 nav ul li a {
-  color: #f8fafc;
+//  color: #f8fafc;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
-nav ul li a:hover {
-  color: #93c5fd; /* lighter blue */
-}
-
 /* --- Headings --- */
 h1 {
-  color: #0f172a;
   text-align: center;
   margin-top: 1.5rem;
 }
@@ -46,15 +60,16 @@ h1 {
   width: 90%;
   margin: 2rem auto;
   border-collapse: collapse;
-  background-color: #ffffff;
+  background-color: $c9;
+  color: $c1;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .table thead {
-  background-color: #3b82f6; /* accent blue */
-  color: #fff;
+  background-color: $c4; /* accent blue */
+  color: $c8;
 }
 
 .table th, .table td {
@@ -171,8 +186,6 @@ nav.action a:hover {
 /* --- Footer --- */
 footer {
   margin-top: 2rem;
-  background-color: #1e293b;
-  color: white;
   text-align: center;
   padding: 1rem 0;
 }

@@ -29,6 +29,7 @@ final class CustomerController extends AbstractController
     #[IsGranted(PermissionVoter::CUSTOMER_VIEW)]
     public function show(Customer $customer): Response
     {
+
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
         ]);

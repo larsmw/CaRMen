@@ -1,5 +1,5 @@
 <?php
-// src/Translation/DbTranslationLoader.php
+
 namespace CaRMen\Translation;
 
 use Symfony\Component\Translation\Loader\LoaderInterface;
