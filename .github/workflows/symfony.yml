@@ -54,7 +54,11 @@ jobs:
       run: bin/console asset-map:compile
     - name: Run migrations
       run: bin/console doctrine:migrations:migrate --no-interaction --env=test
+    - name: Install phpunit
+      run: composer require -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist phpunit/phpunit
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/database.sqlite
       run: vendor/bin/phpunit
+    - name: Remove phpunit
+      run: composer remove -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist phpunit/phpunit
