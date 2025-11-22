@@ -40,7 +40,8 @@
         "symfony/validator": "^7.3",
         "symfony/messenger": "^7.3",
         "symfony/notifier": "^7.3",
-        "symfony/dotenv": "^7.3"
+        "symfony/dotenv": "^7.3",
+        "symfony/http-foundation": "^7.3.7"
     },
     "config": {
         "allow-plugins": {
