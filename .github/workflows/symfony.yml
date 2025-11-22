@@ -41,10 +41,6 @@ jobs:
       run: composer update
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Create Database
-      run: |
-        mkdir -p var/data
-        bin/console doctrine:database:create --env=test
     - name: Prepare css
       run: |
         mkdir -pv assets/styles
