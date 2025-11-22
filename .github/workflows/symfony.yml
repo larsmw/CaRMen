@@ -61,4 +61,4 @@ jobs:
         DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/database.sqlite
       run: vendor/bin/phpunit
     - name: Remove phpunit
-      run: composer remove -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist phpunit/phpunit symfony/browser-kit symfony/css-selector
+      run: composer remove -q --no-ansi --no-interaction --no-scripts --no-progress phpunit/phpunit symfony/browser-kit symfony/css-selector
