@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(python:*)",
+      "Bash(npm:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(jq:*)",
+      "Bash(curl:*)",
+      "Bash(ruff:*)",
+      "Bash(black:*)",
+      "Bash(pytest:*)",
+      "Bash(php:*)",
+      "Bash(composer:*)",
+      "Bash(docker:*)",
+      "Read", 
+      "Write",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "deny": ["Bash(rm -rf:*)"]
+  },
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
+
