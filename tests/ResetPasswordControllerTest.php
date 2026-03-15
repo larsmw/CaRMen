@@ -60,8 +60,8 @@ class ResetPasswordControllerTest extends WebTestCase
 
         // Ensure the reset password email was sent
         // Use either assertQueuedEmailCount() || assertEmailCount() depending on your mailer setup
-        // self::assertQueuedEmailCount(1);
-        self::assertEmailCount(1);
+        self::assertQueuedEmailCount(1);
+        self::assertEmailCount(0);
         /*
         self::assertCount(1, $messages = $this->getMailerMessages());
 

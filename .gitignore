@@ -22,6 +22,7 @@ public/assets/**
 # Cache, session files and logs (Symfony3)
 /var/cache/*
 /var/logs/*
+/var/lib/*
 /var/sessions/*
 !var/cache/.gitkeep
 !var/logs/.gitkeep

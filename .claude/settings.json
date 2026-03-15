@@ -5,6 +5,7 @@
       "Bash(python:*)",
       "Bash(npm:*)",
       "Bash(ls:*)",
+      "Bash(cat:*)",
       "Bash(grep:*)",
       "Bash(jq:*)",
       "Bash(curl:*)",

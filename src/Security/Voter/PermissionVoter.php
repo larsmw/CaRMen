@@ -21,6 +21,7 @@ final class PermissionVoter extends Voter
     
     protected function supports(string $attribute, mixed $subject): bool
     {
+        dump(__METHOD__);
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         if (in_array($attribute, [self::EDIT,
@@ -42,6 +43,7 @@ final class PermissionVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
+        dump(__METHOD__);
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
         if (!$user instanceof User) {
