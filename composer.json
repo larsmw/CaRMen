@@ -42,7 +42,8 @@
         "symfony/notifier": "^7.3",
         "symfony/dotenv": "^7.3",
         "symfony/http-foundation": "^7.3.7",
-        "symfony/doctrine-messenger": "^7.4"
+        "symfony/doctrine-messenger": "^7.4",
+        "symfony/ux-react": "^2.32"
     },
     "config": {
         "allow-plugins": {
