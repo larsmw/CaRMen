@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for customer in customers %}
+      {% for customer in pagination %}
         <tr>
           <td><a href="/customer/{{ customer.id }}">{{ customer.firstName }}</a></td>
           <td>{{ customer.lastName }}</td>
@@ -37,6 +37,8 @@
       {% endfor %}
     </tbody>
   </table>
+  {{ knp_pagination_render(pagination) }}
+
   <nav class="action">
     <ul>
       <li>

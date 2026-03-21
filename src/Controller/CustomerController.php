@@ -11,16 +11,23 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use CaRMen\Repository\CustomerRepository;
 use CaRMen\Entity\Customer;
 use CaRMen\Form\CustomerForm;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/customer', name: 'app_customer_')]
 final class CustomerController extends AbstractController
 {
     #[Route('/', name: 'index')]
     #[IsGranted('customer.list')]
-    public function index(CustomerRepository $customerRepository): Response
+    public function index(Request $request, CustomerRepository $customerRepository, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $customerRepository->createQueryBuilder('c')->orderBy('c.lastName', 'ASC')->getQuery(),
+            $request->query->getInt('page', 1),
+            25
+        );
+
         return $this->render('customer/index.html.twig', [
-            'customers' => $customerRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 
