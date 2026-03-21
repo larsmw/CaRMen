@@ -9,9 +9,12 @@ export default class extends Controller {
 
     connect() {
         this.sortable = Sortable.create(this.element, {
-            animation: 150,
-            handle: '.drag-handle',
-            onEnd: this.onEnd.bind(this),
+            animation:       150,
+            handle:          '.drag-handle',
+            forceFallback:   true,   // bypass native HTML5 drag, required for <tr> elements
+            fallbackOnBody:  true,   // attach ghost to <body> so table layout doesn't clip it
+            ghostClass:      'sortable-ghost',
+            onEnd:           this.onEnd.bind(this),
         });
     }
 

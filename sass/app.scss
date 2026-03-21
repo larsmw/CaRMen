@@ -190,6 +190,29 @@ footer {
   padding: 1rem 0;
 }
 
+/* --- Drag and drop --- */
+.sortable-ghost td {
+  background-color: $c6;
+  opacity: 0.5;
+}
+
+.sortable-fallback {
+  display: table !important;
+  background: $c9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  opacity: 0.95 !important;
+}
+
+.drag-handle {
+  color: $c4;
+  cursor: grab !important;
+
+  &:active {
+    cursor: grabbing !important;
+  }
+}
+
 /* --- Animations --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
