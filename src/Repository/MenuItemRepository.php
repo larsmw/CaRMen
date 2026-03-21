@@ -3,7 +3,6 @@
 namespace CaRMen\Repository;
 
 use CaRMen\Entity\MenuItem;
-use CaRMen\Security\Voter\MenuItemVoter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

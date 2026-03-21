@@ -5,7 +5,6 @@ namespace CaRMen\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use CaRMen\Entity\MenuItem;
-use CaRMen\Security\Voter\MenuItemVoter;
 use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends AbstractController
@@ -34,7 +33,7 @@ class MenuController extends AbstractController
         $menu = [];
         foreach ($menuitems as $item) {
 
-            if ($this->isGranted(MenuItemVoter::VIEW, $item)) {
+            if ($this->isGranted('menu_item.view', $item)) {
               $menu[] = [
                   'url' => $item->getRoute(),
                   'name' => $item->getName(),

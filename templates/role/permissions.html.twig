@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Role Permissions{% endblock %}
+
+{% block body %}
+    <h1>Role Permissions</h1>
+
+    <form method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token('permission_matrix') }}">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Permission</th>
+                    {% for role in roles %}
+                        <th>{{ role.name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for permission in permissions %}
+                    <tr>
+                        <td>{{ permission.subject }}.{{ permission.action }}</td>
+                        {% for role in roles %}
+                            <td style="text-align: center;">
+                                <input type="checkbox"
+                                       name="matrix[{{ role.id }}][]"
+                                       value="{{ permission.id }}"
+                                       {% if role.permissions.contains(permission) %}checked{% endif %}>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ roles|length + 1 }}">No permissions defined yet.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn">Save</button>
+    </form>
+
+    <a href="{{ path('app_role_index') }}">back to list</a>
+{% endblock %}

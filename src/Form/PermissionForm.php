@@ -12,9 +12,8 @@ class PermissionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('action')
             ->add('subject')
+            ->add('action')
         ;
     }
 

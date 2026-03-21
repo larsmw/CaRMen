@@ -3,6 +3,8 @@
 namespace CaRMen\Entity;
 
 use CaRMen\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -24,11 +26,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length:180, unique: true)]
     private ?string $email;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
+    /** @var Collection<int, Role> */
+    #[ORM\ManyToMany(targetEntity: Role::class)]
+    private Collection $roles;
 
     /**
      * @var string The hashed password
@@ -38,6 +38,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,21 +88,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return list<string>
      */
+    /** @see UserInterface */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = $this->roles->map(fn(Role $r) => 'ROLE_' . strtoupper($r->getName()))->toArray();
+
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
+    /** @return Collection<int, Role> */
+    public function getRoleEntities(): Collection
     {
-        $this->roles = $roles;
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): static
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): static
+    {
+        $this->roles->removeElement($role);
 
         return $this;
     }

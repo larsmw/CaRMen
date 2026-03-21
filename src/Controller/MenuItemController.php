@@ -4,7 +4,6 @@ namespace CaRMen\Controller;
 
 use CaRMen\Entity\MenuItem;
 use CaRMen\Form\MenuItemType;
-use CaRMen\Security\Voter\MenuItemVoter;
 use CaRMen\Repository\MenuItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class MenuItemController extends AbstractController
 {
     #[Route(name: 'app_menu_item_index', methods: ['GET'])]
-    #[IsGranted(MenuItemVoter::EDIT)] // Needs edit permission to 'view' the admin page
+    #[IsGranted('menu_item.edit')]
     public function index(MenuItemRepository $menuItemRepository): Response
     {
         return $this->render('menu_item/index.html.twig', [
@@ -26,7 +25,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/new', name: 'app_menu_item_new', methods: ['GET', 'POST'])]
-    #[IsGranted(MenuItemVoter::CREATE)]
+    #[IsGranted('menu_item.create')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $menuItem = new MenuItem();
@@ -54,7 +53,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_menu_item_show', methods: ['GET'])]
-    #[IsGranted(MenuItemVoter::EDIT)]
+    #[IsGranted('menu_item.edit')]
     public function show(MenuItem $menuItem): Response
     {
         return $this->render('menu_item/show.html.twig', [
@@ -63,7 +62,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_menu_item_edit', methods: ['GET', 'POST'])]
-    #[IsGranted(MenuItemVoter::EDIT)]
+    #[IsGranted('menu_item.edit')]
     public function edit(Request $request, MenuItem $menuItem, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MenuItemType::class, $menuItem);
@@ -90,7 +89,7 @@ final class MenuItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_menu_item_delete', methods: ['POST'])]
-    #[IsGranted(MenuItemVoter::DELETE)]
+    #[IsGranted('menu_item.delete')]
     public function delete(Request $request, MenuItem $menuItem, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$menuItem->getId(), $request->getPayload()->getString('_token'))) {

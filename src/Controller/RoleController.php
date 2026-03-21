@@ -4,6 +4,7 @@ namespace CaRMen\Controller;
 
 use CaRMen\Entity\Role;
 use CaRMen\Form\RoleForm;
+use CaRMen\Repository\PermissionRepository;
 use CaRMen\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +47,50 @@ final class RoleController extends AbstractController
         return $this->render('role/new.html.twig', [
             'role' => $role,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/permissions', name: 'app_role_permissions', methods: ['GET', 'POST'])]
+    public function permissions(
+        Request $request,
+        RoleRepository $roleRepository,
+        PermissionRepository $permissionRepository,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        $roles       = $roleRepository->findAll();
+        $permissions = $permissionRepository->findAll();
+
+        if ($request->isMethod('POST')) {
+            if (!$this->isCsrfTokenValid('permission_matrix', $request->request->get('_token'))) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $matrix = $request->request->all('matrix'); // [role_id => [permission_id, ...]]
+
+            foreach ($roles as $role) {
+                $selectedIds = array_map('intval', $matrix[$role->getId()] ?? []);
+
+                foreach ($role->getPermissions() as $permission) {
+                    if (!in_array($permission->getId(), $selectedIds, true)) {
+                        $role->removePermission($permission);
+                    }
+                }
+
+                foreach ($permissions as $permission) {
+                    if (in_array($permission->getId(), $selectedIds, true)) {
+                        $role->addPermission($permission);
+                    }
+                }
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_role_permissions');
+        }
+
+        return $this->render('role/permissions.html.twig', [
+            'roles'       => $roles,
+            'permissions' => $permissions,
         ]);
     }
 

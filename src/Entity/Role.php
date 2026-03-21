@@ -3,6 +3,8 @@
 namespace CaRMen\Entity;
 
 use CaRMen\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
@@ -16,8 +18,13 @@ class Role
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'roles')]
-    private ?Permission $permissions = null;
+    #[ORM\ManyToMany(targetEntity: Permission::class, inversedBy: 'roles')]
+    private Collection $permissions;
+
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,14 +43,24 @@ class Role
         return $this;
     }
 
-    public function getPermissions(): ?Permission
+    /** @return Collection<int, Permission> */
+    public function getPermissions(): Collection
     {
         return $this->permissions;
     }
 
-    public function setPermissions(?Permission $permissions): static
+    public function addPermission(Permission $permission): static
     {
-        $this->permissions = $permissions;
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions->add($permission);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): static
+    {
+        $this->permissions->removeElement($permission);
 
         return $this;
     }

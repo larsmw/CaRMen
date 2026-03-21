@@ -11,13 +11,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use CaRMen\Repository\CustomerRepository;
 use CaRMen\Entity\Customer;
 use CaRMen\Form\CustomerForm;
-use CaRMen\Security\Voter\PermissionVoter;
 
 #[Route('/customer', name: 'app_customer_')]
 final class CustomerController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    #[IsGranted(PermissionVoter::CUSTOMER_LIST)]
+    #[IsGranted('customer.list')]
     public function index(CustomerRepository $customerRepository): Response
     {
         return $this->render('customer/index.html.twig', [
@@ -26,7 +25,7 @@ final class CustomerController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    #[IsGranted(PermissionVoter::CUSTOMER_VIEW)]
+    #[IsGranted('customer.view')]
     public function show(Customer $customer): Response
     {
 
@@ -36,7 +35,7 @@ final class CustomerController extends AbstractController
     }
 
     #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
-    #[IsGranted(PermissionVoter::CUSTOMER_ADD)]
+    #[IsGranted('customer.add')]
     public function addCustomer(Request $request, EntityManagerInterface $entityManager) : Response {
         $customer = new Customer();
         $form = $this->createForm(CustomerForm::class,
@@ -66,7 +65,7 @@ final class CustomerController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    #[IsGranted(PermissionVoter::CUSTOMER_EDIT)]
+    #[IsGranted('customer.edit')]
     public function edit(Request $request, Customer $customerItem, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CustomerForm::class, $customerItem);

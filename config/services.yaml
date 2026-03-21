@@ -29,20 +29,6 @@ services:
         arguments:
             $maintenanceMode: '%maintenance_mode%'
 
-    CaRMen\Security\PermissionChecker:
-        arguments:
-            $strategies: !tagged_iterator app.permission_strategy
-
-    CaRMen\Security\PermissionStrategyInterface:
-        tags: ['app.permission_strategy']
-        autoconfigure: false
-
-    CaRMen\Security\Strategy\:
-        resource: '../src/Security/Strategy/*'
-        tags: ['app.permission_strategy']
-        autowire: true
-        autoconfigure: false
-
     CaRMen\Translation\DBTranslationLoader:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
