@@ -28,6 +28,9 @@ class MenuItem
     #[ORM\Column(length: 255)]
     private ?string $menu = null;
 
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $weight = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +88,17 @@ class MenuItem
     public function setMenu(string $menu): static
     {
         $this->menu = $menu;
+        return $this;
+    }
+
+    public function getWeight(): int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(int $weight): static
+    {
+        $this->weight = $weight;
         return $this;
     }
 }

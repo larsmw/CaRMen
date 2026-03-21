@@ -33,6 +33,7 @@ class MenuItemType extends AbstractType
             ->add('name')
             ->add('route')
             ->add('title')
+            ->add('weight')
             ->add('menu')
             ->add('parent', ChoiceType::class, [
                 'choices'     => $choices,

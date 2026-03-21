@@ -7,6 +7,7 @@ use CaRMen\Form\MenuItemType;
 use CaRMen\Repository\MenuItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,8 +21,28 @@ final class MenuItemController extends AbstractController
     public function index(MenuItemRepository $menuItemRepository): Response
     {
         return $this->render('menu_item/index.html.twig', [
-            'menu_items' => $menuItemRepository->findAll(),
+            'menu_items' => $menuItemRepository->findAllSorted(),
         ]);
+    }
+
+    #[Route('/reorder', name: 'app_menu_item_reorder', methods: ['POST'])]
+    #[IsGranted('menu_item.edit')]
+    public function reorder(Request $request, MenuItemRepository $menuItemRepository, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!$this->isCsrfTokenValid('menu_item_reorder', $data['_token'] ?? '')) {
+            return $this->json(['error' => 'Invalid token'], Response::HTTP_FORBIDDEN);
+        }
+
+        foreach ($data['order'] ?? [] as $weight => $id) {
+            $item = $menuItemRepository->find((int) $id);
+            $item?->setWeight($weight);
+        }
+
+        $entityManager->flush();
+
+        return $this->json(['success' => true]);
     }
 
     #[Route('/new', name: 'app_menu_item_new', methods: ['GET', 'POST'])]

@@ -16,6 +16,17 @@ class MenuItemRepository extends ServiceEntityRepository
         parent::__construct($registry, MenuItem::class);
     }
 
+    /** @return MenuItem[] */
+    public function findAllSorted(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.menu', 'ASC')
+            ->addOrderBy('m.weight', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /**
      * @param $value : Name of the menu for which to finde menu items.
      * @return MenuItem[] Returns an array of MenuItem objects
@@ -25,7 +36,7 @@ class MenuItemRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('m')
             ->andWhere('m.menu = :val')
             ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
+            ->orderBy('m.weight', 'ASC')
             ->getQuery()
             ->getResult()
             ;

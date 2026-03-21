@@ -249,7 +249,7 @@ class RoleControllerTest extends WebTestCase
 
 
         $crawler = $client->request('GET', '/role/'.$role->getId().'/edit');
-        //self::assertSelectorTextContains('//a[contains(@href, ".delete")]', 'Delete');
+        self::assertSelectorTextContains('//button', 'Delete');
 
         $client->submitForm('Delete');
 

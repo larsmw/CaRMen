@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4527cb8ca4e74af388315d170097984",
+    "content-hash": "46910e80f18324ba8fdd92085897b8b9",
     "packages": [
+        {
+            "name": "aymericcucherousset/ux-sortable",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aymericcucherousset/ux-sortable.git",
+                "reference": "84500fd1b6646744d8d80eb3122565a87fb0e2ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aymericcucherousset/ux-sortable/zipball/84500fd1b6646744d8d80eb3122565a87fb0e2ac",
+                "reference": "84500fd1b6646744d8d80eb3122565a87fb0e2ac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "symfony/config": "^7.0|^8.0",
+                "symfony/dependency-injection": "^7.0|^8.0",
+                "symfony/stimulus-bundle": "^2.22",
+                "twig/twig": "^3.8"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "dev-master",
+                "phpstan/phpstan": "2.2.x-dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/ux",
+                    "name": "symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aymericcucherousset\\Ux\\Sortable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "aymericcucherousset",
+                    "email": "aymeric.cucherousset@gmail.com"
+                }
+            ],
+            "description": "Sortable integration for Symfony",
+            "keywords": [
+                "sortable",
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/aymericcucherousset/ux-sortable/issues",
+                "source": "https://github.com/aymericcucherousset/ux-sortable/tree/v0.0.2"
+            },
+            "time": "2026-03-08T19:02:14+00:00"
+        },
         {
             "name": "composer/semver",
             "version": "3.4.4",

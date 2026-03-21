@@ -8,15 +8,21 @@
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th>Name</th>
         <th>Route</th>
         <th>Menu</th>
         <th>actions</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody
+      data-controller="menu-sort"
+      data-menu-sort-url-value="{{ path('app_menu_item_reorder') }}"
+      data-menu-sort-token-value="{{ csrf_token('menu_item_reorder') }}"
+    >
     {% for menu_item in menu_items %}
-      <tr>
+      <tr data-id="{{ menu_item.id }}">
+        <td class="drag-handle" title="Drag to reorder" style="cursor: grab; user-select: none;">⠿</td>
         <td>{{ menu_item.name }}</td>
         <td>{{ menu_item.route }}</td>
         <td>{{ menu_item.menu }}</td>
