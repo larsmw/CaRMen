@@ -221,6 +221,17 @@ footer {
   }
 }
 
+/* --- Danger button --- */
+.btn-danger {
+  padding: 0.25rem 0.6rem !important;
+  background-color: #c0392b !important;
+  font-size: 0.82rem;
+
+  &:hover {
+    background-color: #a93226 !important;
+  }
+}
+
 /* --- Flash messages --- */
 .flash {
   max-width: 850px;
@@ -272,6 +283,14 @@ footer {
 }
 
 /* --- Forms --- */
+td form {
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  max-width: none;
+}
+
 form {
   max-width: 640px;
   margin: 2rem auto;

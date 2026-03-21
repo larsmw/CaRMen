@@ -25,7 +25,7 @@
             <form method="post" action="{{ path('app_customer_delete', {'id': customer.id}) }}"
                   onsubmit="return confirm('Delete {{ customer.firstName }} {{ customer.lastName }}?');">
               <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ customer.id) }}">
-              <button class="btn">Delete</button>
+              <button class="btn btn-danger">Delete</button>
             </form>
           </td>
         </tr>
