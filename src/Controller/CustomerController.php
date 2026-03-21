@@ -53,8 +53,10 @@ final class CustomerController extends AbstractController
                     $entityManager->commit();
                   } catch( \Exception $e) {
                     $entityManager->rollback();
-                    throw $e;
+                    $this->addFlash('error', 'Could not save customer: ' . $e->getMessage());
                 }
+
+                return $this->redirectToRoute('app_customer_index', [], Response::HTTP_SEE_OTHER);
             }
         }
 
@@ -62,6 +64,18 @@ final class CustomerController extends AbstractController
             'controller_name' => 'ny kunde',
             'addcustomer_form' => $form,
         ]);
+    }
+
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
+    #[IsGranted('customer.delete')]
+    public function delete(Request $request, Customer $customer, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $customer->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($customer);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_customer_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]

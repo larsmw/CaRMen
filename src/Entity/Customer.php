@@ -39,7 +39,7 @@ class Customer
     private ?string $mail = null;
 
     public function __construct() {
-        $this->created = new \DateTimeImmutable();
+        $this->created = new \DateTime();
         $this->projects = new ArrayCollection();
     }
 

@@ -190,6 +190,27 @@ footer {
   padding: 1rem 0;
 }
 
+/* --- Flash messages --- */
+.flash {
+  max-width: 850px;
+  margin: 0.75rem auto;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+.flash-error {
+  background-color: #fde8e8;
+  color: #c0392b;
+  border: 1px solid #f5c6cb;
+}
+
+.flash-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c3e6cb;
+}
+
 /* --- Drag and drop --- */
 .sortable-ghost td {
   background-color: $c6;

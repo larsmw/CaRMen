@@ -12,6 +12,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Phone</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,13 @@
           <td><a href="/customer/{{ customer.id }}">{{ customer.firstName }}</a></td>
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.phone }}</td>
+          <td>
+            <form method="post" action="{{ path('app_customer_delete', {'id': customer.id}) }}"
+                  onsubmit="return confirm('Delete {{ customer.firstName }} {{ customer.lastName }}?');">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ customer.id) }}">
+              <button class="btn">Delete</button>
+            </form>
+          </td>
         </tr>
       {% else %}
         <tr>
