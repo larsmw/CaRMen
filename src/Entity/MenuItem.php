@@ -13,7 +13,7 @@ class MenuItem
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $parent = null;
 
     #[ORM\Column(length: 255)]
@@ -49,7 +49,7 @@ class MenuItem
         return $this->parent;
     }
 
-    public function setParent(int $parent): static
+    public function setParent(?int $parent): static
     {
         $this->parent = $parent;
         return $this;
