@@ -19,6 +19,18 @@
         <th>Phone</th>
         <td>{{ customer.phone }}</td>
       </tr>
+      {% if customer.address %}
+      <tr>
+        <th>Address</th>
+        <td>
+          {{ customer.address.addressLine1 }}<br>
+          {% if customer.address.addressLine2 %}
+            {{ customer.address.addressLine2 }}<br>
+          {% endif %}
+          {{ customer.address.postalcode }} {{ customer.address.city }}
+        </td>
+      </tr>
+      {% endif %}
     </tbody>
   </table>
 

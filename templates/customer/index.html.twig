@@ -6,38 +6,19 @@
   <h1>{{ 'List of Customers'|trans }}</h1>
 
   <i class="fa-regular fa-circle-question open-btn"></i>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Phone</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for customer in pagination %}
-        <tr>
-          <td><a href="/customer/{{ customer.id }}">{{ customer.firstName }}</a></td>
-          <td>{{ customer.lastName }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>
-            <form method="post" action="{{ path('app_customer_delete', {'id': customer.id}) }}"
-                  onsubmit="return confirm('Delete {{ customer.firstName }} {{ customer.lastName }}?');">
-              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ customer.id) }}">
-              <button class="btn btn-danger">Delete</button>
-            </form>
-          </td>
-        </tr>
-      {% else %}
-        <tr>
-          <td colspan="5">no records found</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {{ knp_pagination_render(pagination) }}
+
+  <div data-controller="customer-search">
+    <input data-customer-search-target="input"
+           data-action="input->customer-search#search"
+           type="search"
+           placeholder="Search by name, phone or email…"
+           value="{{ q ?? '' }}"
+           class="search-input">
+
+    <div data-customer-search-target="results">
+      {% include 'customer/_results.html.twig' %}
+    </div>
+  </div>
 
   <nav class="action">
     <ul>
@@ -46,5 +27,5 @@
       </li>
     </ul>
   </nav>
-  
+
 {% endblock %}

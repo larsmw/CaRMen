@@ -20,14 +20,25 @@ final class CustomerController extends AbstractController
     #[IsGranted('customer.list')]
     public function index(Request $request, CustomerRepository $customerRepository, PaginatorInterface $paginator): Response
     {
-        $pagination = $paginator->paginate(
-            $customerRepository->createQueryBuilder('c')->orderBy('c.lastName', 'ASC')->getQuery(),
-            $request->query->getInt('page', 1),
-            25
-        );
+        $q  = $request->query->getString('q', '');
+        $qb = $customerRepository->createQueryBuilder('c')->orderBy('c.lastName', 'ASC');
+
+        if ($q !== '') {
+            $qb->where('c.firstName LIKE :q OR c.lastName LIKE :q OR c.phone LIKE :q OR c.mail LIKE :q')
+               ->setParameter('q', '%' . $q . '%');
+        }
+
+        $pagination = $paginator->paginate($qb->getQuery(), $request->query->getInt('page', 1), 25);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('customer/_results.html.twig', [
+                'pagination' => $pagination,
+            ]);
+        }
 
         return $this->render('customer/index.html.twig', [
             'pagination' => $pagination,
+            'q'          => $q,
         ]);
     }
 

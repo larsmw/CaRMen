@@ -190,6 +190,23 @@ footer {
   padding: 1rem 0;
 }
 
+/* --- Search --- */
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid $c5;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $c3;
+    box-shadow: 0 0 0 3px rgba(10, 88, 124, 0.15);
+  }
+}
+
 /* --- Pagination --- */
 .knp-paginator-nav {
   display: flex;

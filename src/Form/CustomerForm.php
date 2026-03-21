@@ -6,6 +6,7 @@ use CaRMen\Entity\Customer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use CaRMen\Form\AddressType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerForm extends AbstractType
@@ -17,6 +18,7 @@ class CustomerForm extends AbstractType
             ->add('lastName')
             ->add('phone')
             ->add('mail')
+            ->add('address', AddressType::class, ['required' => false])
             ->add('submit', SubmitType::class);
         ;
     }

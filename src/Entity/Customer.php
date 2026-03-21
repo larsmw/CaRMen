@@ -38,6 +38,9 @@ class Customer
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $mail = null;
 
+    #[ORM\OneToOne(targetEntity: Address::class, cascade: ['persist', 'remove'])]
+    private ?Address $address = null;
+
     public function __construct() {
         $this->created = new \DateTime();
         $this->projects = new ArrayCollection();
@@ -143,6 +146,18 @@ class Customer
     public function setMail(?string $mail): static
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
 
         return $this;
     }
