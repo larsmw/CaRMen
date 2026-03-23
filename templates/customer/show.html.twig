@@ -2,6 +2,15 @@
 
 {% block title %}Customer{% endblock %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" crossorigin=""></script>
+{% endblock %}
+
 {% block body %}
   <h1>{{ customer.fullName }}</h1>
 
@@ -30,9 +39,56 @@
           {{ customer.address.postalcode }} {{ customer.address.city }}
         </td>
       </tr>
+      <tr>
+        <td colspan="2">
+          <div id="map" style="height: 300px; width: 100%; margin-top: 0.5rem;"></div>
+        </td>
+      </tr>
       {% endif %}
     </tbody>
   </table>
+
+  {% if customer.address %}
+  <script>
+    const street = {{ customer.address.addressLine1 | json_encode | raw }};
+    const postalcode = {{ customer.address.postalcode | json_encode | raw }};
+    const city = {{ customer.address.city | json_encode | raw }};
+    const address = [street, postalcode, city].join(', ');
+
+    const map = L.map('map');
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const params = new URLSearchParams({
+      format: 'json',
+      limit: '1',
+      street: street,
+      postalcode: postalcode,
+      city: city,
+      countrycodes: 'dk'
+    });
+
+    fetch('https://nominatim.openstreetmap.org/search?' + params, {
+      headers: { 'Accept-Language': 'da' }
+    })
+      .then(r => r.json())
+      .then(results => {
+        if (results.length > 0) {
+          const lat = parseFloat(results[0].lat);
+          const lon = parseFloat(results[0].lon);
+          map.setView([lat, lon], 15);
+          L.marker([lat, lon]).addTo(map).bindPopup(address).openPopup();
+        } else {
+          document.getElementById('map').innerHTML = '<p style="padding:1rem;color:gray;">Address could not be found on the map.</p>';
+        }
+      })
+      .catch(() => {
+        document.getElementById('map').innerHTML = '<p style="padding:1rem;color:gray;">Map could not be loaded.</p>';
+      });
+  </script>
+  {% endif %}
 
   <nav class="actions"><ul>
     <li><a href="{{ path('app_customer_index') }}">back to list</a></li> &bull; 

@@ -1,3 +1,9 @@
+{{ form_errors(form) }}
 {{ form_start(form) }}
-  {{ form_widget(form) }}
+  {{ form_row(form.firstName, { row_attr: { class: 'field field-first-name' } }) }}
+  {{ form_row(form.lastName,  { row_attr: { class: 'field field-last-name' } }) }}
+  {{ form_row(form.phone,     { row_attr: { class: 'field field-phone' } }) }}
+  {{ form_row(form.mail,      { row_attr: { class: 'field field-mail' } }) }}
+  {{ form_row(form.address,   { row_attr: { class: 'field field-address' } }) }}
+  {{ form_row(form.submit,    { row_attr: { class: 'field field-submit' } }) }}
 {{ form_end(form) }}
