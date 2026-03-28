@@ -1,10 +1,27 @@
 @use '../styles/variables' as *;
 @use '../styles/mixins' as *;
 
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-xl;
+}
+
 .title {
   font-size: $font-3xl;
   font-weight: 700;
-  margin-bottom: $space-xl;
+}
+
+.createBtn {
+  @include btn-primary;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-md;
+  margin-bottom: $space-sm;
 }
 
 .tableWrap {
@@ -57,6 +74,17 @@
   font-size: $font-base;
   font-weight: 500;
   margin-bottom: $space-xs;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  margin-bottom: $space-md;
+
+  .formLabelCheckbox {
+    margin-bottom: 0;
+  }
 }
 
 .formLabelCheckbox {
