@@ -5,6 +5,7 @@ import client from '../api/client'
 import type { Deal, Activity, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
 import DealForm from '../components/forms/DealForm'
+import ActivityForm from '../components/forms/ActivityForm'
 import styles from './DealDetail.module.scss'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -27,6 +28,7 @@ export default function DealDetail() {
   const navigate = useNavigate()
   const qc = useQueryClient()
   const [showEdit, setShowEdit] = useState(false)
+  const [showNewActivity, setShowNewActivity] = useState(false)
 
   const { data: deal, isLoading } = useQuery({
     queryKey: ['deal', id],
@@ -106,7 +108,10 @@ export default function DealDetail() {
       </div>
 
       <div className={styles.card}>
-        <h2 className={styles.sectionTitle}>Activities ({activities.length})</h2>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Activities ({activities.length})</h2>
+          <button className={styles.addBtn} onClick={() => setShowNewActivity(true)}>+ New Activity</button>
+        </div>
         {activities.length === 0 ? <p className={styles.empty}>No activities.</p> : (
           <table className={styles.activitiesTable}>
             <thead>
@@ -136,6 +141,18 @@ export default function DealDetail() {
       {showEdit && (
         <Modal title="Edit Deal" onClose={() => setShowEdit(false)}>
           <DealForm initial={deal} onDone={() => setShowEdit(false)} />
+        </Modal>
+      )}
+
+      {showNewActivity && (
+        <Modal title="New Activity" onClose={() => setShowNewActivity(false)}>
+          <ActivityForm
+            initial={{ deal }}
+            onDone={() => {
+              setShowNewActivity(false)
+              qc.invalidateQueries({ queryKey: ['deal-activities', id] })
+            }}
+          />
         </Modal>
       )}
     </div>

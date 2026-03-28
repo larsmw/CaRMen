@@ -25,7 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(security: "is_granted('ROLE_ADMIN')"),
         new Post(security: "is_granted('ROLE_ADMIN')"),
         new Get(security: "is_granted('ROLE_ADMIN') or object == user"),
-        new Patch(security: "is_granted('ROLE_ADMIN') or object == user"),
+        new Patch(
+            security: "is_granted('ROLE_ADMIN') or object == user",
+            securityPostDenormalize: "object != user or object.getIsActive()",
+        ),
     ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']],
@@ -140,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getCreatedAt(): \DateTimeImmutable { return $this->createdAt; }
     public function getUpdatedAt(): \DateTimeImmutable { return $this->updatedAt; }
 
-    public function isActive(): bool { return $this->isActive; }
+    public function getIsActive(): bool { return $this->isActive; }
     public function setIsActive(bool $isActive): static { $this->isActive = $isActive; return $this; }
 
     public function getResetToken(): ?string { return $this->resetToken; }

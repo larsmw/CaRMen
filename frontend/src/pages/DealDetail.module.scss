@@ -96,13 +96,30 @@
   padding: $space-xl;
 }
 
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
 .sectionTitle {
   font-size: $font-md;
   font-weight: 600;
   color: $color-text-muted;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 14px;
+  margin-bottom: 0;
+}
+
+.addBtn {
+  padding: 3px 10px;
+  font-size: $font-sm;
+  background: $color-primary;
+  color: white;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
 }
 
 .sectionTitleMt {

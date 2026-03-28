@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import client from '../api/client'
+import { useAuthStore } from '../store/auth'
 import { User, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
 import { usePageTitle } from '../hooks/usePageTitle'
@@ -21,6 +22,7 @@ const ROLE_LABELS: Record<string, string> = {
 export default function Users() {
   usePageTitle('Users')
   const qc = useQueryClient()
+  const currentUser = useAuthStore((s) => s.user)
   const [page, setPage] = useState(1)
   const [editing, setEditing] = useState<User | null>(null)
   const [saveError, setSaveError] = useState<unknown>(null)
@@ -83,6 +85,7 @@ export default function Users() {
         <Modal title={`Edit: ${editing.fullName}`} onClose={() => setEditing(null)}>
           <UserEditForm
             user={editing}
+            isSelf={editing.id === currentUser?.id}
             saving={patchUser.isPending}
             error={saveError}
             onSave={(roles, isActive) =>
@@ -97,11 +100,13 @@ export default function Users() {
 
 function UserEditForm({
   user,
+  isSelf,
   saving,
   error,
   onSave,
 }: {
   user: User
+  isSelf: boolean
   saving: boolean
   error: unknown
   onSave: (roles: string[], isActive: boolean) => void
@@ -117,8 +122,14 @@ function UserEditForm({
       </select>
 
       <label className={styles.formLabelCheckbox}>
-        <input type="checkbox" checked={isActive} onChange={e => setIsActive(e.target.checked)} />
-        Active
+        <input
+          type="checkbox"
+          checked={isActive}
+          disabled={isSelf}
+          onChange={e => setIsActive(e.target.checked)}
+          title={isSelf ? 'You cannot deactivate your own account' : undefined}
+        />
+        Active {isSelf && <span style={{ fontSize: '0.8em', color: '#94a3b8' }}>(cannot deactivate yourself)</span>}
       </label>
 
       {error && <FormError error={error} />}

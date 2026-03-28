@@ -5,6 +5,7 @@ import client from '../api/client'
 import type { Contact, Activity, Deal, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
 import ContactForm from '../components/forms/ContactForm'
+import DealForm from '../components/forms/DealForm'
 import styles from './ContactDetail.module.scss'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -20,6 +21,7 @@ export default function ContactDetail() {
   const navigate = useNavigate()
   const qc = useQueryClient()
   const [showEdit, setShowEdit] = useState(false)
+  const [showNewDeal, setShowNewDeal] = useState(false)
 
   const { data: contact, isLoading } = useQuery({
     queryKey: ['contact', id],
@@ -97,7 +99,10 @@ export default function ContactDetail() {
 
       <div className={styles.grid2}>
         <div className={styles.card}>
-          <h2 className={styles.sectionTitle}>Deals ({deals.length})</h2>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Deals ({deals.length})</h2>
+            <button className={styles.addBtn} onClick={() => setShowNewDeal(true)}>+ New Deal</button>
+          </div>
           {deals.length === 0 ? <p className={styles.empty}>No deals.</p> : deals.map(d => (
             <Link key={d.id} to={`/deals/${d.id}`} className={styles.listItem}>
               <span>{d.title}</span>
@@ -119,6 +124,18 @@ export default function ContactDetail() {
       {showEdit && (
         <Modal title="Edit Contact" onClose={() => setShowEdit(false)}>
           <ContactForm initial={contact} onDone={() => setShowEdit(false)} />
+        </Modal>
+      )}
+
+      {showNewDeal && (
+        <Modal title="New Deal" onClose={() => setShowNewDeal(false)}>
+          <DealForm
+            initial={{ primaryContact: contact }}
+            onDone={() => {
+              setShowNewDeal(false)
+              qc.invalidateQueries({ queryKey: ['contact-deals', id] })
+            }}
+          />
         </Modal>
       )}
     </div>
