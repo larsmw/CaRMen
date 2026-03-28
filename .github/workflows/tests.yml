@@ -36,6 +36,10 @@ jobs:
           extensions: pdo_pgsql, intl, sodium
           coverage: none
 
+      - name: Create .env file
+        working-directory: backend
+        run: cp .env.test .env
+
       - name: Install dependencies
         working-directory: backend
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
