@@ -30,6 +30,7 @@ jobs:
       APP_ENV: test
       DATABASE_URL: postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16&charset=utf8
       JWT_PASSPHRASE: changeme
+      CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 
     steps:
       - uses: actions/checkout@v4
