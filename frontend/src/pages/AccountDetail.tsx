@@ -6,6 +6,7 @@ import type { Account, Contact, Deal, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
 import AccountForm from '../components/forms/AccountForm'
 import styles from './AccountDetail.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function AccountDetail() {
   const { id } = useParams<{ id: string }>()
@@ -17,6 +18,7 @@ export default function AccountDetail() {
     queryKey: ['account', id],
     queryFn: () => client.get<Account>(`/api/accounts/${id}`).then(r => r.data),
   })
+  usePageTitle(account?.name ?? 'Account')
 
   const { data: contactsData } = useQuery({
     queryKey: ['account-contacts', id],

@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import client from '../api/client'
 import { User, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
+import { usePageTitle } from '../hooks/usePageTitle'
 import FormError from '../components/FormError'
 import Pagination from '../components/Pagination'
 import styles from './Users.module.scss'
@@ -18,6 +19,7 @@ const ROLE_LABELS: Record<string, string> = {
 }
 
 export default function Users() {
+  usePageTitle('Users')
   const qc = useQueryClient()
   const [page, setPage] = useState(1)
   const [editing, setEditing] = useState<User | null>(null)

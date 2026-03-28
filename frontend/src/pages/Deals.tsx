@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import client from '../api/client'
 import type { Deal, PaginatedResponse } from '../types'
+import { usePageTitle } from '../hooks/usePageTitle'
 import Modal from '../components/Modal'
 import DealForm from '../components/forms/DealForm'
 import Pagination from '../components/Pagination'
@@ -25,6 +26,7 @@ const stageClass: Record<string, string> = {
 }
 
 export default function Deals() {
+  usePageTitle('Deals')
   const [page, setPage] = useState(1)
   const [showCreate, setShowCreate] = useState(false)
   const qc = useQueryClient()

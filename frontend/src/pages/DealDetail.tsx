@@ -6,6 +6,7 @@ import type { Deal, Activity, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
 import DealForm from '../components/forms/DealForm'
 import styles from './DealDetail.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const STAGE_LABELS: Record<string, string> = {
   prospecting: 'Prospecting', qualification: 'Qualification', proposal: 'Proposal',
@@ -31,6 +32,7 @@ export default function DealDetail() {
     queryKey: ['deal', id],
     queryFn: () => client.get<Deal>(`/api/deals/${id}`).then(r => r.data),
   })
+  usePageTitle(deal?.title ?? 'Deal')
 
   const { data: activitiesData } = useQuery({
     queryKey: ['deal-activities', id],

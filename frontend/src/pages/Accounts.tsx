@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import client from '../api/client'
 import type { Account, PaginatedResponse } from '../types'
+import { usePageTitle } from '../hooks/usePageTitle'
 import Modal from '../components/Modal'
 import AccountForm from '../components/forms/AccountForm'
 import Pagination from '../components/Pagination'
@@ -11,6 +12,7 @@ import styles from './Accounts.module.scss'
 const PER_PAGE = 20
 
 export default function Accounts() {
+  usePageTitle('Accounts')
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [showCreate, setShowCreate] = useState(false)

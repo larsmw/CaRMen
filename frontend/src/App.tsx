@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/auth'
 import Layout from './components/Layout'
@@ -22,6 +23,14 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const token = useAuthStore((s) => s.token)
+  const user = useAuthStore((s) => s.user)
+  const fetchMe = useAuthStore((s) => s.fetchMe)
+
+  useEffect(() => {
+    if (token && !user) fetchMe()
+  }, [token])
+
   return (
     <BrowserRouter>
       <Routes>

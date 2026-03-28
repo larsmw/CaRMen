@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import client from '../api/client'
 import type { Activity, PaginatedResponse } from '../types'
+import { usePageTitle } from '../hooks/usePageTitle'
 import Modal from '../components/Modal'
 import ActivityForm from '../components/forms/ActivityForm'
 import Pagination from '../components/Pagination'
@@ -21,6 +22,7 @@ const statusClass: Record<string, string> = {
 }
 
 export default function Activities() {
+  usePageTitle('Activities')
   const [page, setPage] = useState(1)
   const [showCreate, setShowCreate] = useState(false)
   const qc = useQueryClient()

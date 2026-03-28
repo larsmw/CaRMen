@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import client from '../api/client'
 import styles from './RolePermissions.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const ROLES = ['ROLE_USER', 'ROLE_SALES', 'ROLE_MANAGER', 'ROLE_ADMIN']
 
@@ -35,6 +36,7 @@ const PERMISSION_LABELS: Record<string, string> = {
 interface RolePerms { role: string; permissions: string[] }
 
 export default function RolePermissions() {
+  usePageTitle('Role Permissions')
   const qc = useQueryClient()
   const [isSaving, setIsSaving] = useState(false)
   const [saved, setSaved] = useState(false)

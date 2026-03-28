@@ -2,8 +2,10 @@ import { useState, FormEvent } from 'react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import client from '../api/client'
 import styles from './ResetPassword.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function ResetPassword() {
+  usePageTitle('Reset Password')
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const token = params.get('token') ?? ''

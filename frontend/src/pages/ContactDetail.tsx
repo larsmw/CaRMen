@@ -6,6 +6,7 @@ import type { Contact, Activity, Deal, PaginatedResponse } from '../types'
 import Modal from '../components/Modal'
 import ContactForm from '../components/forms/ContactForm'
 import styles from './ContactDetail.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const statusClass: Record<string, string> = {
   lead:     'statusLead',
@@ -24,6 +25,7 @@ export default function ContactDetail() {
     queryKey: ['contact', id],
     queryFn: () => client.get<Contact>(`/api/contacts/${id}`).then(r => r.data),
   })
+  usePageTitle(contact?.fullName ?? 'Contact')
 
   const { data: activitiesData } = useQuery({
     queryKey: ['contact-activities', id],

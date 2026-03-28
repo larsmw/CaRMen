@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import client from '../api/client'
 import type { DashboardStats } from '../types'
 import styles from './Dashboard.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const STAGE_LABELS: Record<string, string> = {
   prospecting: 'Prospecting',
@@ -13,6 +14,7 @@ const STAGE_LABELS: Record<string, string> = {
 }
 
 export default function Dashboard() {
+  usePageTitle('Dashboard')
   const { data, isLoading } = useQuery({
     queryKey: ['dashboard'],
     queryFn: () => client.get<DashboardStats>('/api/dashboard/stats').then(r => r.data),

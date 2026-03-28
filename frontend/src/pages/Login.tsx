@@ -2,8 +2,10 @@ import { useState, FormEvent } from 'react'
 import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
 import styles from './Login.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function Login() {
+  usePageTitle('Sign In')
   const [searchParams] = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

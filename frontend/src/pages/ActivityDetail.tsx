@@ -6,6 +6,7 @@ import type { Activity } from '../types'
 import Modal from '../components/Modal'
 import ActivityForm from '../components/forms/ActivityForm'
 import styles from './ActivityDetail.module.scss'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const TYPE_ICON: Record<string, string> = {
   call: '📞', email: '✉️', meeting: '📅', task: '✓', note: '📝',
@@ -27,6 +28,7 @@ export default function ActivityDetail() {
     queryKey: ['activity', id],
     queryFn: () => client.get<Activity>(`/api/activities/${id}`).then(r => r.data),
   })
+  usePageTitle(activity?.subject ?? 'Activity')
 
   const deleteMutation = useMutation({
     mutationFn: () => client.delete(`/api/activities/${id}`),
