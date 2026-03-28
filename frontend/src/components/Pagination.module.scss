@@ -1,0 +1,57 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $space-lg;
+  padding: 0 $space-xs;
+}
+
+.info {
+  font-size: $font-base;
+  color: $color-text-muted;
+}
+
+.controls {
+  display: flex;
+  gap: $space-xs;
+}
+
+.btn {
+  padding: 5px 10px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-size: $font-base;
+  cursor: pointer;
+  background: $color-white;
+  color: $color-text;
+  font-weight: 400;
+
+  &:disabled {
+    cursor: default;
+    background: $color-table-header;
+    color: #cbd5e1;
+  }
+}
+
+.btnActive {
+  background: $color-primary;
+  color: $color-white;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-size: $font-base;
+  padding: 5px 10px;
+}
+
+// Hide individual page number buttons on mobile; show only on sm+
+.pageBtn {
+  display: none;
+
+  @include sm {
+    display: inline-block;
+  }
+}

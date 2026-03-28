@@ -1,0 +1,152 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.backLink {
+  color: $color-text-muted;
+  text-decoration: none;
+  font-size: $font-md;
+  margin-bottom: $space-2xl;
+  display: inline-block;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: $space-2xl;
+
+  @include sm {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.pageTitle {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: $color-text-muted;
+  margin-top: $space-xs;
+}
+
+.actions {
+  display: flex;
+  gap: $space-sm;
+  align-items: center;
+}
+
+.editBtn {
+  padding: 6px 14px;
+  background: $color-bg;
+  color: #334155;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-base;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  padding: 6px 14px;
+  background: #fee2e2;
+  color: $color-error-dark;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-base;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: $font-base;
+  font-weight: 500;
+}
+
+.statusLead     { background: #dbeafe; color: #1d4ed8; }
+.statusProspect { background: #fef9c3; color: #854d0e; }
+.statusCustomer { background: $color-success-bg; color: $color-success-text; }
+.statusInactive { background: $color-bg; color: $color-text-muted; }
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-lg;
+  margin-bottom: $space-2xl;
+
+  @include md {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  padding: $space-xl;
+}
+
+.sectionTitle {
+  font-size: $font-md;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+}
+
+.notes {
+  font-size: $font-md;
+  line-height: 1.6;
+}
+
+.notesEmpty {
+  font-size: $font-md;
+  color: $color-sidebar-text;
+  line-height: 1.6;
+}
+
+.fieldRow {
+  display: flex;
+  gap: $space-sm;
+  margin-bottom: 10px;
+}
+
+.fieldLabel {
+  font-size: $font-base;
+  color: $color-text-muted;
+  min-width: 80px;
+}
+
+.fieldValue {
+  font-size: $font-md;
+}
+
+.fieldEmpty {
+  color: $color-sidebar-text;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  padding: $space-sm 0;
+  border-bottom: 1px solid $color-bg;
+  text-decoration: none;
+  color: $color-text-dark;
+  font-size: $font-md;
+}
+
+.listItemMeta {
+  color: $color-text-muted;
+  font-size: $font-base;
+}
+
+.empty {
+  font-size: $font-md;
+  color: $color-sidebar-text;
+}

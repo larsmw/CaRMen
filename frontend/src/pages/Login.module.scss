@@ -1,0 +1,55 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.wrapper {
+  @include auth-wrapper;
+}
+
+.form {
+  @include form-box;
+}
+
+.title {
+  margin-bottom: $space-2xl;
+  font-size: $font-4xl;
+  font-weight: 700;
+}
+
+.successMsg {
+  color: $color-success-text;
+  background: $color-success-bg;
+  padding: $space-sm $space-md;
+  border-radius: $radius-md;
+  margin-bottom: $space-lg;
+  font-size: $font-md;
+}
+
+.errorMsg {
+  color: $color-error;
+  margin-bottom: $space-lg;
+  font-size: $font-md;
+}
+
+.label {
+  @include label;
+}
+
+.input {
+  @include input;
+}
+
+.btn {
+  @include btn-primary;
+  margin-top: $space-sm;
+}
+
+.forgotLink {
+  margin-top: $space-md;
+  text-align: center;
+
+  a {
+    color: $color-primary;
+    font-size: $font-base;
+    text-decoration: none;
+  }
+}

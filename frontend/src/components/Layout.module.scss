@@ -1,0 +1,164 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// Mobile-first: stacked layout
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  @include lg {
+    flex-direction: row;
+    height: 100vh;
+  }
+}
+
+// Mobile top bar — hidden on desktop
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 52px;
+  background: $color-sidebar;
+  color: $color-white;
+  flex-shrink: 0;
+
+  @include lg {
+    display: none;
+  }
+}
+
+.topBarLogo {
+  font-size: $font-xl;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  color: $color-white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+// Overlay (mobile only)
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+
+  &.overlayVisible {
+    display: block;
+  }
+
+  @include lg {
+    display: none !important;
+  }
+}
+
+// Sidebar
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  background: $color-sidebar;
+  color: $color-white;
+  display: flex;
+  flex-direction: column;
+  padding: $space-2xl 0;
+  z-index: 100;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+
+  &.sidebarOpen {
+    transform: translateX(0);
+  }
+
+  @include lg {
+    position: static;
+    transform: none !important;
+    transition: none;
+    flex-shrink: 0;
+  }
+}
+
+.logo {
+  padding: 0 $space-xl $space-2xl;
+  font-size: $font-2xl;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.nav {
+  flex: 1;
+}
+
+.link {
+  display: block;
+  padding: 10px $space-xl;
+  color: $color-sidebar-text;
+  text-decoration: none;
+  font-size: $font-md;
+
+  &:hover {
+    text-decoration: none;
+    color: $color-white;
+  }
+}
+
+.active {
+  color: $color-white;
+  background: $color-sidebar-active;
+  border-left: 3px solid $color-primary;
+}
+
+.adminLabel {
+  margin: $space-md $space-xl 4px;
+  font-size: $font-xs;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.userInfo {
+  padding: 0 $space-xl $space-sm;
+  font-size: $font-sm;
+  color: $color-text-muted;
+}
+
+.logout {
+  padding: 10px $space-xl;
+  background: none;
+  border: none;
+  color: $color-sidebar-text;
+  cursor: pointer;
+  font-size: $font-md;
+  text-align: left;
+  width: 100%;
+
+  &:hover {
+    color: $color-white;
+  }
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+
+  @include md {
+    padding: 24px;
+  }
+
+  @include lg {
+    padding: $space-3xl;
+  }
+}

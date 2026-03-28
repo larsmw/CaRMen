@@ -1,0 +1,124 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: $space-2xl;
+
+  @include sm {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.title {
+  font-size: $font-4xl;
+  font-weight: 700;
+}
+
+.headerRight {
+  display: flex;
+  gap: $space-md;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  padding: $space-sm $space-md;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  width: 100%;
+
+  @include sm {
+    width: 220px;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+.newBtn {
+  padding: $space-sm $space-lg;
+  background: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background: $color-primary-hover;
+  }
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+  box-shadow: $shadow-card;
+}
+
+.table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  background: $color-white;
+}
+
+.theadRow {
+  background: $color-table-header;
+}
+
+.th {
+  padding: $space-md $space-lg;
+  text-align: left;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+}
+
+.td {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+}
+
+.tdRight {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+  text-align: right;
+}
+
+.tbodyRow {
+  border-top: 1px solid $color-bg;
+}
+
+.link {
+  color: $color-primary;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.delBtn {
+  padding: 4px 10px;
+  background: #fee2e2;
+  color: $color-error-dark;
+  border: none;
+  border-radius: $radius-sm;
+  font-size: $font-sm;
+  cursor: pointer;
+}
+
+.emptyCell {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+  text-align: center;
+  color: $color-sidebar-text;
+}

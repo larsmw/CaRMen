@@ -1,0 +1,55 @@
+// Colors
+$color-primary: #3b82f6;
+$color-primary-hover: #2563eb;
+$color-bg: #f1f5f9;
+$color-white: #fff;
+$color-border: #e2e8f0;
+$color-text: #374151;
+$color-text-muted: #64748b;
+$color-text-dark: #1e293b;
+$color-success-text: #15803d;
+$color-success-bg: #dcfce7;
+$color-error: #ef4444;
+$color-error-dark: #b91c1c;
+$color-table-header: #f8fafc;
+$color-table-row-alt: #fafafa;
+$color-sidebar: #1e293b;
+$color-sidebar-active: #334155;
+$color-sidebar-text: #94a3b8;
+
+// Spacing
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 20px;
+$space-2xl: 24px;
+$space-3xl: 32px;
+$space-4xl: 40px;
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-xl: 12px;
+
+// Typography
+$font-xs: 11px;
+$font-sm: 12px;
+$font-base: 13px;
+$font-md: 14px;
+$font-lg: 15px;
+$font-xl: 16px;
+$font-2xl: 20px;
+$font-3xl: 22px;
+$font-4xl: 24px;
+
+// Shadows
+$shadow-card: 0 1px 4px rgba(0, 0, 0, 0.06);
+$shadow-form: 0 4px 24px rgba(0, 0, 0, 0.08);
+
+// Breakpoints
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;

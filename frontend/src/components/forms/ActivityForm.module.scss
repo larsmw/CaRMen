@@ -1,0 +1,76 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.field {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+.label {
+  display: block;
+  font-size: $font-base;
+  font-weight: 500;
+  margin-bottom: $space-xs;
+  color: $color-text;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-md;
+
+  @include sm {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 10px;
+  background: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: $space-xs;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+  }
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+  min-height: 80px;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}

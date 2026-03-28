@@ -1,0 +1,83 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.title {
+  font-size: $font-3xl;
+  font-weight: 700;
+  margin-bottom: $space-xl;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  background: $color-white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.th {
+  text-align: left;
+  padding: 10px $space-lg;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  background: $color-table-header;
+  border-bottom: 1px solid $color-border;
+}
+
+.td {
+  padding: 10px $space-lg;
+  font-size: $font-md;
+}
+
+.tbodyRow {
+  border-bottom: 1px solid $color-bg;
+}
+
+.editBtn {
+  padding: 4px 10px;
+  font-size: $font-sm;
+  background: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  cursor: pointer;
+}
+
+// UserEditForm styles
+.formLabel {
+  display: block;
+  font-size: $font-base;
+  font-weight: 500;
+  margin-bottom: $space-xs;
+}
+
+.formLabelCheckbox {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: $font-base;
+  font-weight: 500;
+  margin-bottom: $space-lg;
+  flex-direction: row;
+}
+
+.formInput {
+  @include input;
+}
+
+.saveBtn {
+  @include btn-primary;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
