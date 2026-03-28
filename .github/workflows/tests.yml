@@ -26,6 +26,11 @@ jobs:
           --health-timeout 5s
           --health-retries 10
 
+    env:
+      APP_ENV: test
+      DATABASE_URL: postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16&charset=utf8
+      JWT_PASSPHRASE: changeme
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +38,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.4"
-          extensions: pdo_pgsql, intl, sodium
+          extensions: pdo_pgsql, intl, sodium, ctype, iconv
           coverage: none
 
       - name: Create .env file
@@ -47,23 +52,13 @@ jobs:
       - name: Generate JWT keys
         working-directory: backend
         run: php bin/console lexik:jwt:generate-keypair --skip-if-exists
-        env:
-          APP_ENV: test
-          JWT_PASSPHRASE: changeme
 
       - name: Create test database & run migrations
         working-directory: backend
         run: |
-          php bin/console doctrine:database:create
+          php bin/console doctrine:database:create --if-not-exists
           php bin/console doctrine:migrations:migrate --no-interaction
-        env:
-          APP_ENV: test
-          DATABASE_URL: postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16&charset=utf8
 
       - name: Run PHPUnit
         working-directory: backend
         run: php bin/phpunit --testdox
-        env:
-          APP_ENV: test
-          DATABASE_URL: postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16&charset=utf8
-          JWT_PASSPHRASE: changeme
