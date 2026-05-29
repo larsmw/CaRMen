@@ -4,7 +4,18 @@ lexik_jwt_authentication:
     pass_phrase: '%env(JWT_PASSPHRASE)%'
     token_ttl: '%env(int:JWT_TTL)%'
     token_extractors:
+        cookie:
+            enabled: true
+            name: jwt
         authorization_header:
             enabled: true
             prefix: Bearer
             name: Authorization
+    set_cookies:
+        jwt:
+            lifetime: null
+            samesite: strict
+            path: /
+            domain: null
+            httpOnly: true
+            secure: false

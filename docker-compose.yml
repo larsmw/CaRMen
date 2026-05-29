@@ -35,9 +35,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: >
-      sh -c "php bin/console doctrine:migrations:migrate --no-interaction
-      && php -S 0.0.0.0:8000 -t public/"
+#    command: >
+#      sh -c "php bin/console doctrine:migrations:migrate --no-interaction
+#      && php -S 0.0.0.0:8000 -t public/"
 
   mailpit:
     image: axllent/mailpit
