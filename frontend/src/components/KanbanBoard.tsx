@@ -13,6 +13,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import client from '../api/client'
 import type { Deal, DealStage, PaginatedResponse } from '../types'
+import { useLocale } from '../context/LocaleContext'
 import styles from './KanbanBoard.module.scss'
 
 const STAGES: DealStage[] = [
@@ -29,6 +30,7 @@ const STAGE_LABELS: Record<DealStage, string> = {
 }
 
 function DealCard({ deal, ghost = false }: { deal: Deal; ghost?: boolean }) {
+  const { locale } = useLocale()
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: deal.id })
 
   return (
@@ -60,7 +62,7 @@ function DealCard({ deal, ghost = false }: { deal: Deal; ghost?: boolean }) {
         </span>
         {deal.closeDate && (
           <span className={styles.cardDate}>
-            {new Date(deal.closeDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            {new Date(deal.closeDate).toLocaleDateString(locale, { month: 'short', day: 'numeric' })}
           </span>
         )}
       </div>

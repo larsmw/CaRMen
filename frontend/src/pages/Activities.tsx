@@ -12,6 +12,7 @@ import ActivityCalendar, {
   getCalendarRange,
   formatRangeLabel,
 } from '../components/ActivityCalendar'
+import { useLocale } from '../context/LocaleContext'
 import styles from './Activities.module.scss'
 
 type ViewMode = 'calendar' | 'list'
@@ -30,6 +31,7 @@ const statusClass: Record<string, string> = {
 
 export default function Activities() {
   usePageTitle('Activities')
+  const { locale } = useLocale()
   const [viewMode, setViewMode] = useState<ViewMode>('calendar')
   const [calMode, setCalMode] = useState<CalendarMode>('month')
   const [currentDate, setCurrentDate] = useState(() => new Date())
@@ -109,7 +111,7 @@ export default function Activities() {
               <button className={styles.navBtn} onClick={() => navigate(-1)}>‹</button>
               <button className={styles.todayBtn} onClick={() => setCurrentDate(new Date())}>Today</button>
               <button className={styles.navBtn} onClick={() => navigate(1)}>›</button>
-              <span className={styles.calTitle}>{formatRangeLabel(calMode, currentDate)}</span>
+              <span className={styles.calTitle}>{formatRangeLabel(calMode, currentDate, locale)}</span>
             </div>
             <div className={styles.viewToggle}>
               <button
@@ -154,7 +156,7 @@ export default function Activities() {
                       </td>
                       <td className={styles.td}>{a.contact?.fullName ?? '-'}</td>
                       <td className={styles.td}>{a.deal?.title ?? '-'}</td>
-                      <td className={styles.td}>{a.scheduledAt ? new Date(a.scheduledAt).toLocaleString() : '-'}</td>
+                      <td className={styles.td}>{a.scheduledAt ? new Date(a.scheduledAt).toLocaleString(locale) : '-'}</td>
                       <td className={styles.td}>
                         <span className={`${styles.badge} ${styles[statusClass[a.status]] ?? ''}`}>{a.status}</span>
                       </td>

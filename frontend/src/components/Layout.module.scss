@@ -134,6 +134,32 @@
   color: $color-text-muted;
 }
 
+.localePicker {
+  padding: 0 $space-xl $space-sm;
+}
+
+.localeSelect {
+  width: 100%;
+  padding: 5px 8px;
+  background: $color-sidebar-active;
+  border: 1px solid #334155;
+  border-radius: $radius-md;
+  color: $color-sidebar-text;
+  font-size: $font-sm;
+  cursor: pointer;
+  appearance: auto;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  option {
+    background: $color-sidebar;
+    color: $color-white;
+  }
+}
+
 .logout {
   padding: 10px $space-xl;
   background: none;

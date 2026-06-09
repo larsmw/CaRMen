@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Activity } from '../types'
+import { useLocale } from '../context/LocaleContext'
 import styles from './ActivityCalendar.module.scss'
 
 export type CalendarMode = 'week' | 'month'
@@ -13,7 +14,12 @@ const TYPE_CLASS: Record<string, string> = {
   task: 'typeTask', note: 'typeNote',
 }
 
-const WEEK_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+// Jan 6–12 2025 is Mon–Sun
+function getWeekDayNames(locale: string): string[] {
+  return Array.from({ length: 7 }, (_, i) =>
+    new Date(2025, 0, 6 + i).toLocaleDateString(locale, { weekday: 'short' })
+  )
+}
 
 function weekStart(date: Date): Date {
   const d = new Date(date)
@@ -35,19 +41,19 @@ function sameDay(a: Date, b: Date): boolean {
     a.getDate() === b.getDate()
 }
 
-function activityDay(a: Activity): Date | null {
-  if (!a.scheduledAt) return null
-  return new Date(a.scheduledAt)
-}
-
 function sortByTime(activities: Activity[]): Activity[] {
   return [...activities].sort((a, b) => (a.scheduledAt ?? '').localeCompare(b.scheduledAt ?? ''))
 }
 
+function activityDay(a: Activity): Date | null {
+  return a.scheduledAt ? new Date(a.scheduledAt) : null
+}
+
 function ActivityChip({ activity }: { activity: Activity }) {
+  const { locale } = useLocale()
   const cls = TYPE_CLASS[activity.type] ?? 'typeNote'
   const time = activity.scheduledAt
-    ? new Date(activity.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    ? new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(new Date(activity.scheduledAt))
     : null
   return (
     <Link
@@ -68,6 +74,8 @@ function ActivityChip({ activity }: { activity: Activity }) {
 }
 
 function WeekView({ currentDate, activities }: { currentDate: Date; activities: Activity[] }) {
+  const { locale } = useLocale()
+  const weekDays = getWeekDayNames(locale)
   const monday = weekStart(currentDate)
   const days = Array.from({ length: 7 }, (_, i) => addDays(monday, i))
   const today = new Date()
@@ -82,7 +90,7 @@ function WeekView({ currentDate, activities }: { currentDate: Date; activities: 
         return (
           <div key={i} className={`${styles.weekCol} ${isToday ? styles.weekToday : ''}`}>
             <div className={styles.weekColHeader}>
-              <span className={styles.weekDayName}>{WEEK_DAYS[i]}</span>
+              <span className={styles.weekDayName}>{weekDays[i]}</span>
               <span className={`${styles.weekDayNum} ${isToday ? styles.todayCircle : ''}`}>
                 {day.getDate()}
               </span>
@@ -98,6 +106,8 @@ function WeekView({ currentDate, activities }: { currentDate: Date; activities: 
 }
 
 function MonthView({ currentDate, activities }: { currentDate: Date; activities: Activity[] }) {
+  const { locale } = useLocale()
+  const weekDays = getWeekDayNames(locale)
   const today = new Date()
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -113,7 +123,7 @@ function MonthView({ currentDate, activities }: { currentDate: Date; activities:
   return (
     <div className={styles.monthGrid}>
       <div className={styles.monthDayNames}>
-        {WEEK_DAYS.map(d => <div key={d} className={styles.monthDayName}>{d}</div>)}
+        {weekDays.map(d => <div key={d} className={styles.monthDayName}>{d}</div>)}
       </div>
       <div className={styles.monthBody}>
         {displayRows.map((row, ri) => (
@@ -179,14 +189,12 @@ export function getCalendarRange(mode: CalendarMode, date: Date): { start: Date;
   return { start, end }
 }
 
-export function formatRangeLabel(mode: CalendarMode, date: Date): string {
+export function formatRangeLabel(mode: CalendarMode, date: Date, locale: string): string {
   if (mode === 'week') {
     const start = weekStart(date)
     const end = addDays(start, 6)
-    if (start.getMonth() === end.getMonth()) {
-      return `${start.toLocaleDateString('en-US', { month: 'long' })} ${start.getDate()}–${end.getDate()}, ${start.getFullYear()}`
-    }
-    return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+    return new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', year: 'numeric' })
+      .formatRange(start, end)
   }
-  return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(date)
 }

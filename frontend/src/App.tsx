@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/auth'
+import { LocaleProvider } from './context/LocaleContext'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
@@ -32,6 +33,7 @@ export default function App() {
   }, [token])
 
   return (
+    <LocaleProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -59,5 +61,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </LocaleProvider>
   )
 }

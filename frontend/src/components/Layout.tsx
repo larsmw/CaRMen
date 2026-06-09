@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
+import { useLocale, LOCALES } from '../context/LocaleContext'
 import styles from './Layout.module.scss'
 
 const navItems = [
@@ -22,6 +23,7 @@ export default function Layout() {
   const navigate = useNavigate()
   const isAdmin = user?.roles?.includes('ROLE_ADMIN') ?? false
   const [menuOpen, setMenuOpen] = useState(false)
+  const { locale, setLocale } = useLocale()
 
   const handleLogout = () => { logout(); navigate('/login') }
   const closeMenu = () => setMenuOpen(false)
@@ -74,6 +76,18 @@ export default function Layout() {
         </nav>
         <div className={styles.userInfo}>
           {user?.fullName}
+        </div>
+        <div className={styles.localePicker}>
+          <select
+            value={locale}
+            onChange={e => setLocale(e.target.value)}
+            className={styles.localeSelect}
+            aria-label="Language"
+          >
+            {LOCALES.map(l => (
+              <option key={l.value} value={l.value}>{l.label}</option>
+            ))}
+          </select>
         </div>
         <button className={styles.logout} onClick={handleLogout}>Sign out</button>
       </aside>
