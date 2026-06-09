@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ActivityRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,6 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     'deal.id' => 'exact',
     'assignedTo.id' => 'exact',
 ])]
+#[ApiFilter(DateFilter::class, properties: ['scheduledAt'])]
 class Activity
 {
     const TYPE_CALL    = 'call';

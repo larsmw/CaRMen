@@ -1,0 +1,210 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// ── Week view ────────────────────────────────────────────────────────────────
+
+.weekGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-white;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.weekCol {
+  border-right: 1px solid $color-border;
+  min-height: 480px;
+
+  &:last-child { border-right: none; }
+}
+
+.weekToday {
+  background: #f0f7ff;
+}
+
+.weekColHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $space-sm $space-xs $space-xs;
+  border-bottom: 1px solid $color-border;
+  background: $color-table-header;
+  gap: 2px;
+}
+
+.weekDayName {
+  font-size: $font-xs;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.weekDayNum {
+  font-size: $font-xl;
+  font-weight: 500;
+  color: $color-text;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.weekColBody {
+  padding: $space-xs;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+// ── Month view ───────────────────────────────────────────────────────────────
+
+.monthGrid {
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-white;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.monthDayNames {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: $color-table-header;
+  border-bottom: 1px solid $color-border;
+}
+
+.monthDayName {
+  padding: $space-sm $space-xs;
+  text-align: center;
+  font-size: $font-xs;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.monthBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.monthRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid $color-border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.monthCell {
+  border-right: 1px solid $color-border;
+  min-height: 100px;
+  padding: $space-xs;
+
+  &:last-child { border-right: none; }
+}
+
+.otherMonth {
+  background: #fafafa;
+
+  .monthDayNum {
+    color: $color-text-muted;
+  }
+}
+
+.todayCell {
+  background: #f0f7ff;
+}
+
+.monthDayNum {
+  font-size: $font-sm;
+  font-weight: 500;
+  color: $color-text;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+
+.monthCellActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.moreCount {
+  font-size: $font-xs;
+  color: $color-text-muted;
+  padding: 0 4px;
+}
+
+// ── Shared: today circle ─────────────────────────────────────────────────────
+
+.todayCircle {
+  background: $color-primary;
+  color: $color-white !important;
+}
+
+// ── Activity chips ───────────────────────────────────────────────────────────
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 5px;
+  border-radius: $radius-sm;
+  font-size: $font-xs;
+  font-weight: 500;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: filter 0.1s;
+
+  &:hover { filter: brightness(0.92); }
+}
+
+.chipIcon {
+  flex-shrink: 0;
+  font-size: 10px;
+}
+
+.chipSubject {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.chipTime {
+  flex-shrink: 0;
+  opacity: 0.75;
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+// Type colors
+.typeCall    { background: #dbeafe; color: #1d4ed8; }
+.typeEmail   { background: #ede9fe; color: #6d28d9; }
+.typeMeeting { background: #dcfce7; color: #15803d; }
+.typeTask    { background: #fef9c3; color: #92400e; }
+.typeNote    { background: #f1f5f9; color: #475569; }
+
+// Status modifiers
+.completed {
+  opacity: 0.6;
+}
+
+.cancelled {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
