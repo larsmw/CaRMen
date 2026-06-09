@@ -7,6 +7,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import Modal from '../components/Modal'
 import DealForm from '../components/forms/DealForm'
 import Pagination from '../components/Pagination'
+import KanbanBoard from '../components/KanbanBoard'
 import styles from './Deals.module.scss'
 
 const PER_PAGE = 20
@@ -25,10 +26,13 @@ const stageClass: Record<string, string> = {
   closed_lost:   'stageClosedLost',
 }
 
+type ViewMode = 'list' | 'board'
+
 export default function Deals() {
   usePageTitle('Deals')
   const [page, setPage] = useState(1)
   const [showCreate, setShowCreate] = useState(false)
+  const [view, setView] = useState<ViewMode>('list')
   const qc = useQueryClient()
 
   const { data, isLoading } = useQuery({
@@ -56,10 +60,28 @@ export default function Deals() {
     <div>
       <div className={styles.header}>
         <h1 className={styles.title}>Deals</h1>
-        <button onClick={() => setShowCreate(true)} className={styles.newBtn}>+ New Deal</button>
+        <div className={styles.headerRight}>
+          <div className={styles.viewToggle}>
+            <button
+              className={`${styles.toggleBtn} ${view === 'list' ? styles.toggleActive : ''}`}
+              onClick={() => setView('list')}
+            >
+              List
+            </button>
+            <button
+              className={`${styles.toggleBtn} ${view === 'board' ? styles.toggleActive : ''}`}
+              onClick={() => setView('board')}
+            >
+              Board
+            </button>
+          </div>
+          <button onClick={() => setShowCreate(true)} className={styles.newBtn}>+ New Deal</button>
+        </div>
       </div>
 
-      {isLoading ? <p>Loading...</p> : (
+      {view === 'board' && <KanbanBoard />}
+
+      {view === 'list' && isLoading ? <p>Loading...</p> : view === 'list' && (
         <>
           <div className={styles.tableWrap}>
             <table className={styles.table}>

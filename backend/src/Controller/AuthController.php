@@ -63,7 +63,10 @@ class AuthController extends AbstractController
             'email'     => $user->getEmail(),
             'firstName' => $user->getFirstName(),
             'lastName'  => $user->getLastName(),
+            'fullName'  => $user->getFullName(),
             'roles'     => $user->getRoles(),
+            'isActive'  => $user->getIsActive(),
+            'createdAt' => $user->getCreatedAt()->format(\DateTimeInterface::ATOM),
         ]);
     }
 }

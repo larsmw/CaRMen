@@ -48,6 +48,8 @@ public/assets/**
 /web/bundles/
 /web/uploads/
 /assets/styles/*
+frontend/dist/assets/
+/frontend/node_modules/
 
 # PHPUnit
 /app/phpunit.xml
