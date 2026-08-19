@@ -29,10 +29,13 @@ final class ProjectController extends AbstractController
         $project = new Project();
         $form = $this->createForm(ProjectForm::class, $project);
         $form->handleRequest($request);
-        $customer_id = $request->query->get('customer_id');
-        $customer = $customerRepository->findOneById($customer_id);
-        $project->setCustomer($customer);
+        dump($request->getContent());
+        dump($form);
+        //$customer_id = $request->request->get('customer');
+        //$customer = $customerRepository->findOneById($customer_id);
+        //$project->setCustomer($customer);
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($form->getData());
             $entityManager->beginTransaction();
             try {
                 $entityManager->persist($project);

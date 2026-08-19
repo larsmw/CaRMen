@@ -10,7 +10,7 @@ public/assets/**
 
 # ignore emacs backup files
 *~
-
+\#*
 #.env
 .env.local
 .env.dev

@@ -17,8 +17,9 @@ class CustomerAutocompleteField extends AbstractType {
     {
         $resolver->setDefaults([
             'class' => Customer::class,
-            'preload' => false,
-            'query_builder' => function (Options $options) {
+            'placeholder' => 'en kunde...',
+            //'preload' => false,
+            /*'query_builder' => function (Options $options) {
                 return function (EntityRepository $er) use ($options) {
                     
                     $qb = $er->createQueryBuilder('o');
@@ -32,7 +33,7 @@ class CustomerAutocompleteField extends AbstractType {
                     //dump($qb->__toString());
                     return $qb;
                 };
-            }
+            }*/
         ]);
     }
 
