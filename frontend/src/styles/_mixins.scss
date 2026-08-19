@@ -1,0 +1,106 @@
+@use 'variables' as *;
+
+@mixin sm { @media (min-width: #{$bp-sm}) { @content; } }
+@mixin md { @media (min-width: #{$bp-md}) { @content; } }
+@mixin lg { @media (min-width: #{$bp-lg}) { @content; } }
+@mixin xl { @media (min-width: #{$bp-xl}) { @content; } }
+
+@mixin card {
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+@mixin form-box {
+  background: $color-white;
+  padding: 24px;
+  border-radius: $radius-xl;
+  width: 100%;
+  box-shadow: $shadow-form;
+
+  @include sm {
+    padding: $space-4xl;
+    width: 380px;
+  }
+}
+
+@mixin btn-primary {
+  background: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-lg;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+  }
+}
+
+@mixin input {
+  display: block;
+  width: 100%;
+  padding: $space-sm $space-md;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  margin-bottom: $space-lg;
+  font-size: $font-md;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+@mixin label {
+  display: block;
+  font-size: $font-base;
+  font-weight: 500;
+  margin-bottom: $space-xs;
+}
+
+@mixin table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: $radius-lg;
+
+  @include card;
+
+  th {
+    text-align: left;
+    padding: 10px $space-lg;
+    font-size: $font-sm;
+    font-weight: 600;
+    color: $color-text-muted;
+    background: $color-table-header;
+    border-bottom: 1px solid $color-border;
+  }
+
+  td {
+    padding: 10px $space-lg;
+    font-size: $font-md;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $color-table-row-alt;
+  }
+}
+
+@mixin auth-wrapper {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg;
+  padding: 16px;
+}

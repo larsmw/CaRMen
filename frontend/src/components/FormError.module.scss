@@ -1,0 +1,15 @@
+@use '../styles/variables' as *;
+
+.error {
+  color: $color-error-dark;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: $radius-md;
+  padding: $space-sm $space-md;
+  font-size: $font-base;
+  margin-bottom: $space-sm;
+}
+
+.errorList {
+  margin-bottom: $space-md;
+}

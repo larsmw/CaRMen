@@ -1,0 +1,157 @@
+@use '../styles/variables' as *;
+
+.board {
+  display: flex;
+  gap: $space-lg;
+  overflow-x: auto;
+  padding-bottom: $space-lg;
+  align-items: flex-start;
+  min-height: 500px;
+}
+
+.column {
+  flex: 0 0 260px;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg;
+  border-radius: $radius-xl;
+  padding: $space-md;
+  min-height: 400px;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-xs;
+}
+
+.columnLabel {
+  font-size: $font-sm;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+// Stage label colors (match Deals list badge colors)
+.stage_prospecting   { background: #e2e8f0; color: #475569; }
+.stage_qualification { background: #dbeafe; color: #1d4ed8; }
+.stage_proposal      { background: #fef9c3; color: #854d0e; }
+.stage_negotiation   { background: #fed7aa; color: #9a3412; }
+.stage_closed_won    { background: $color-success-bg; color: $color-success-text; }
+.stage_closed_lost   { background: #fee2e2; color: $color-error-dark; }
+
+.columnCount {
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  background: $color-white;
+  border-radius: 999px;
+  padding: 1px 8px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.columnTotal {
+  font-size: $font-xs;
+  color: $color-text-muted;
+  margin-bottom: $space-md;
+  padding: 0 2px;
+}
+
+.columnBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  flex: 1;
+  border-radius: $radius-lg;
+  transition: background 0.15s;
+  padding: 2px;
+  min-height: 80px;
+}
+
+.columnBodyOver {
+  background: rgba(59, 130, 246, 0.07);
+  outline: 2px dashed rgba(59, 130, 246, 0.35);
+  outline-offset: -2px;
+}
+
+.card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-md;
+  cursor: grab;
+  box-shadow: $shadow-card;
+  user-select: none;
+  touch-action: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.cardDragging {
+  opacity: 0.35;
+}
+
+.cardGhost {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: grabbing;
+  opacity: 1;
+}
+
+.cardTitle {
+  display: block;
+  font-size: $font-md;
+  font-weight: 600;
+  color: $color-text-dark;
+  text-decoration: none;
+  margin-bottom: $space-xs;
+  line-height: 1.3;
+  pointer-events: auto;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.cardCustomer {
+  font-size: $font-sm;
+  color: $color-text-muted;
+  margin-bottom: $space-sm;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: $space-xs;
+}
+
+.cardValue {
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.cardDate {
+  font-size: $font-xs;
+  color: $color-text-muted;
+}
+
+.emptyDrop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  border: 2px dashed $color-border;
+  border-radius: $radius-md;
+  font-size: $font-sm;
+  color: $color-text-muted;
+}

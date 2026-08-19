@@ -1,0 +1,84 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.title {
+  font-size: $font-4xl;
+  font-weight: 700;
+  margin-bottom: $space-2xl;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-lg;
+  margin-bottom: $space-3xl;
+
+  @include sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  padding: $space-xl $space-2xl;
+}
+
+.cardValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: $color-primary;
+}
+
+.cardLabel {
+  font-size: $font-base;
+  color: $color-text-muted;
+  margin-top: $space-xs;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: $space-lg;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: $color-white;
+  border-radius: 10px;
+  border: 1px solid $color-border;
+}
+
+.table {
+  width: 100%;
+  min-width: 400px;
+  border-collapse: collapse;
+}
+
+.theadRow {
+  background: $color-table-header;
+}
+
+.th {
+  padding: $space-md $space-lg;
+  text-align: left;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+}
+
+.td {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+}
+
+.tbodyRow {
+  border-top: 1px solid $color-bg;
+}

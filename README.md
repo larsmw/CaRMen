@@ -1,79 +1,81 @@
-## CaRMen
-# A Customer Relationship Management system
-The foundational thought for this project is to create a CRM system that is ACID and GDPR compliant,
+# Enterprise CRM
 
-# Build on shoulders of Giants
-This project is built on top of many other great projects. As foundation Symfony is used to manage routes, controllers and fundamental features.
+Symfony 7 + API Platform backend, React 18 + TypeScript frontend.
 
-As a cookie manager I use : https://silktide.com/consent-manager/install/
+## Quick Start
 
-# Install
-I have not made an installer yet. But insert these menu items as a start.
-` 
-INSERT INTO `menu_item` (`id`,`name`,`title`,`route`,`menu`,`parent`) VALUES (1,'Menu Items','Menu Items','/menu/item','admin',0), (2,'Hjem','Hjem','/','main',0), (3,'Login','Login','/login','main',2), (4,'Logout','Logout','/logout','main',2), (5,'Register User','Register User','/register','admin',0), (6,'Kundeliste','Kunder','/customer',0);
-`
-sass -w sass/:assets/styles/
-`
+### Prerequisites
+- PHP 8.2+, Composer, Symfony CLI
+- Node 20+
+- PostgreSQL 16 (or Docker)
 
-## migration of test database
-php bin/console doctrine:database:create --env=test
-php bin/console make:migration --env=test
-php bin/console doctrine:migrations:status --env=test
-php bin/console doctrine:migrations:migrate --env=test
+### Backend
 
-### This doesnt work
-It has generated migration with DEFAULT which is incompatible with sqlite.
+```bash
+cd backend
+composer install
+# Generate JWT keys
+php bin/console lexik:jwt:generate-keypair
+# Create DB & run migrations
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
+# Load sample data
+composer require --dev doctrine/doctrine-fixtures-bundle
+php bin/console doctrine:fixtures:load
+# Start server
+symfony server:start --port=8000
+```
 
-## How to update assets
-`
-bin/console asset-map:compile
-`
+### Frontend
 
-# Usage of components
-## Autocomplete
-https://symfony.com/bundles/ux-autocomplete/current/index.html
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
+### Or with Docker
 
-# Wishlist for features
-Users and permissions
+```bash
+docker compose up -d
+```
 
-Leads - Collect leads from facebook and website.
+## Credentials (fixtures)
 
-Customers
+| Role  | Email              | Password  |
+|-------|--------------------|-----------|
+| Admin | admin@crm.local    | admin123  |
+| Sales | sales@crm.local    | sales123  |
 
-Deals - a calendar event
+## API
 
-KPI - some sort of ranking on events.
+- Docs: http://localhost:8000/api/docs
+- Login: `POST /api/login` → returns JWT
 
-Lead qualification - Rank leads
+## Architecture
 
-Reporting - tables and graphs of KPI's
+```
+backend/
+  src/
+    Entity/       # User, Account, Contact, Deal, Activity
+    Controller/   # AuthController, DashboardController
+    Repository/   # Doctrine repositories
+    DataFixtures/ # Sample data
+  config/
+    packages/     # security, jwt, api_platform, cors
 
-Customerlifecycle - visualization of the customer journey.
+frontend/
+  src/
+    api/          # Axios client
+    store/        # Zustand auth store
+    types/        # TypeScript interfaces
+    pages/        # Dashboard, Contacts, Accounts, Deals, Activities
+    components/   # Layout, Sidebar
+```
 
-Automation - When an enity reaches some state it should be able to trigger some actions.
+## Role Hierarchy
 
-Email - Templates for standard emails for customers
-
-Department - A user can belong to a department
-
-Teams - Some structure of colaboration between users.
-
-Calendar - scheduled appointments.
-
-Integrations - Zapier, Facebook, mail system.
-
-Internationalization - possibility to have more languages in the user interface.
-
-# Research
-
-Why are CRM faling
-https://www.researchgate.net/profile/Mohamed-Tazkarji/publication/340550301_Reasons_for_Failures_of_CRM_Implementations/links/63fe7a9ab1704f343f8d4233/Reasons-for-Failures-of-CRM-Implementations.pdf
-
-# Notes
-Error page handling : https://symfony.com/doc/current/controller/error_pages.html
-
-Install profiler : https://symfony.com/doc/current/profiler.html
-
-Translation : https://medium.com/@andrew72ru/store-translation-messages-in-database-in-symfony-3f12e579df74
-
+```
+ROLE_ADMIN > ROLE_MANAGER > ROLE_SALES > ROLE_USER
+```

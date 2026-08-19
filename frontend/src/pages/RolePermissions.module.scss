@@ -1,0 +1,128 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: $space-xs;
+
+  @include sm {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+}
+
+.title {
+  font-size: $font-3xl;
+  font-weight: 700;
+  margin: 0;
+}
+
+.headerRight {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.savedMsg {
+  font-size: $font-base;
+  color: $color-success-text;
+}
+
+.saveBtn {
+  padding: $space-sm 18px;
+  background: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+  }
+}
+
+.subText {
+  font-size: $font-md;
+  color: $color-text-muted;
+  margin-bottom: $space-xl;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+
+.theadRow {
+  background: $color-table-header;
+  border-bottom: 1px solid $color-border;
+}
+
+.thLeft {
+  padding: 10px $space-lg;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-align: left;
+  width: 40%;
+}
+
+.thCenter {
+  padding: 10px $space-lg;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.tbodyRowEven {
+  border-bottom: 1px solid $color-bg;
+  background: $color-white;
+}
+
+.tbodyRowOdd {
+  border-bottom: 1px solid $color-bg;
+  background: $color-table-row-alt;
+}
+
+.tdPerm {
+  padding: 10px $space-lg;
+  font-size: $font-md;
+  font-weight: 500;
+}
+
+.tdCenter {
+  padding: 10px $space-lg;
+  font-size: $font-md;
+  text-align: center;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkboxDisabled {
+  width: 16px;
+  height: 16px;
+  cursor: default;
+}

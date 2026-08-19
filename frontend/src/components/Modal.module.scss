@@ -1,0 +1,60 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end; // sheet from bottom on mobile
+  justify-content: center;
+  z-index: 1000;
+  padding: 0;
+
+  @include md {
+    align-items: center;
+    padding: 16px;
+  }
+}
+
+.dialog {
+  background: $color-white;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+  @include md {
+    border-radius: $radius-xl;
+    width: 480px;
+    max-width: 100%;
+    max-height: 85vh;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-xl $space-2xl $space-lg;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: $color-sidebar-text;
+  line-height: 1;
+}
+
+.body {
+  padding: 0 $space-2xl $space-2xl;
+}

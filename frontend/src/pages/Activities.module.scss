@@ -1,0 +1,204 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: $space-lg;
+
+  @include sm {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  flex-wrap: wrap;
+}
+
+.viewToggle {
+  display: flex;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+.toggleBtn {
+  padding: 6px 14px;
+  border: none;
+  background: $color-white;
+  font-size: $font-sm;
+  font-weight: 500;
+  color: $color-text-muted;
+  cursor: pointer;
+
+  & + & { border-left: 1px solid $color-border; }
+
+  &:hover { background: $color-bg; }
+}
+
+.toggleActive {
+  background: $color-primary !important;
+  color: $color-white !important;
+}
+
+.calBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-md;
+  margin-bottom: $space-lg;
+}
+
+.calBarLeft {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.navBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-border;
+  background: $color-white;
+  border-radius: $radius-md;
+  font-size: $font-xl;
+  cursor: pointer;
+  color: $color-text;
+  line-height: 1;
+
+  &:hover { background: $color-bg; }
+}
+
+.todayBtn {
+  padding: 4px 12px;
+  border: 1px solid $color-border;
+  background: $color-white;
+  border-radius: $radius-md;
+  font-size: $font-sm;
+  font-weight: 500;
+  cursor: pointer;
+  color: $color-text;
+
+  &:hover { background: $color-bg; }
+}
+
+.calTitle {
+  font-size: $font-xl;
+  font-weight: 600;
+  color: $color-text-dark;
+  margin-left: $space-sm;
+}
+
+.title {
+  font-size: $font-4xl;
+  font-weight: 700;
+}
+
+.newBtn {
+  padding: $space-sm $space-lg;
+  background: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  align-self: flex-start;
+
+  @include sm {
+    align-self: auto;
+  }
+
+  &:hover {
+    background: $color-primary-hover;
+  }
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+  box-shadow: $shadow-card;
+}
+
+.table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  background: $color-white;
+}
+
+.theadRow {
+  background: $color-table-header;
+}
+
+.th {
+  padding: $space-md $space-lg;
+  text-align: left;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+}
+
+.td {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+}
+
+.tdRight {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+  text-align: right;
+}
+
+.tbodyRow {
+  border-top: 1px solid $color-bg;
+}
+
+.link {
+  color: $color-primary;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.delBtn {
+  padding: 4px 10px;
+  background: #fee2e2;
+  color: $color-error-dark;
+  border: none;
+  border-radius: $radius-sm;
+  font-size: $font-sm;
+  cursor: pointer;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: $font-sm;
+  font-weight: 500;
+}
+
+// Status colors
+.statusPlanned   { background: #dbeafe; color: #1d4ed8; }
+.statusCompleted { background: $color-success-bg; color: $color-success-text; }
+.statusCancelled { background: #fee2e2; color: $color-error-dark; }
+
+.emptyCell {
+  padding: $space-md $space-lg;
+  font-size: $font-md;
+  text-align: center;
+  color: $color-sidebar-text;
+}
