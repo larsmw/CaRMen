@@ -17,7 +17,7 @@ class DealTest extends ApiTestCase
     {
         $response = $this->adminClient()->request('GET', '/api/deals');
         $this->assertResponseIsSuccessful();
-        $this->assertGreaterThanOrEqual(TestFixtures::DEAL_COUNT, $response->toArray()['hydra:totalItems']);
+        $this->assertGreaterThanOrEqual(TestFixtures::DEAL_COUNT, $response->toArray()['totalItems']);
     }
 
     public function testCreateDealB2C(): void
@@ -26,7 +26,7 @@ class DealTest extends ApiTestCase
         $client  = $this->salesClient();
 
         // Pick a contact IRI
-        $contactIri = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $contactIri = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $response = $client->request('POST', '/api/deals', [
             'json' => [
@@ -50,8 +50,8 @@ class DealTest extends ApiTestCase
         $faker   = Factory::create();
         $client  = $this->salesClient();
 
-        $accountIri = $client->request('GET', '/api/accounts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
-        $contactIri = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $accountIri = $client->request('GET', '/api/accounts?itemsPerPage=1')->toArray()['member'][0]['@id'];
+        $contactIri = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $response = $client->request('POST', '/api/deals', [
             'json' => [
@@ -85,7 +85,7 @@ class DealTest extends ApiTestCase
     public function testPatchDealStage(): void
     {
         $client = $this->salesClient();
-        $iri    = $client->request('GET', '/api/deals?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $iri    = $client->request('GET', '/api/deals?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $response = $client->request('PATCH', $iri, [
             'headers' => ['Content-Type' => 'application/merge-patch+json'],
@@ -98,7 +98,7 @@ class DealTest extends ApiTestCase
 
     public function testDeleteDealAsUserForbidden(): void
     {
-        $iri = $this->adminClient()->request('GET', '/api/deals?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $iri = $this->adminClient()->request('GET', '/api/deals?itemsPerPage=1')->toArray()['member'][0]['@id'];
         $this->userClient()->request('DELETE', $iri);
         $this->assertResponseStatusCodeSame(403);
     }
@@ -107,7 +107,7 @@ class DealTest extends ApiTestCase
     {
         $faker  = Factory::create();
         $admin  = $this->adminClient();
-        $contact = $admin->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $contact = $admin->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $created = $admin->request('POST', '/api/deals', [
             'json' => [

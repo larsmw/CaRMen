@@ -27,9 +27,9 @@ class ContactTest extends ApiTestCase
 
         $this->assertResponseIsSuccessful();
         $data = $response->toArray();
-        $this->assertArrayHasKey('hydra:member', $data);
-        $this->assertArrayHasKey('hydra:totalItems', $data);
-        $this->assertGreaterThanOrEqual(TestFixtures::CONTACT_COUNT, $data['hydra:totalItems']);
+        $this->assertArrayHasKey('member', $data);
+        $this->assertArrayHasKey('totalItems', $data);
+        $this->assertGreaterThanOrEqual(TestFixtures::CONTACT_COUNT, $data['totalItems']);
     }
 
     public function testCreateContactAsSales(): void
@@ -71,7 +71,7 @@ class ContactTest extends ApiTestCase
     {
         $client   = $this->adminClient();
         $list     = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray();
-        $iri      = $list['hydra:member'][0]['@id'];
+        $iri      = $list['member'][0]['@id'];
 
         $response = $client->request('GET', $iri);
         $this->assertResponseIsSuccessful();
@@ -85,7 +85,7 @@ class ContactTest extends ApiTestCase
     {
         $client = $this->salesClient();
         $list   = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray();
-        $iri    = $list['hydra:member'][0]['@id'];
+        $iri    = $list['member'][0]['@id'];
 
         $response = $client->request('PATCH', $iri, [
             'headers' => ['Content-Type' => 'application/merge-patch+json'],
@@ -99,7 +99,7 @@ class ContactTest extends ApiTestCase
     public function testUserCannotDeleteContact(): void
     {
         $adminList = $this->adminClient()->request('GET', '/api/contacts?itemsPerPage=1')->toArray();
-        $iri       = $adminList['hydra:member'][0]['@id'];
+        $iri       = $adminList['member'][0]['@id'];
 
         $response = $this->userClient()->request('DELETE', $iri);
         $this->assertSame(403, $response->getStatusCode());
@@ -152,9 +152,9 @@ class ContactTest extends ApiTestCase
 
         $this->assertResponseIsSuccessful();
         $data = $response->toArray();
-        $this->assertArrayHasKey('hydra:member', $data);
-        $this->assertArrayHasKey('hydra:totalItems', $data);
-        $this->assertGreaterThan(0, $data['hydra:totalItems']);
-        $this->assertIsArray($data['hydra:member']);
+        $this->assertArrayHasKey('member', $data);
+        $this->assertArrayHasKey('totalItems', $data);
+        $this->assertGreaterThan(0, $data['totalItems']);
+        $this->assertIsArray($data['member']);
     }
 }

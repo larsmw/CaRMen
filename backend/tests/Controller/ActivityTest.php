@@ -17,14 +17,14 @@ class ActivityTest extends ApiTestCase
     {
         $response = $this->salesClient()->request('GET', '/api/activities');
         $this->assertResponseIsSuccessful();
-        $this->assertGreaterThanOrEqual(TestFixtures::ACTIVITY_COUNT, $response->toArray()['hydra:totalItems']);
+        $this->assertGreaterThanOrEqual(TestFixtures::ACTIVITY_COUNT, $response->toArray()['totalItems']);
     }
 
     public function testCreateActivity(): void
     {
         $faker      = Factory::create();
         $client     = $this->salesClient();
-        $contactIri = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $contactIri = $client->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $response = $client->request('POST', '/api/activities', [
             'json' => [
@@ -45,7 +45,7 @@ class ActivityTest extends ApiTestCase
     public function testPatchActivityStatus(): void
     {
         $client = $this->salesClient();
-        $iri    = $client->request('GET', '/api/activities?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $iri    = $client->request('GET', '/api/activities?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $response = $client->request('PATCH', $iri, [
             'headers' => ['Content-Type' => 'application/merge-patch+json'],
@@ -58,7 +58,7 @@ class ActivityTest extends ApiTestCase
 
     public function testDeleteActivityAsSalesForbidden(): void
     {
-        $iri = $this->adminClient()->request('GET', '/api/activities?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $iri = $this->adminClient()->request('GET', '/api/activities?itemsPerPage=1')->toArray()['member'][0]['@id'];
         $this->salesClient()->request('DELETE', $iri);
         $this->assertResponseStatusCodeSame(403);
     }
@@ -67,7 +67,7 @@ class ActivityTest extends ApiTestCase
     {
         $faker   = Factory::create();
         $admin   = $this->adminClient();
-        $contact = $admin->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $contact = $admin->request('GET', '/api/contacts?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $created = $admin->request('POST', '/api/activities', [
             'json' => [

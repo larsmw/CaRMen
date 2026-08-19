@@ -1,4 +1,4 @@
-# Enterprise CRM
+# CRM
 
 Symfony 7 + API Platform backend, React 18 + TypeScript frontend.
 

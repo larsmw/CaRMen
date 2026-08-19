@@ -24,7 +24,7 @@ class AccountTest extends ApiTestCase
         $response = $this->adminClient()->request('GET', '/api/accounts');
         $this->assertResponseIsSuccessful();
         $data = $response->toArray();
-        $this->assertGreaterThanOrEqual(TestFixtures::ACCOUNT_COUNT, $data['hydra:totalItems']);
+        $this->assertGreaterThanOrEqual(TestFixtures::ACCOUNT_COUNT, $data['totalItems']);
     }
 
     public function testCreateAccountAsSales(): void
@@ -53,7 +53,7 @@ class AccountTest extends ApiTestCase
     public function testPatchAccountAsSales(): void
     {
         $client = $this->salesClient();
-        $iri    = $client->request('GET', '/api/accounts?itemsPerPage=1')->toArray()['hydra:member'][0]['@id'];
+        $iri    = $client->request('GET', '/api/accounts?itemsPerPage=1')->toArray()['member'][0]['@id'];
 
         $response = $client->request('PATCH', $iri, [
             'headers' => ['Content-Type' => 'application/merge-patch+json'],
