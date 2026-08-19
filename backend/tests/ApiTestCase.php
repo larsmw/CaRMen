@@ -11,6 +11,8 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 abstract class ApiTestCase extends BaseApiTestCase
 {
+    protected static ?bool $alwaysBootKernel = true;
+
     private static bool $fixturesLoaded = false;
 
     protected static function loadFixtures(): void
