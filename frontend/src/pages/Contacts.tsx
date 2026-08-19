@@ -43,8 +43,8 @@ export default function Contacts() {
     if (window.confirm(`Delete "${name}"?`)) deleteMutation.mutate(id)
   }
 
-  const contacts = data?.['hydra:member'] ?? []
-  const total = data?.['hydra:totalItems'] ?? 0
+  const contacts = data?.['member'] ?? []
+  const total = data?.['totalItems'] ?? 0
 
   return (
     <div>

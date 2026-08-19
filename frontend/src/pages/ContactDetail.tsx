@@ -53,8 +53,8 @@ export default function ContactDetail() {
   if (isLoading) return <p>Loading...</p>
   if (!contact) return <p>Contact not found.</p>
 
-  const activities = activitiesData?.['hydra:member'] ?? []
-  const deals      = dealsData?.['hydra:member']      ?? []
+  const activities = activitiesData?.['member'] ?? []
+  const deals      = dealsData?.['member']      ?? []
 
   return (
     <div>

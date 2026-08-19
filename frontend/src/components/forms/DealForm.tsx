@@ -46,9 +46,9 @@ export default function DealForm({ initial, onDone }: Props) {
     }).then(r => r.data),
   })
 
-  const accounts = accountsData?.['hydra:member'] ?? []
-  const contacts = contactsData?.['hydra:member'] ?? []
-  const users    = usersData?.['hydra:member']    ?? []
+  const accounts = accountsData?.['member'] ?? []
+  const contacts = contactsData?.['member'] ?? []
+  const users    = usersData?.['member']    ?? []
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))

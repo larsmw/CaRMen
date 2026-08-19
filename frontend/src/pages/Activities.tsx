@@ -81,9 +81,9 @@ export default function Activities() {
     setCurrentDate(d)
   }
 
-  const calActivities = calData?.['hydra:member'] ?? []
-  const listActivities = listData?.['hydra:member'] ?? []
-  const total = listData?.['hydra:totalItems'] ?? 0
+  const calActivities = calData?.['member'] ?? []
+  const listActivities = listData?.['member'] ?? []
+  const total = listData?.['totalItems'] ?? 0
 
   return (
     <div>

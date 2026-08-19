@@ -29,9 +29,10 @@ services:
       JWT_TTL: "3600"
       CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
       MAILER_DSN: smtp://mailpit:1025
-      FRONTEND_URL: http://localhost:3000
+      FRONTEND_URL: http://localhost:3001
     volumes:
       - ./backend:/app
+      - backend_vendor:/app/vendor
     depends_on:
       db:
         condition: service_healthy
@@ -42,13 +43,13 @@ services:
   mailpit:
     image: axllent/mailpit
     ports:
-      - "8025:8025"
+      - "8027:8025"
       - "1025:1025"
 
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -58,3 +59,4 @@ services:
 
 volumes:
   db_data:
+  backend_vendor:

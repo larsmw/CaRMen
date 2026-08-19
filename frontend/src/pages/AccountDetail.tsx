@@ -44,8 +44,8 @@ export default function AccountDetail() {
   if (isLoading) return <p>Loading...</p>
   if (!account) return <p>Account not found.</p>
 
-  const contacts = contactsData?.['hydra:member'] ?? []
-  const deals    = dealsData?.['hydra:member']    ?? []
+  const contacts = contactsData?.['member'] ?? []
+  const deals    = dealsData?.['member']    ?? []
 
   return (
     <div>

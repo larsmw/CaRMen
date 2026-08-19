@@ -53,8 +53,8 @@ export default function Deals() {
     if (window.confirm(`Delete "${title}"?`)) deleteMutation.mutate(id)
   }
 
-  const deals = data?.['hydra:member'] ?? []
-  const total = data?.['hydra:totalItems'] ?? 0
+  const deals = data?.['member'] ?? []
+  const total = data?.['totalItems'] ?? 0
 
   return (
     <div>

@@ -44,9 +44,9 @@ export default function ActivityForm({ initial, onDone }: Props) {
     }).then(r => r.data),
   })
 
-  const contacts = contactsData?.['hydra:member'] ?? []
-  const deals    = dealsData?.['hydra:member']    ?? []
-  const users    = usersData?.['hydra:member']    ?? []
+  const contacts = contactsData?.['member'] ?? []
+  const deals    = dealsData?.['member']    ?? []
+  const users    = usersData?.['member']    ?? []
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))

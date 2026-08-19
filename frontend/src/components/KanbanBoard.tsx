@@ -123,7 +123,7 @@ export default function KanbanBoard() {
       const prev = qc.getQueryData<PaginatedResponse<Deal>>(['deals-kanban'])
       qc.setQueryData<PaginatedResponse<Deal>>(['deals-kanban'], old =>
         old
-          ? { ...old, 'hydra:member': old['hydra:member'].map(d => d.id === id ? { ...d, stage } : d) }
+          ? { ...old, 'member': old['member'].map(d => d.id === id ? { ...d, stage } : d) }
           : old
       )
       return { prev }
@@ -141,7 +141,7 @@ export default function KanbanBoard() {
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   )
 
-  const deals = data?.['hydra:member'] ?? []
+  const deals = data?.['member'] ?? []
   const byStage = STAGES.reduce((acc, s) => {
     acc[s] = deals.filter(d => d.stage === s)
     return acc

@@ -7,8 +7,8 @@ interface ApiViolation {
 }
 
 interface ApiError {
-  'hydra:description'?: string
-  'hydra:title'?: string
+  description?: string
+  title?: string
   violations?: ApiViolation[]
   detail?: string
 }
@@ -37,7 +37,6 @@ export default function FormError({ error }: { error: unknown }) {
     )
   }
 
-  // Hydra error description
-  const message = data['hydra:description'] ?? data.detail ?? 'Something went wrong.'
+  const message = data.description ?? data.detail ?? 'Something went wrong.'
   return <p className={styles.error}>{message}</p>
 }

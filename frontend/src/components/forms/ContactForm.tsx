@@ -39,7 +39,7 @@ export default function ContactForm({ initial, onDone }: Props) {
       headers: { Accept: 'application/ld+json' },
     }).then(r => r.data),
   })
-  const accounts = accountsData?.['hydra:member'] ?? []
+  const accounts = accountsData?.['member'] ?? []
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))

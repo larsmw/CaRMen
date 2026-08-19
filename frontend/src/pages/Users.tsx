@@ -35,8 +35,8 @@ export default function Users() {
         .then(r => r.data),
   })
 
-  const users = data?.['hydra:member'] ?? []
-  const totalItems = data?.['hydra:totalItems'] ?? 0
+  const users = data?.['member'] ?? []
+  const totalItems = data?.['totalItems'] ?? 0
 
   const patchUser = useMutation({
     mutationFn: ({ id, roles, isActive }: { id: string; roles: string[]; isActive: boolean }) =>
