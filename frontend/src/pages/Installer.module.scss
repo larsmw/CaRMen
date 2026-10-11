@@ -1,0 +1,172 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.wrapper {
+  @include auth-wrapper;
+}
+
+.box {
+  @include form-box;
+
+  @include sm {
+    width: 480px;
+  }
+}
+
+.title {
+  margin-bottom: $space-xl;
+  font-size: $font-4xl;
+  font-weight: 700;
+}
+
+.steps {
+  display: flex;
+  gap: $space-sm;
+  list-style: none;
+  margin: 0 0 $space-2xl;
+  padding: 0;
+
+  li {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-xs;
+    color: $color-text-muted;
+    font-size: $font-sm;
+    text-align: center;
+  }
+
+  .current {
+    color: $color-primary;
+    font-weight: 600;
+
+    .stepNumber {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  .done .stepNumber {
+    background: $color-success-bg;
+    border-color: $color-success-text;
+    color: $color-success-text;
+  }
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid $color-border;
+  font-size: $font-base;
+}
+
+.stepTitle {
+  font-size: $font-2xl;
+  font-weight: 600;
+  margin-bottom: $space-lg;
+}
+
+.muted {
+  color: $color-text-muted;
+  font-size: $font-md;
+  margin-bottom: $space-lg;
+}
+
+.checks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 $space-lg;
+
+  li {
+    padding: $space-sm 0 $space-sm 28px;
+    position: relative;
+    font-size: $font-md;
+    border-bottom: 1px solid $color-border;
+
+    &::before {
+      position: absolute;
+      left: 4px;
+      font-weight: 700;
+    }
+  }
+
+  .ok::before {
+    content: '✓';
+    color: $color-success-text;
+  }
+
+  .fail {
+    color: $color-error;
+
+    &::before {
+      content: '✕';
+    }
+  }
+}
+
+.detail {
+  display: block;
+  margin-top: $space-xs;
+  font-size: $font-sm;
+  color: $color-text-muted;
+  word-break: break-word;
+}
+
+.success {
+  color: $color-success-text;
+  background: $color-success-bg;
+  padding: $space-sm $space-md;
+  border-radius: $radius-md;
+  margin-bottom: $space-lg;
+  font-size: $font-md;
+}
+
+.errorMsg {
+  color: $color-error;
+  margin-bottom: $space-lg;
+  font-size: $font-md;
+}
+
+.fieldError {
+  color: $color-error;
+  font-size: $font-sm;
+  margin: -$space-sm 0 $space-md;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  margin: $space-sm 0 $space-lg;
+  font-size: $font-md;
+  cursor: pointer;
+
+  input {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+}
+
+.label {
+  @include label;
+}
+
+.input {
+  @include input;
+}
+
+.btn {
+  @include btn-primary;
+  display: block;
+  margin-top: $space-sm;
+  text-align: center;
+  text-decoration: none;
+}
