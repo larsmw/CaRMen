@@ -17,6 +17,7 @@ import Activities from './pages/Activities'
 import ActivityDetail from './pages/ActivityDetail'
 import Users from './pages/Users'
 import RolePermissions from './pages/RolePermissions'
+import Installer from './pages/Installer'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((s) => s.token)
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/installer" element={<Installer />} />
         <Route
           path="/"
           element={
