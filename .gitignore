@@ -72,3 +72,15 @@ phpstan.neon
 docker/nginx/certs/**
 *.sql.gz
 TAGS
+
+# Playwright
+frontend/test-results/
+frontend/playwright-report/
+
+/data/**
+
+# Local editor / tool files
+.phpunit.result.cache
+.phpdoc/
+.ac-php-conf.json
+.phpactor.json
