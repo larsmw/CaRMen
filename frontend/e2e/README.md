@@ -9,9 +9,13 @@ The tests log in as the fixture users from `backend/src/DataFixtures/AppFixtures
 contacts (Alice Smith, Bob Jones). Load them into the database the frontend talks to:
 
 ```bash
-# WARNING: wipes the database. Use ./reset-db.sh first if you want a backup.
+# WARNING: wipes the data. Use ./reset-db.sh first if you want a backup.
+docker compose exec backend php bin/console doctrine:migrations:migrate -n
 docker compose exec backend php bin/console doctrine:fixtures:load -n
 ```
+
+The migrate step is a no-op on a database that's already up to date, but is needed
+after `./reset-db.sh`, which drops all tables.
 
 ## Running
 
