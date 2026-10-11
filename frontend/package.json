@@ -10,10 +10,7 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "test:chrome": "playwright test --project=chromium",
-    "test:firefox": "playwright test --project=firefox",
-    "test:webkit": "playwright test --project=webkit"
+    "test:debug": "playwright test --debug"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -26,10 +23,10 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "playwright": "^1.60.0",
     "sass": "^1.98.0",
     "typescript": "^5.5.3",
     "vite": "^7.0.0"

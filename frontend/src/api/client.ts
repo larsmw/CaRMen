@@ -14,7 +14,9 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    // Only an expired/invalid token means "back to login". A 401 on an
+    // unauthenticated request (e.g. wrong password on /api/login) is for the caller to show.
+    if (err.response?.status === 401 && err.config?.headers?.Authorization) {
       localStorage.removeItem('token')
       localStorage.removeItem('crm-auth')
       window.location.href = '/login'
