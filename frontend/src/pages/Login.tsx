@@ -1,6 +1,7 @@
-import { useState, FormEvent } from 'react'
+import { useEffect, useState, FormEvent } from 'react'
 import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
+import client from '../api/client'
 import styles from './Login.module.scss'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -13,6 +14,13 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const login = useAuthStore((s) => s.login)
   const navigate = useNavigate()
+
+  // Fresh install: no users yet, so send them to the installer instead
+  useEffect(() => {
+    client.get('/api/install/status')
+      .then(({ data }) => { if (!data.installed) navigate('/installer', { replace: true }) })
+      .catch(() => {})
+  }, [navigate])
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
