@@ -63,3 +63,90 @@ jobs:
       - name: Run PHPUnit
         working-directory: backend
         run: php bin/phpunit --testdox
+
+  e2e:
+    name: Playwright
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: crm
+          POSTGRES_USER: crm
+          POSTGRES_PASSWORD: crm
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U crm"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: pdo_pgsql, intl, sodium, ctype, iconv
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: |
+          # Config goes in .env, not job env vars: setup-php's production php.ini has
+          # variables_order=GPCS, so `php -S` never sees env vars and Symfony would
+          # fall back to .env. APP_ENV=dev (not test) so fixtures:load loads AppFixtures,
+          # whose users (admin@crm.local etc.) the e2e specs log in as.
+          sed -e 's/^APP_ENV=.*/APP_ENV=dev/' \
+              -e 's|^DATABASE_URL=.*|DATABASE_URL="postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16\&charset=utf8"|' \
+              .env.test > .env
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+          php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+      - name: Create database with fixtures
+        working-directory: backend
+        run: |
+          php bin/console doctrine:migrations:migrate --no-interaction
+          php bin/console doctrine:fixtures:load --no-interaction
+
+      - name: Start backend
+        working-directory: backend
+        run: |
+          php -S 127.0.0.1:8000 -t public/ > /tmp/backend.log 2>&1 &
+          status=$(curl --retry 10 --retry-delay 1 --retry-connrefused -s http://127.0.0.1:8000/api/install/status)
+          echo "install status: $status"
+          # Fail here (with the backend log) rather than as 16 confusing UI timeouts
+          [[ "$status" == *'"installed":true'* ]] || { cat /tmp/backend.log; exit 1; }
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      # Playwright starts Vite on :3001 itself (webServer in playwright.config.ts);
+      # Vite proxies /api to the backend on :8000.
+      - name: Run Playwright
+        working-directory: frontend
+        run: npx playwright test
+
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            frontend/playwright-report/
+            frontend/test-results/
+            /tmp/backend.log
+          retention-days: 7
