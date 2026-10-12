@@ -5,10 +5,6 @@ import client from '../api/client'
 import styles from './Login.module.scss'
 import { usePageTitle } from '../hooks/usePageTitle'
 
-// Set at build time for the public demo, so visitors can log in with one click
-const DEMO_EMAIL = import.meta.env.VITE_DEMO_EMAIL as string | undefined
-const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD as string | undefined
-
 export default function Login() {
   usePageTitle('Sign In')
   const [searchParams] = useSearchParams()
@@ -16,13 +12,18 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  // Public demo: the backend tells us the shared login so visitors can log in with one click
+  const [demoLogin, setDemoLogin] = useState<{ email: string; password: string } | null>(null)
   const login = useAuthStore((s) => s.login)
   const navigate = useNavigate()
 
   // Fresh install: no users yet, so send them to the installer instead
   useEffect(() => {
     client.get('/api/install/status')
-      .then(({ data }) => { if (!data.installed) navigate('/installer', { replace: true }) })
+      .then(({ data }) => {
+        if (!data.installed) navigate('/installer', { replace: true })
+        setDemoLogin(data.demoLogin ?? null)
+      })
       .catch(() => {})
   }, [navigate])
 
@@ -47,13 +48,13 @@ export default function Login() {
         {searchParams.get('reset') && (
           <p className={styles.successMsg}>Password updated. You can now sign in.</p>
         )}
-        {DEMO_EMAIL && DEMO_PASSWORD && (
+        {demoLogin && (
           <div className={styles.demoBox}>
             <p>
-              This is a public demo. Log in as <strong>{DEMO_EMAIL}</strong> / <strong>{DEMO_PASSWORD}</strong>.
+              This is a public demo. Log in as <strong>{demoLogin.email}</strong> / <strong>{demoLogin.password}</strong>.
               Data is reset every night.
             </p>
-            <button type="button" className={styles.demoBtn} onClick={() => { setEmail(DEMO_EMAIL); setPassword(DEMO_PASSWORD) }}>
+            <button type="button" className={styles.demoBtn} onClick={() => { setEmail(demoLogin.email); setPassword(demoLogin.password) }}>
               Use demo login
             </button>
           </div>
@@ -66,7 +67,7 @@ export default function Login() {
         <button type="submit" disabled={loading} className={styles.btn}>
           {loading ? 'Signing in...' : 'Sign in'}
         </button>
-        {!DEMO_EMAIL && (
+        {!demoLogin && (
           <div className={styles.forgotLink}>
             <Link to="/forgot-password">Forgot password?</Link>
           </div>

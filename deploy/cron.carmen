@@ -3,6 +3,6 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Nightly backup of the real CRM (last 14 kept in /srv/carmen/backups/crm)
-30 3 * * * root /srv/carmen/src/deploy/backup.sh crm >> /var/log/carmen-backup.log 2>&1
+30 3 * * * root /srv/carmen/src/deploy/backup.sh crm nightly >> /var/log/carmen-backup.log 2>&1
 # Reset the public demo to fresh demo data
 0 4 * * * root /srv/carmen/src/deploy/demo-reset.sh >> /var/log/carmen-demo-reset.log 2>&1
