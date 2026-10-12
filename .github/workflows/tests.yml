@@ -83,12 +83,6 @@ jobs:
           --health-timeout 5s
           --health-retries 10
 
-    # dev, not test: the e2e specs log in as the AppFixtures users (admin@crm.local etc.)
-    env:
-      APP_ENV: dev
-      DATABASE_URL: postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16&charset=utf8
-      JWT_PASSPHRASE: changeme
-
     steps:
       - uses: actions/checkout@v4
 
@@ -109,7 +103,13 @@ jobs:
       - name: Install backend dependencies
         working-directory: backend
         run: |
-          cp .env.test .env
+          # Config goes in .env, not job env vars: setup-php's production php.ini has
+          # variables_order=GPCS, so `php -S` never sees env vars and Symfony would
+          # fall back to .env. APP_ENV=dev (not test) so fixtures:load loads AppFixtures,
+          # whose users (admin@crm.local etc.) the e2e specs log in as.
+          sed -e 's/^APP_ENV=.*/APP_ENV=dev/' \
+              -e 's|^DATABASE_URL=.*|DATABASE_URL="postgresql://crm:crm@127.0.0.1:5432/crm?serverVersion=16\&charset=utf8"|' \
+              .env.test > .env
           composer install --no-interaction --prefer-dist --optimize-autoloader
           php bin/console lexik:jwt:generate-keypair --skip-if-exists
 
@@ -123,7 +123,10 @@ jobs:
         working-directory: backend
         run: |
           php -S 127.0.0.1:8000 -t public/ > /tmp/backend.log 2>&1 &
-          curl --retry 10 --retry-delay 1 --retry-connrefused -s -o /dev/null http://127.0.0.1:8000/api/install/status
+          status=$(curl --retry 10 --retry-delay 1 --retry-connrefused -s http://127.0.0.1:8000/api/install/status)
+          echo "install status: $status"
+          # Fail here (with the backend log) rather than as 16 confusing UI timeouts
+          [[ "$status" == *'"installed":true'* ]] || { cat /tmp/backend.log; exit 1; }
 
       - name: Install frontend dependencies
         working-directory: frontend
