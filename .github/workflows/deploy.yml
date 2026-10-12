@@ -126,4 +126,21 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           # The key's forced command on the server only accepts these two forms
           if [ "$ACTION" = deploy ]; then cmd="deploy $INSTANCE $SHA"; else cmd="rollback $INSTANCE"; fi
-          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes root@91.210.57.191 "$cmd"
+          # The hosting provider drops SSH from some GitHub runner IPs; retry the connection a
+          # few times (ssh exits 255 only for its own errors, never for the deploy's result)
+          for attempt in 1 2 3; do
+            rc=0
+            ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+                -o ConnectTimeout=20 root@91.210.57.191 "$cmd" || rc=$?
+            [ "$rc" -ne 255 ] && exit "$rc"
+            echo "::warning::SSH to the server failed (attempt $attempt)"; sleep 20
+          done
+          {
+            echo "### Could not reach the server over SSH"
+            echo "The images are published. Deploy from the server instead:"
+            echo '```'
+            echo "ssh ssdvps 'cd /srv/carmen/src && deploy/deploy.sh deploy $INSTANCE $SHA'"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::error::Could not reach the server over SSH; see the run summary for the server-side fallback"
+          exit 1
