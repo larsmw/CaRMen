@@ -33,7 +33,6 @@ security:
 
     access_control:
         - { path: ^/api/login,           roles: PUBLIC_ACCESS }
-        - { path: ^/api/register,        roles: PUBLIC_ACCESS }
         - { path: ^/api/forgot-password, roles: PUBLIC_ACCESS }
         - { path: ^/api/reset-password,  roles: PUBLIC_ACCESS }
         - { path: ^/api/docs,            roles: PUBLIC_ACCESS }

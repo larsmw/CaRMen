@@ -24,6 +24,29 @@
   font-size: $font-md;
 }
 
+.demoBox {
+  background: $color-success-bg;
+  color: $color-success-text;
+  padding: $space-md;
+  border-radius: $radius-md;
+  margin-bottom: $space-lg;
+  font-size: $font-md;
+
+  p {
+    margin-bottom: $space-sm;
+  }
+}
+
+.demoBtn {
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  border-radius: $radius-md;
+  padding: $space-xs $space-md;
+  font-size: $font-base;
+  cursor: pointer;
+}
+
 .errorMsg {
   color: $color-error;
   margin-bottom: $space-lg;

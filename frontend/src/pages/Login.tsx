@@ -5,6 +5,10 @@ import client from '../api/client'
 import styles from './Login.module.scss'
 import { usePageTitle } from '../hooks/usePageTitle'
 
+// Set at build time for the public demo, so visitors can log in with one click
+const DEMO_EMAIL = import.meta.env.VITE_DEMO_EMAIL as string | undefined
+const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD as string | undefined
+
 export default function Login() {
   usePageTitle('Sign In')
   const [searchParams] = useSearchParams()
@@ -43,6 +47,17 @@ export default function Login() {
         {searchParams.get('reset') && (
           <p className={styles.successMsg}>Password updated. You can now sign in.</p>
         )}
+        {DEMO_EMAIL && DEMO_PASSWORD && (
+          <div className={styles.demoBox}>
+            <p>
+              This is a public demo. Log in as <strong>{DEMO_EMAIL}</strong> / <strong>{DEMO_PASSWORD}</strong>.
+              Data is reset every night.
+            </p>
+            <button type="button" className={styles.demoBtn} onClick={() => { setEmail(DEMO_EMAIL); setPassword(DEMO_PASSWORD) }}>
+              Use demo login
+            </button>
+          </div>
+        )}
         {error && <p className={styles.errorMsg}>{error}</p>}
         <label className={styles.label}>Email</label>
         <input className={styles.input} type="email" value={email} onChange={e => setEmail(e.target.value)} required />
@@ -51,9 +66,11 @@ export default function Login() {
         <button type="submit" disabled={loading} className={styles.btn}>
           {loading ? 'Signing in...' : 'Sign in'}
         </button>
-        <div className={styles.forgotLink}>
-          <Link to="/forgot-password">Forgot password?</Link>
-        </div>
+        {!DEMO_EMAIL && (
+          <div className={styles.forgotLink}>
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
+        )}
       </form>
     </div>
   )

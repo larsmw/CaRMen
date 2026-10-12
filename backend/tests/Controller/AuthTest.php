@@ -4,7 +4,6 @@ namespace App\Tests\Controller;
 
 use App\Tests\ApiTestCase;
 use App\Tests\DataFixtures\TestFixtures;
-use Faker\Factory;
 
 class AuthTest extends ApiTestCase
 {
@@ -74,28 +73,15 @@ class AuthTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testRegisterCreatesUser(): void
+    public function testPublicRegistrationIsDisabled(): void
     {
-        $faker  = Factory::create();
-        $email  = $faker->unique()->safeEmail();
-        $client = static::createClient();
-
-        $client->request('POST', '/api/register', [
-            'json' => [
-                'email'     => $email,
-                'password'  => 'NewPass123!',
-                'firstName' => $faker->firstName(),
-                'lastName'  => $faker->lastName(),
-            ],
+        // Users are created by admins (POST /api/users) or the installer, never anonymously
+        static::createClient()->request('POST', '/api/register', [
+            'json' => ['email' => 'stranger@example.com', 'password' => 'NewPass123!', 'firstName' => 'A', 'lastName' => 'B'],
         ]);
+        $this->assertResponseStatusCodeSame(404);
 
-        $this->assertResponseStatusCodeSame(201);
-
-        // Verify can log in with new credentials
-        $response = $client->request('POST', '/api/login', [
-            'json' => ['email' => $email, 'password' => 'NewPass123!'],
-        ]);
-        $this->assertResponseIsSuccessful();
-        $this->assertArrayHasKey('token', $response->toArray());
+        $em = static::getContainer()->get(\Doctrine\ORM\EntityManagerInterface::class);
+        $this->assertNull($em->getRepository(\App\Entity\User::class)->findOneBy(['email' => 'stranger@example.com']));
     }
 }

@@ -1,0 +1,23 @@
+# Production image: PHP-FPM serving the Symfony API (see deploy/compose.yaml)
+FROM php:8.4-fpm
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions pdo_pgsql intl sodium opcache zip \
+    && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY docker/php-prod.ini $PHP_INI_DIR/conf.d/zz-carmen.ini
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /app
+COPY composer.json composer.lock symfony.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --no-interaction --prefer-dist
+
+COPY . .
+# Real configuration comes from container env vars; this only satisfies Dotenv.
+RUN printf 'APP_ENV=prod\nAPP_DEBUG=0\n' > .env \
+    && composer dump-autoload --no-dev --classmap-authoritative \
+    && mkdir -p var config/jwt && chown -R www-data:www-data var config/jwt
+
+COPY docker/entrypoint.prod.sh /usr/local/bin/carmen-entrypoint
+ENTRYPOINT ["carmen-entrypoint"]
+CMD ["php-fpm"]

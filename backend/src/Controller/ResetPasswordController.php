@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -21,6 +22,8 @@ class ResetPasswordController extends AbstractController
         UserRepository $users,
         EntityManagerInterface $em,
         MailerInterface $mailer,
+        #[Autowire(env: 'FRONTEND_URL')] string $frontendUrl,
+        #[Autowire(env: 'MAILER_FROM')] string $mailerFrom,
     ): JsonResponse {
         $data  = json_decode($request->getContent(), true);
         $email = $data['email'] ?? '';
@@ -39,11 +42,10 @@ class ResetPasswordController extends AbstractController
         $user->setResetTokenExpiresAt($expiresAt);
         $em->flush();
 
-        $frontendUrl = $_ENV['FRONTEND_URL'] ?? 'http://localhost:3000';
-        $resetLink   = "{$frontendUrl}/reset-password?token={$token}";
+        $resetLink = rtrim($frontendUrl, '/') . "/reset-password?token={$token}";
 
         $mail = (new Email())
-            ->from('noreply@crm.local')
+            ->from($mailerFrom)
             ->to($user->getEmail())
             ->subject('Reset your CRM password')
             ->html(
