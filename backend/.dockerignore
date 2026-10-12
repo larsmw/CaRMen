@@ -1,0 +1,8 @@
+# Never bake local secrets, deps or caches into an image
+.env
+.env.local
+.env.*.local
+config/jwt/*.pem
+vendor/
+var/
+.phpunit.result.cache

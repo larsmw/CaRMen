@@ -84,3 +84,6 @@ frontend/playwright-report/
 .phpdoc/
 .ac-php-conf.json
 .phpactor.json
+
+# Frontend production build
+frontend/dist/

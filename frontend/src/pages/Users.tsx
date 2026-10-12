@@ -154,7 +154,7 @@ function UserEditForm({
         Active {isSelf && <span style={{ fontSize: '0.8em', color: '#94a3b8' }}>(cannot deactivate yourself)</span>}
       </label>
 
-      {error && <FormError error={error} />}
+      {!!error && <FormError error={error} />}
 
       <button
         onClick={() => onSave(roles, isActive)}
@@ -233,9 +233,3 @@ function roleLabels(roles: string[]): string {
   return labels.length > 0 ? labels.join(', ') : 'User'
 }
 
-function topRoleKey(roles: string[]): string {
-  for (const r of ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_SALES', 'ROLE_USER']) {
-    if (roles.includes(r)) return r
-  }
-  return 'ROLE_USER'
-}

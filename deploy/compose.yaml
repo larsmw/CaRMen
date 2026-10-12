@@ -1,0 +1,66 @@
+# One CaRMen instance. Run once per instance with its own project name and env file:
+#   docker compose -p carmen-crm  --env-file /srv/carmen/crm.env  -f deploy/compose.yaml up -d --build
+#   docker compose -p carmen-demo --env-file /srv/carmen/demo.env -f deploy/compose.yaml up -d --build
+# See deploy/README.md.
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: carmen
+      POSTGRES_USER: carmen
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U carmen"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      APP_SECRET: ${APP_SECRET:?set APP_SECRET}
+      DATABASE_URL: "postgresql://carmen:${DB_PASSWORD}@db:5432/carmen?serverVersion=16&charset=utf8"
+      JWT_SECRET_KEY: /app/config/jwt/private.pem
+      JWT_PUBLIC_KEY: /app/config/jwt/public.pem
+      JWT_PASSPHRASE: ${JWT_PASSPHRASE:?set JWT_PASSPHRASE}
+      JWT_TTL: "3600"
+      CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:?set CORS_ALLOW_ORIGIN}
+      FRONTEND_URL: ${FRONTEND_URL:?set FRONTEND_URL}
+      DEFAULT_URI: ${FRONTEND_URL}
+      MAILER_DSN: ${MAILER_DSN:-null://null}
+      MAILER_FROM: ${MAILER_FROM:-noreply@carmen-crm.net}
+      DEMO_ACCOUNT_EMAIL: ${DEMO_ACCOUNT_EMAIL:-}
+      DEMO_ACCOUNT_PASSWORD: ${DEMO_ACCOUNT_PASSWORD:-}
+    volumes:
+      - jwt_keys:/app/config/jwt
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_BASE: ${BASE_PATH:-/}
+        VITE_DEMO_EMAIL: ${DEMO_ACCOUNT_EMAIL:-}
+        VITE_DEMO_PASSWORD: ${DEMO_ACCOUNT_PASSWORD:-}
+    restart: unless-stopped
+    ports:
+      # Only reachable from the host; the host's nginx terminates TLS and proxies here
+      - "127.0.0.1:${HTTP_PORT:?set HTTP_PORT}:80"
+    depends_on:
+      - app
+
+volumes:
+  db_data:
+  jwt_keys:
