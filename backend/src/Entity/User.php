@@ -37,7 +37,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    #[Groups(['user:read'])]
+    // deal:read / activity:read: embed owner / assignee (id + name only) instead of an IRI
+    #[Groups(['user:read', 'deal:read', 'activity:read'])]
     private Uuid $id;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -134,7 +135,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getLastName(): string { return $this->lastName; }
     public function setLastName(string $lastName): static { $this->lastName = $lastName; return $this; }
 
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'deal:read', 'activity:read'])]
     public function getFullName(): string { return $this->firstName . ' ' . $this->lastName; }
 
     public function getPhone(): ?string { return $this->phone; }

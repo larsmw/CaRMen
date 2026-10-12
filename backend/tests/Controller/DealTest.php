@@ -20,6 +20,19 @@ class DealTest extends ApiTestCase
         $this->assertGreaterThanOrEqual(TestFixtures::DEAL_COUNT, $response->toArray()['totalItems']);
     }
 
+    public function testOwnerIsEmbeddedWithNameOnly(): void
+    {
+        $deals = $this->adminClient()->request('GET', '/api/deals')->toArray()['member'];
+        $owner = array_values(array_filter(array_column($deals, 'owner')))[0] ?? null;
+
+        // An object (not an IRI string) so the UI can show the name and prefill the edit form
+        $this->assertIsArray($owner);
+        $this->assertArrayHasKey('id', $owner);
+        $this->assertNotEmpty($owner['fullName']);
+        $this->assertArrayNotHasKey('email', $owner);
+        $this->assertArrayNotHasKey('roles', $owner);
+    }
+
     public function testCreateDealB2C(): void
     {
         $faker   = Factory::create();

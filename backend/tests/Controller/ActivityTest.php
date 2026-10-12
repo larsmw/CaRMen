@@ -20,6 +20,17 @@ class ActivityTest extends ApiTestCase
         $this->assertGreaterThanOrEqual(TestFixtures::ACTIVITY_COUNT, $response->toArray()['totalItems']);
     }
 
+    public function testAssigneeIsEmbeddedWithNameOnly(): void
+    {
+        $activities = $this->salesClient()->request('GET', '/api/activities')->toArray()['member'];
+        $assignee   = array_values(array_filter(array_column($activities, 'assignedTo')))[0] ?? null;
+
+        $this->assertIsArray($assignee);
+        $this->assertArrayHasKey('id', $assignee);
+        $this->assertNotEmpty($assignee['fullName']);
+        $this->assertArrayNotHasKey('email', $assignee);
+    }
+
     public function testCreateActivity(): void
     {
         $faker      = Factory::create();
