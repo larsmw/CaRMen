@@ -1,10 +1,11 @@
 #!/bin/bash
 # Deploy, roll back and inspect CaRMen instances. See deploy/README.md.
 #
-#   deploy.sh deploy   <instance> <tag>   switch to the images CI published as <tag> (a commit SHA)
+#   deploy.sh deploy   <instance> [sha]   deploy the newest main commit CI published images for
+#                                         (or that commit); switches this checkout to it first
 #   deploy.sh build    <instance>         build images from this checkout and switch to them
 #   deploy.sh rollback <instance>         switch back to the previously deployed tag
-#   deploy.sh status
+#   deploy.sh status                      what runs where, and whether a newer version is published
 #
 # A deploy: pull images -> back up the database (real instances) -> switch -> health check.
 # If the health check fails it switches back to the previous tag automatically, first
@@ -146,25 +147,61 @@ do_status() {
         printf '%-6s %-8s current=%-12s previous=%s\n' "$i" "$health" \
             "$(current_tag "$i" | cut -c1-12)" "$(previous_tag "$i" | cut -c1-12)"
     done
+    git fetch -q origin main 2>/dev/null || true
+    local newest; newest=$(newest_published) && echo "newest published: ${newest:0:12} ($(git log -1 --format='%cr: %s' "$newest"))"
     echo "--- last deploys:"
     tail -5 "$ENV_DIR/deploy.log" 2>/dev/null || true
 }
+
+published() {  # sha: CI published all images for it (images are public, no login needed)
+    local img
+    for img in carmen-app carmen-web carmen-web-demo; do
+        docker manifest inspect "ghcr.io/larsmw/$img:$1" >/dev/null 2>&1 || return 1
+    done
+}
+
+newest_published() {  # newest commit on origin/main with published images (checks the last 20)
+    local sha
+    for sha in $(git rev-list -n 20 origin/main); do
+        if published "$sha"; then echo "$sha"; return 0; fi
+    done
+    return 1
+}
+
+usage() { sed -n '4,8p' "$0" | sed 's/^# \{0,1\}//' >&2; exit 2; }
+
+cmd=${1:-}; instance=${2:-}
+[[ $cmd == status || ( -n $instance && -f "$ENV_DIR/$instance.env" ) ]] || usage
+
+# deploy: pick the version, then re-run this script from that version's checkout so the
+# compose file and scripts match the images being deployed
+if [[ $cmd == deploy && -z ${CARMEN_CHECKED_OUT:-} ]]; then
+    git fetch -q origin main
+    sha=${3:-}
+    if [[ -z $sha ]]; then
+        sha=$(newest_published) || { log "no published images for the last 20 commits on main"; exit 1; }
+        [[ $sha == $(git rev-parse origin/main) ]] \
+            || log "note: newest main ($(git rev-parse --short origin/main)) has no published images (yet); using ${sha:0:12}"
+    else
+        sha=$(git rev-parse --verify -q "$sha^{commit}") || { log "unknown commit $3"; exit 1; }
+        git merge-base --is-ancestor "$sha" origin/main || { log "$sha is not on main"; exit 1; }
+        published "$sha" || { log "no published images for $sha (did the Publish images workflow pass?)"; exit 1; }
+    fi
+    git checkout -q --detach "$sha"
+    CARMEN_CHECKED_OUT=1 exec deploy/deploy.sh deploy "$instance" "$sha"
+fi
 
 # One deploy at a time
 exec 9>"$ENV_DIR/deploy.lock"
 flock -w 900 9 || { log "another deploy is still running"; exit 1; }
 
-cmd=${1:-}; instance=${2:-}
-[[ $cmd == status || -f "$ENV_DIR/$instance.env" ]] || { echo "usage: $0 deploy|build|rollback <instance> [tag] | status" >&2; exit 2; }
 case $cmd in
-    deploy)
-        tag=${3:?usage: deploy.sh deploy <instance> <tag>}
-        do_deploy "$instance" "$tag" ;;
+    deploy)   do_deploy "$instance" "$3" ;;
     build)
         tag="local-$(git rev-parse --short=12 HEAD)"
         IMAGE_TAG=$tag compose "$instance" build app web
         do_deploy "$instance" "$tag" ;;
     rollback) do_rollback "$instance" ;;
     status)   do_status ;;
-    *) echo "usage: $0 deploy|build|rollback <instance> [tag] | status" >&2; exit 2 ;;
+    *) usage ;;
 esac
