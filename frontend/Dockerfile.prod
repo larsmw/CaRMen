@@ -4,11 +4,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 COPY . .
-# Per-instance build settings (see deploy/compose.yaml)
+# Sub-path the app is served under: / (crm) or /demo/ (public demo).
+# The only build-time difference between instances; everything else is runtime config.
 ARG VITE_BASE=/
-ARG VITE_DEMO_EMAIL=
-ARG VITE_DEMO_PASSWORD=
-ENV VITE_BASE=$VITE_BASE VITE_DEMO_EMAIL=$VITE_DEMO_EMAIL VITE_DEMO_PASSWORD=$VITE_DEMO_PASSWORD
+ENV VITE_BASE=$VITE_BASE
 RUN npm run build
 
 FROM nginx:1.29-alpine

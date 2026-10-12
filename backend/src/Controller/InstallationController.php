@@ -38,15 +38,24 @@ class InstallationController extends AbstractController
     ) {}
 
     #[Route('/status', name: 'api_install_status', methods: ['GET'])]
-    public function status(): JsonResponse
-    {
+    public function status(
+        #[Autowire(env: 'DEMO_ACCOUNT_EMAIL')] string $demoEmail,
+        #[Autowire(env: 'DEMO_ACCOUNT_PASSWORD')] string $demoPassword,
+    ): JsonResponse {
         try {
-            return $this->json(['installed' => $this->isInstalled()]);
+            $data = ['installed' => $this->isInstalled()];
         } catch (\Throwable) {
             // Database unreachable: not something the installer can fix, but the
             // frontend should still be able to show the installer's system check.
-            return $this->json(['installed' => false]);
+            $data = ['installed' => false];
         }
+
+        // Public demo: the shared login is public anyway; the login page shows it
+        if ($demoEmail !== '') {
+            $data['demoLogin'] = ['email' => $demoEmail, 'password' => $demoPassword];
+        }
+
+        return $this->json($data);
     }
 
     #[Route('/system-check', name: 'api_install_system_check', methods: ['GET'])]

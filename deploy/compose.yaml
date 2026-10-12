@@ -1,7 +1,6 @@
-# One CaRMen instance. Run once per instance with its own project name and env file:
-#   docker compose -p carmen-crm  --env-file /srv/carmen/crm.env  -f deploy/compose.yaml up -d --build
-#   docker compose -p carmen-demo --env-file /srv/carmen/demo.env -f deploy/compose.yaml up -d --build
-# See deploy/README.md.
+# One CaRMen instance (project carmen-<instance>, config in /srv/carmen/<instance>.env).
+# Normally run by deploy/deploy.sh with IMAGE_TAG set to a commit SHA whose images CI
+# published to ghcr.io; `build:` is only for building images locally. See deploy/README.md.
 
 services:
   db:
@@ -20,6 +19,7 @@ services:
       retries: 20
 
   app:
+    image: ghcr.io/larsmw/carmen-app:${IMAGE_TAG:-local}
     build:
       context: ../backend
       dockerfile: Dockerfile.prod
@@ -47,13 +47,13 @@ services:
         condition: service_healthy
 
   web:
+    # carmen-web (served at /) or carmen-web-demo (built for /demo/), see WEB_IMAGE
+    image: ${WEB_IMAGE:-ghcr.io/larsmw/carmen-web}:${IMAGE_TAG:-local}
     build:
       context: ../frontend
       dockerfile: Dockerfile.prod
       args:
         VITE_BASE: ${BASE_PATH:-/}
-        VITE_DEMO_EMAIL: ${DEMO_ACCOUNT_EMAIL:-}
-        VITE_DEMO_PASSWORD: ${DEMO_ACCOUNT_PASSWORD:-}
     restart: unless-stopped
     ports:
       # Only reachable from the host; the host's nginx terminates TLS and proxies here

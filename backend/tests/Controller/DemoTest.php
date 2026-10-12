@@ -21,7 +21,7 @@ class DemoTest extends ApiTestCase
 
     protected function tearDown(): void
     {
-        unset($_SERVER['DEMO_ACCOUNT_EMAIL'], $_ENV['DEMO_ACCOUNT_EMAIL']);
+        unset($_SERVER['DEMO_ACCOUNT_EMAIL'], $_ENV['DEMO_ACCOUNT_EMAIL'], $_SERVER['DEMO_ACCOUNT_PASSWORD'], $_ENV['DEMO_ACCOUNT_PASSWORD']);
         static::resetFixtures();
         parent::tearDown();
     }
@@ -70,6 +70,17 @@ class DemoTest extends ApiTestCase
 
         static::createClient()->request('POST', '/api/forgot-password', ['json' => ['email' => TestFixtures::SALES_EMAIL]]);
         $this->assertResponseStatusCodeSame(403);
+    }
+
+    public function testStatusShowsDemoLoginOnlyInDemoMode(): void
+    {
+        $data = static::createClient()->request('GET', '/api/install/status')->toArray();
+        $this->assertArrayNotHasKey('demoLogin', $data);
+
+        $this->enableDemoMode(TestFixtures::SALES_EMAIL);
+        $_SERVER['DEMO_ACCOUNT_PASSWORD'] = $_ENV['DEMO_ACCOUNT_PASSWORD'] = 'demo1234';
+        $data = static::createClient()->request('GET', '/api/install/status')->toArray();
+        $this->assertSame(['email' => TestFixtures::SALES_EMAIL, 'password' => 'demo1234'], $data['demoLogin']);
     }
 
     public function testDemoModeOffByDefault(): void

@@ -12,6 +12,7 @@ parameters:
     env(MAILER_FROM): 'noreply@localhost'
     # Demo mode: this account can't be changed or deleted (empty = off)
     env(DEMO_ACCOUNT_EMAIL): ''
+    env(DEMO_ACCOUNT_PASSWORD): ''
 
 services:
     # default configuration for services in *this* file
