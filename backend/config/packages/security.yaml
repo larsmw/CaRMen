@@ -24,6 +24,12 @@ security:
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            # Brute-force protection: 5 failed attempts per email+IP per 15 minutes (and
+            # 25 per IP). A successful login resets the counters. Needs the real client IP,
+            # see framework.trusted_proxies.
+            login_throttling:
+                max_attempts: 5
+                interval: '15 minutes'
 
         api:
             pattern: ^/api

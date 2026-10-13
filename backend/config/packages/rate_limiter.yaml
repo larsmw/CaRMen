@@ -1,0 +1,7 @@
+framework:
+    rate_limiter:
+        # Password reset emails: per address, so nobody can mail-bomb a user
+        password_reset:
+            policy: sliding_window
+            limit: 3
+            interval: '1 hour'

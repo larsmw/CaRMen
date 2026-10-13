@@ -73,6 +73,33 @@ class AuthTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
+    public function testLoginIsThrottledAfterFiveFailures(): void
+    {
+        $client = static::createClient();
+        $email  = 'brute-' . bin2hex(random_bytes(4)) . '@example.com';
+
+        for ($i = 1; $i <= 5; $i++) {
+            $response = $client->request('POST', '/api/login', ['json' => ['email' => $email, 'password' => "guess$i"]]);
+            $this->assertResponseStatusCodeSame(401);
+            $this->assertStringNotContainsString('Too many', $response->getContent(false));
+        }
+
+        $response = $client->request('POST', '/api/login', ['json' => ['email' => $email, 'password' => 'guess6']]);
+        $this->assertResponseStatusCodeSame(401);
+        $this->assertStringContainsString('Too many failed login attempts', $response->getContent(false));
+    }
+
+    public function testThrottlingIsPerAccount(): void
+    {
+        $client = static::createClient();
+        for ($i = 1; $i <= 6; $i++) {
+            $client->request('POST', '/api/login', ['json' => ['email' => 'someone-else@example.com', 'password' => 'x']]);
+        }
+
+        // A different account from the same IP can still log in
+        $this->assertNotEmpty($this->getToken(TestFixtures::ADMIN_EMAIL, TestFixtures::ADMIN_PASSWORD));
+    }
+
     public function testPublicRegistrationIsDisabled(): void
     {
         // Users are created by admins (POST /api/users) or the installer, never anonymously
