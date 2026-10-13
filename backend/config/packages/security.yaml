@@ -31,6 +31,13 @@ security:
                 max_attempts: 5
                 interval: '15 minutes'
 
+        # Integrations (website forms etc.): API key only, no user logins
+        leads:
+            pattern: ^/api/leads
+            stateless: true
+            custom_authenticators:
+                - App\Security\ApiKeyAuthenticator
+
         api:
             pattern: ^/api
             stateless: true
@@ -44,6 +51,7 @@ security:
         - { path: ^/api/docs,            roles: PUBLIC_ACCESS }
         # Installer locks itself once a user exists (see InstallationController)
         - { path: ^/api/install,         roles: PUBLIC_ACCESS }
+        - { path: ^/api/leads,           roles: ROLE_API_LEADS_CREATE }
         - { path: ^/api,                 roles: IS_AUTHENTICATED_FULLY }
 
     role_hierarchy:

@@ -15,6 +15,7 @@ const navItems = [
 const adminNavItems = [
   { to: '/users',            label: 'Users'            },
   { to: '/role-permissions', label: 'Role Permissions' },
+  { to: '/api-keys',         label: 'API Keys'         },
 ]
 
 export default function Layout() {

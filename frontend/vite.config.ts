@@ -15,7 +15,8 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/api': {
+      // Only /api/..., so page routes like /api-keys aren't proxied to the backend
+      '^/api/': {
         target: 'http://localhost:8000',
         changeOrigin: true,
       },

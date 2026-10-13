@@ -5,3 +5,9 @@ framework:
             policy: sliding_window
             limit: 3
             interval: '1 hour'
+
+        # Requests per API key (lead intake from website forms, integrations)
+        api_key:
+            policy: sliding_window
+            limit: 60
+            interval: '1 minute'
