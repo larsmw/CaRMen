@@ -9,13 +9,22 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    await client.post('/api/forgot-password', { email }).catch(() => {})
-    setSent(true)
-    setLoading(false)
+    setError(null)
+    try {
+      await client.post('/api/forgot-password', { email })
+      setSent(true)
+    } catch (err: any) {
+      // Only the rate limit is worth telling; otherwise behave as if it was sent (no enumeration)
+      if (err?.response?.status === 429) setError(err.response.data?.message ?? 'Too many requests. Please try again later.')
+      else setSent(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -36,6 +45,7 @@ export default function ForgotPassword() {
               Enter your email and we'll send you a reset link.
             </p>
             <form onSubmit={submit}>
+              {error && <p className={styles.errorMsg}>{error}</p>}
               <label className={styles.label}>Email</label>
               <input
                 className={styles.input}

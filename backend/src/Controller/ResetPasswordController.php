@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api')]
@@ -24,9 +25,15 @@ class ResetPasswordController extends AbstractController
         MailerInterface $mailer,
         #[Autowire(env: 'FRONTEND_URL')] string $frontendUrl,
         #[Autowire(env: 'MAILER_FROM')] string $mailerFrom,
+        RateLimiterFactoryInterface $passwordResetLimiter,
     ): JsonResponse {
         $data  = json_decode($request->getContent(), true);
         $email = $data['email'] ?? '';
+
+        // Per address, checked before the lookup so it says nothing about whether it exists
+        if (!$passwordResetLimiter->create(mb_strtolower(trim((string) $email)))->consume()->isAccepted()) {
+            return $this->json(['message' => 'Too many password reset requests. Please try again later.'], 429);
+        }
 
         $user = $users->findOneBy(['email' => $email]);
 

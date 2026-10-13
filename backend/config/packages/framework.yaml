@@ -5,6 +5,12 @@ framework:
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
+    # In production requests arrive via the host's nginx and the container's nginx; trust
+    # them so the client IP (login throttling, logs) comes from X-Forwarded-For.
+    # Set to "private_ranges" in deploy/compose.yaml; empty (trust nobody) by default.
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-proto', 'x-forwarded-port']
+
     #esi: true
     #fragments: true
 

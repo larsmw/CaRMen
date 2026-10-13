@@ -10,6 +10,7 @@ parameters:
     # Defaults for local dev; production sets these in deploy/<instance>.env
     env(FRONTEND_URL): 'http://localhost:3000'
     env(MAILER_FROM): 'noreply@localhost'
+    env(TRUSTED_PROXIES): ''
     # Demo mode: this account can't be changed or deleted (empty = off)
     env(DEMO_ACCOUNT_EMAIL): ''
     env(DEMO_ACCOUNT_PASSWORD): ''

@@ -30,6 +30,22 @@ class ResetPasswordTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
+    public function testForgotPasswordIsRateLimitedPerAddress(): void
+    {
+        $client = static::createClient();
+        for ($i = 1; $i <= 3; $i++) {
+            $client->request('POST', '/api/forgot-password', ['json' => ['email' => 'flood@example.com']]);
+            $this->assertResponseIsSuccessful();
+        }
+
+        $client->request('POST', '/api/forgot-password', ['json' => ['email' => 'FLOOD@example.com']]);
+        $this->assertResponseStatusCodeSame(429);
+
+        // Other addresses are unaffected
+        $client->request('POST', '/api/forgot-password', ['json' => ['email' => 'other@example.com']]);
+        $this->assertResponseIsSuccessful();
+    }
+
     public function testForgotPasswordSetsTokenOnUser(): void
     {
         $client = static::createClient();

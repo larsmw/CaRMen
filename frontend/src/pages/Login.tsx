@@ -34,8 +34,10 @@ export default function Login() {
     try {
       await login(email, password)
       navigate('/')
-    } catch {
-      setError('Invalid credentials')
+    } catch (err: any) {
+      // e.g. "Too many failed login attempts, please try again in 15 minutes."
+      const message: string | undefined = err?.response?.data?.message
+      setError(message?.startsWith('Too many') ? message : 'Invalid credentials')
     } finally {
       setLoading(false)
     }

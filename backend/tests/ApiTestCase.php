@@ -17,6 +17,9 @@ abstract class ApiTestCase extends BaseApiTestCase
 
     protected static function loadFixtures(): void
     {
+        // Login throttling / reset limits persist in a cache; start every test with a clean slate
+        static::getContainer()->get('cache.rate_limiter')->clear();
+
         if (self::$fixturesLoaded) {
             return;
         }

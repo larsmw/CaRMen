@@ -36,6 +36,9 @@ services:
       CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:?set CORS_ALLOW_ORIGIN}
       FRONTEND_URL: ${FRONTEND_URL:?set FRONTEND_URL}
       DEFAULT_URI: ${FRONTEND_URL}
+      # Requests come through the host's nginx and the web container (private addresses);
+      # trust them so the real client IP comes from X-Forwarded-For (login throttling)
+      TRUSTED_PROXIES: private_ranges
       MAILER_DSN: ${MAILER_DSN:-null://null}
       MAILER_FROM: ${MAILER_FROM:-noreply@carmen-crm.net}
       DEMO_ACCOUNT_EMAIL: ${DEMO_ACCOUNT_EMAIL:-}
