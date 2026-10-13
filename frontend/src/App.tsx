@@ -17,6 +17,7 @@ import Activities from './pages/Activities'
 import ActivityDetail from './pages/ActivityDetail'
 import Users from './pages/Users'
 import RolePermissions from './pages/RolePermissions'
+import ApiKeys from './pages/ApiKeys'
 import Installer from './pages/Installer'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="activities/:id" element={<ActivityDetail />} />
           <Route path="users" element={<Users />} />
           <Route path="role-permissions" element={<RolePermissions />} />
+          <Route path="api-keys" element={<ApiKeys />} />
         </Route>
       </Routes>
     </BrowserRouter>

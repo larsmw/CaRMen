@@ -1,0 +1,144 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-md;
+}
+
+.title {
+  font-size: $font-3xl;
+  font-weight: 700;
+}
+
+.createBtn {
+  @include btn-primary;
+  width: auto;
+  padding: 10px $space-lg;
+}
+
+.intro {
+  color: $color-text-muted;
+  margin-bottom: $space-xl;
+  max-width: 60ch;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  background: $color-white;
+}
+
+.th {
+  text-align: left;
+  padding: 10px $space-lg;
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-text-muted;
+  background: $color-table-header;
+  border-bottom: 1px solid $color-border;
+}
+
+.td {
+  padding: 10px $space-lg;
+  font-size: $font-md;
+  vertical-align: top;
+}
+
+.row {
+  border-bottom: 1px solid $color-bg;
+}
+
+.revokedRow {
+  border-bottom: 1px solid $color-bg;
+  color: $color-text-muted;
+}
+
+.muted {
+  color: $color-text-muted;
+  font-size: $font-sm;
+  margin: $space-xs 0 $space-md;
+}
+
+.revokeBtn {
+  padding: 4px 10px;
+  font-size: $font-sm;
+  background: $color-bg;
+  color: $color-error;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  cursor: pointer;
+}
+
+.formLabel {
+  @include label;
+}
+
+.formInput {
+  @include input;
+}
+
+.saveBtn {
+  @include btn-primary;
+  margin-top: $space-sm;
+}
+
+.warning {
+  background: $color-success-bg;
+  color: $color-success-text;
+  padding: $space-sm $space-md;
+  border-radius: $radius-md;
+  margin-bottom: $space-md;
+  font-weight: 600;
+}
+
+.keyBox {
+  display: flex;
+  gap: $space-sm;
+  align-items: center;
+  margin-bottom: $space-xl;
+
+  code {
+    flex: 1;
+    padding: $space-sm $space-md;
+    background: $color-bg;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    font-size: $font-sm;
+    word-break: break-all;
+  }
+}
+
+.copyBtn {
+  padding: $space-sm $space-md;
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  cursor: pointer;
+}
+
+.subTitle {
+  font-size: $font-lg;
+  font-weight: 600;
+  margin-bottom: $space-xs;
+}
+
+.example {
+  background: $color-sidebar;
+  color: $color-white;
+  padding: $space-md;
+  border-radius: $radius-md;
+  font-size: $font-xs;
+  overflow-x: auto;
+  margin-bottom: $space-md;
+}
